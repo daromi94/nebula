@@ -27,7 +27,7 @@ public class FraudCheckHistory {
 
     private String email;
 
-    private Boolean isFraudster;
+    private boolean isFraudster;
 
     private LocalDateTime createdAt;
 
