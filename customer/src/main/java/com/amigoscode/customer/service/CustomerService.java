@@ -18,7 +18,7 @@ public record CustomerService(CustomerRepository customerRepository, RestTemplat
                 .email(request.email())
                 .build();
         FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://localhost:8081/api/v1/fraud-check/{customerNumber}",
+                "http://FRAUD/api/v1/fraud-check/{customerNumber}",
                 FraudCheckResponse.class,
                 customer.getCustomerNumber());
         assert fraudCheckResponse != null;
