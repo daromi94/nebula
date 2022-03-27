@@ -23,8 +23,6 @@ public class Customer {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String customerNumber;
-
     private String firstName;
 
     private String lastName;
