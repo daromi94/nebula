@@ -5,9 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -17,9 +21,9 @@ import java.time.LocalDateTime;
 public class FraudCheckHistory {
 
     @Id
-    @SequenceGenerator(name = "fraud_id_sequence", sequenceName = "fraud_id_sequence")
-    @GeneratedValue(generator = "fraud_id_sequence", strategy = GenerationType.SEQUENCE)
-    private Integer id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
 
     private String customerNumber;
 
