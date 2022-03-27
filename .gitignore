@@ -23,7 +23,7 @@
 hs_err_pid*
 
 # Maven
-target/
+*/target/
 
 # IntelliJ IDEA
 .idea
