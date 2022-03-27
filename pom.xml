@@ -12,6 +12,7 @@
         <module>fraud</module>
         <module>eureka</module>
         <module>clients</module>
+        <module>account</module>
     </modules>
     <name>amigos-services</name>
     <url>https://amigoscode.com/</url>
