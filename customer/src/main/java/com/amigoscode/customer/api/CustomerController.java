@@ -1,6 +1,5 @@
 package com.amigoscode.customer.api;
 
-import com.amigoscode.customer.domain.CustomerRegistrationRequest;
 import com.amigoscode.customer.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

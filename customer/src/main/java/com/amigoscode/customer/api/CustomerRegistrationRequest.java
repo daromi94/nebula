@@ -1,4 +1,4 @@
-package com.amigoscode.customer.domain;
+package com.amigoscode.customer.api;
 
 public record CustomerRegistrationRequest(String customerNumber, String firstName, String lastName, String email) {
 
