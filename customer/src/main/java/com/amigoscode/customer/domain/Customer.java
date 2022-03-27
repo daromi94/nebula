@@ -19,6 +19,8 @@ public class Customer {
     @GeneratedValue(generator = "customer_id_sequence", strategy = GenerationType.SEQUENCE)
     private Integer id;
 
+    private String customerNumber;
+
     private String firstName;
 
     private String lastName;
