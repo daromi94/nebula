@@ -1,6 +1,6 @@
 package com.amigoscode.fraud.api;
 
-import com.amigoscode.fraud.domain.FraudCheckResponse;
+import com.amigoscode.clients.fraud.dto.FraudCheckResponse;
 import com.amigoscode.fraud.service.FraudCheckService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
