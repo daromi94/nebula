@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public record FraudController(FraudCheckService fraudCheckService) {
 
-    @GetMapping(path = "{customerNumber}")
-    public FraudCheckResponse isFraudster(@PathVariable("customerNumber") String customerNumber) {
-        log.info("new fraud check request for {}", customerNumber);
-        boolean isFraudulentCustomer = fraudCheckService.isFraudulentCustomer(customerNumber);
-        return new FraudCheckResponse(isFraudulentCustomer);
+    @GetMapping(path = "{email}")
+    public FraudCheckResponse isFraudster(@PathVariable("email") String email) {
+        log.info("new fraud check request for {}", email);
+        return fraudCheckService.isFraudulentCustomer(email);
     }
 
 }

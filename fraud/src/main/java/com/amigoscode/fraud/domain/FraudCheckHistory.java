@@ -25,7 +25,7 @@ public class FraudCheckHistory {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String customerNumber;
+    private String email;
 
     private Boolean isFraudster;
 
