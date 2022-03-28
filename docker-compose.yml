@@ -3,7 +3,8 @@ services:
     container_name: postgres
     image: postgres
     environment:
-      POSTGRES_USER: amigoscode
+      POSTGRES_DB: nebula
+      POSTGRES_USER: nebula
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
     volumes:

@@ -6,7 +6,7 @@ spring:
     name: fraud
   datasource:
     url: jdbc:postgresql://localhost:5432/fraud
-    username: 'amigoscode'
+    username: 'nebula'
     password: 'password'
   jpa:
     properties:
