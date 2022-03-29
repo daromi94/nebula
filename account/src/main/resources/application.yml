@@ -1,13 +1,13 @@
 server:
-  port: 8082
+  port: ${ACCOUNT_SERVER_PORT}
 
 spring:
   application:
     name: account
   datasource:
-    url: jdbc:postgresql://localhost:5432/account
-    username: 'nebula'
-    password: 'password'
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${ACCOUNT_DATABASE_NAME}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
   jpa:
     properties:
       hibernate:
@@ -17,11 +17,14 @@ spring:
       ddl-auto: create-drop
     show-sql: 'true'
   zipkin:
-    base-url: http://localhost:9411/
+    base-url: http://${ZIPKIN_HOST}:${ZIPKIN_PORT}/
+  rabbitmq:
+    addresses: ${RABBITMQ_HOST}:${RABBITMQ_PORT}
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-    fetch-registry: true
-    register-with-eureka: true
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queue:
+    account: account.queue
+  routing-keys:
+    internal-account: internal.account.routing-key

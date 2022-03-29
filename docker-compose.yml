@@ -3,14 +3,14 @@ services:
     container_name: postgres
     image: postgres
     environment:
-      POSTGRES_DB: nebula
-      POSTGRES_USER: nebula
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT}:5432"
     networks:
       - postgres
     restart: unless-stopped
@@ -25,7 +25,7 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
-      - "5050:80"
+      - "${DATABASE_ADMIN_PORT}:80"
     networks:
       - postgres
     restart: unless-stopped
@@ -34,14 +34,14 @@ services:
     image: openzipkin/zipkin
     container_name: zipkin
     ports:
-      - "9411:9411"
+      - "${ZIPKIN_PORT}:9411"
 
   rabbitmq:
     image: rabbitmq:3.9.11-management-alpine
     container_name: rabbitmq
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT}:15672"
 
 networks:
   postgres:
