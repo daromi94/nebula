@@ -2,8 +2,8 @@ package com.nebula.customer.service;
 
 import com.nebula.customer.domain.Customer;
 import com.nebula.customer.repository.CustomerRepository;
-import com.nebula.shared.account.AccountPostClient;
-import com.nebula.shared.account.domain.AccountPostRequest;
+import com.nebula.shared.account.domain.AccountCreateMessage;
+import com.nebula.shared.amqp.MessagePublisher;
 import com.nebula.shared.customer.domain.CustomerEmail;
 import com.nebula.shared.customer.domain.CustomerFirstName;
 import com.nebula.shared.customer.domain.CustomerId;
@@ -23,12 +23,14 @@ public final class CustomerCreator {
 
     private final FraudCheckClient fraudCheckClient;
 
-    private final AccountPostClient accountPostClient;
+    private final MessagePublisher publisher;
 
-    public CustomerCreator(CustomerRepository repository, FraudCheckClient fraudCheckClient, AccountPostClient accountPostClient) {
+    public CustomerCreator(CustomerRepository repository,
+                           FraudCheckClient fraudCheckClient,
+                           MessagePublisher publisher) {
         this.repository = repository;
         this.fraudCheckClient = fraudCheckClient;
-        this.accountPostClient = accountPostClient;
+        this.publisher = publisher;
     }
 
     public void create(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email) {
@@ -50,8 +52,8 @@ public final class CustomerCreator {
 
     private void openAccount(CustomerId id) {
         UUID accountId = UUID.randomUUID();
-        AccountPostRequest request = new AccountPostRequest(accountId, id.getCustomerId(), EMPTY_BALANCE);
-        accountPostClient.post(request);
+        AccountCreateMessage message = new AccountCreateMessage(accountId, id.getCustomerId(), EMPTY_BALANCE);
+        publisher.publish(message, "internal.exchange", "internal.account.routing-key");
     }
 
 }
