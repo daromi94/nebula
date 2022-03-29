@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class AccountCreateConsumer {
+public final class AccountCreateConsumer {
 
     private final AccountCreator creator;
 
