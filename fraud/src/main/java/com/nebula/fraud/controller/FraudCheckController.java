@@ -21,9 +21,9 @@ public final class FraudCheckController {
     }
 
     @GetMapping(path = "{email}")
-    public FraudCheckResponse check(@PathVariable("email") String emailToCheck) {
-        log.info("new fraud check request for {}", emailToCheck);
-        FraudsterEmail email = new FraudsterEmail(emailToCheck);
+    public FraudCheckResponse check(@PathVariable("email") String dubiousEmail) {
+        log.info("new fraud check request for {}", dubiousEmail);
+        FraudsterEmail email = new FraudsterEmail(dubiousEmail);
         boolean isFraudster = checker.check(email);
         return new FraudCheckResponse(isFraudster);
     }
