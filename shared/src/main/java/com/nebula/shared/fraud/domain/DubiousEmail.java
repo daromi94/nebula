@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public final class FraudsterEmail {
+public final class DubiousEmail {
 
     private String email;
 

@@ -1,7 +1,7 @@
 package com.nebula.fraud.domain;
 
 
-import com.nebula.shared.fraud.domain.FraudsterEmail;
+import com.nebula.shared.fraud.domain.DubiousEmail;
 import com.nebula.shared.fraud.domain.FraudsterId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +24,6 @@ public class Fraudster {
     private FraudsterId id;
 
     @Embedded
-    private FraudsterEmail email;
+    private DubiousEmail email;
 
 }

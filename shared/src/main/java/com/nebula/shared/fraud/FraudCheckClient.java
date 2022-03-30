@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface FraudCheckClient {
 
     @GetMapping(path = "{email}")
-    FraudCheckResponse check(@PathVariable("email") String dubiousEmail);
+    FraudCheckResponse check(@PathVariable("email") String email);
 
 }

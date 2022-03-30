@@ -2,7 +2,7 @@ package com.nebula.fraud.service;
 
 import com.nebula.fraud.domain.Fraudster;
 import com.nebula.fraud.repository.FraudsterRepository;
-import com.nebula.shared.fraud.domain.FraudsterEmail;
+import com.nebula.shared.fraud.domain.DubiousEmail;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public final class FraudChecker {
         this.repository = repository;
     }
 
-    public boolean check(FraudsterEmail email) {
+    public boolean check(DubiousEmail email) {
         List<Fraudster> fraudsters = repository.findByEmail(email);
         return !fraudsters.isEmpty();
     }
