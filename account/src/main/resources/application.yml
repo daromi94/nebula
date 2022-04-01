@@ -1,13 +1,13 @@
 server:
-  port: ${ACCOUNT_SERVER_PORT}
+  port: ${ACCOUNT_SERVER_PORT:8082}
 
 spring:
   application:
     name: account
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${ACCOUNT_DATABASE_NAME}
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${ACCOUNT_DATABASE_NAME:account}
+    username: ${DATABASE_USER:nebula}
+    password: ${DATABASE_PASSWORD:password}
   jpa:
     properties:
       hibernate:
@@ -17,9 +17,9 @@ spring:
       ddl-auto: create-drop
     show-sql: 'true'
   zipkin:
-    base-url: http://${ZIPKIN_HOST}:${ZIPKIN_PORT}/
+    base-url: http://${ZIPKIN_HOST:localhost}:${ZIPKIN_PORT:9411}/
   rabbitmq:
-    addresses: ${RABBITMQ_HOST}:${RABBITMQ_PORT}
+    addresses: ${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}
 
 rabbitmq:
   exchanges:
