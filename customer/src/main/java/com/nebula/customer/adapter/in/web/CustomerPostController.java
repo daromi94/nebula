@@ -1,4 +1,4 @@
-package com.nebula.customer.adapter.in;
+package com.nebula.customer.adapter.in.web;
 
 import com.nebula.customer.application.service.CustomerCreator;
 import com.nebula.shared.customer.CustomerPostRequest;

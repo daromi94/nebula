@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.in;
+package com.nebula.fraud.adapter.in.web;
 
 import com.nebula.fraud.application.service.FraudChecker;
 import com.nebula.shared.domain.Email;

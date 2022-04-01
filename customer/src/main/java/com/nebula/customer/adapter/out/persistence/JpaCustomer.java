@@ -1,4 +1,4 @@
-package com.nebula.customer.adapter.persistence;
+package com.nebula.customer.adapter.out.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

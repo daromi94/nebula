@@ -1,13 +1,11 @@
-package com.nebula.fraud.adapter.persistence;
+package com.nebula.fraud.adapter.out.persistence;
 
 import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;
 import com.nebula.shared.domain.Email;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public class JpaFraudsterPersistenceAdapter implements FraudsterRepository {
 
     private final JpaFraudsterRepository repository;

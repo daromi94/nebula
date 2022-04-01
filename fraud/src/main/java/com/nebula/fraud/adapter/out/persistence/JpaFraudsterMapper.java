@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.persistence;
+package com.nebula.fraud.adapter.out.persistence;
 
 import com.nebula.fraud.domain.Fraudster;
 import com.nebula.shared.domain.Email;

@@ -4,10 +4,8 @@ import com.nebula.account.application.port.out.AccountRepository;
 import com.nebula.account.domain.Account;
 import com.nebula.shared.domain.account.AccountId;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Transactional
 public class JpaAccountPersistenceAdapter implements AccountRepository {
 
     private final JpaAccountRepository repository;

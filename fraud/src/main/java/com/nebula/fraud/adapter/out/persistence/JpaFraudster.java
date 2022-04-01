@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.persistence;
+package com.nebula.fraud.adapter.out.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

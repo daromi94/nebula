@@ -1,4 +1,4 @@
-package com.nebula.account.adapter.in;
+package com.nebula.account.adapter.in.bus;
 
 import com.nebula.account.application.service.AccountCreator;
 import com.nebula.shared.domain.account.AccountId;

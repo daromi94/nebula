@@ -1,8 +1,8 @@
 package com.nebula.customer;
 
-import com.nebula.customer.adapter.persistence.JpaCustomerMapper;
-import com.nebula.customer.adapter.persistence.JpaCustomerPersistenceAdapter;
-import com.nebula.customer.adapter.persistence.JpaCustomerRepository;
+import com.nebula.customer.adapter.out.persistence.JpaCustomerMapper;
+import com.nebula.customer.adapter.out.persistence.JpaCustomerPersistenceAdapter;
+import com.nebula.customer.adapter.out.persistence.JpaCustomerRepository;
 import com.nebula.customer.application.port.out.CustomerRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
