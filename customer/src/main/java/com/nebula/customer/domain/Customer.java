@@ -1,36 +1,51 @@
 package com.nebula.customer.domain;
 
-import com.nebula.shared.customer.domain.CustomerEmail;
-import com.nebula.shared.customer.domain.CustomerFirstName;
-import com.nebula.shared.customer.domain.CustomerId;
-import com.nebula.shared.customer.domain.CustomerLastName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.nebula.shared.domain.AggregateRoot;
+import com.nebula.shared.domain.Email;
+import com.nebula.shared.domain.customer.CustomerCreated;
+import com.nebula.shared.domain.customer.CustomerFirstName;
+import com.nebula.shared.domain.customer.CustomerId;
+import com.nebula.shared.domain.customer.CustomerLastName;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public final class Customer extends AggregateRoot {
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "customers")
-public class Customer {
+    private final CustomerId id;
 
-    @Id
-    @Embedded
-    private CustomerId id;
+    private final CustomerFirstName firstName;
 
-    @Embedded
-    private CustomerFirstName firstName;
+    private final CustomerLastName lastName;
 
-    @Embedded
-    private CustomerLastName lastName;
+    private final Email email;
 
-    @Embedded
-    private CustomerEmail email;
+    public Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, Email email) {
+        this.id        = id;
+        this.firstName = firstName;
+        this.lastName  = lastName;
+        this.email     = email;
+    }
+
+    public static Customer create(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, Email email) {
+        Customer customer = new Customer(id, firstName, lastName, email);
+
+        customer.record(new CustomerCreated(id.value(), firstName.value(), lastName.value(), email.value()));
+
+        return customer;
+    }
+
+    public CustomerId id() {
+        return id;
+    }
+
+    public CustomerFirstName firstName() {
+        return firstName;
+    }
+
+    public CustomerLastName lastName() {
+        return lastName;
+    }
+
+    public Email email() {
+        return email;
+    }
 
 }
