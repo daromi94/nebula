@@ -6,7 +6,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class FraudApplication {
+class FraudApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FraudApplication.class, args);

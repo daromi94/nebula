@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication(scanBasePackages = {"com.nebula.customer", "com.nebula.shared"})
 @EnableEurekaClient
 @EnableFeignClients(basePackages = "com.nebula.shared")
-public class CustomerApplication {
+class CustomerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CustomerApplication.class, args);
