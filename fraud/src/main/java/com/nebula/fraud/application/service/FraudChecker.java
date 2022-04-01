@@ -5,9 +5,11 @@ import com.nebula.fraud.domain.Fraudster;
 import com.nebula.shared.domain.Email;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public final class FraudChecker {
 
     private final FraudsterRepository repository;

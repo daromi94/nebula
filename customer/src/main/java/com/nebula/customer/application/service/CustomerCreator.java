@@ -13,7 +13,10 @@ import com.nebula.shared.fraud.FraudCheckClient;
 import com.nebula.shared.fraud.FraudCheckResponse;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public final class CustomerCreator {
 
     private final CustomerRepository repository;
