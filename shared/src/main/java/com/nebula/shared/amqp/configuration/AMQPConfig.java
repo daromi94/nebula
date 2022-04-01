@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class AMQPConfig {
+class AMQPConfig {
 
     private final ConnectionFactory connectionFactory;
 
@@ -23,15 +23,19 @@ public class AMQPConfig {
     @Primary
     public AmqpTemplate amqpTemplate() {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
+
         template.setMessageConverter(messageConverter());
+
         return template;
     }
 
     @Bean
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory containerFactory = new SimpleRabbitListenerContainerFactory();
+
         containerFactory.setConnectionFactory(connectionFactory);
         containerFactory.setMessageConverter(messageConverter());
+
         return containerFactory;
     }
 
