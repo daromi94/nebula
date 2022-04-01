@@ -1,4 +1,4 @@
-package com.nebula.shared.fraud.domain;
+package com.nebula.shared.fraud;
 
 public record FraudCheckResponse(boolean isFraudster) {
 
