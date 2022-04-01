@@ -1,8 +1,8 @@
-package com.nebula.fraud.service;
+package com.nebula.fraud.application.service;
 
+import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;
-import com.nebula.fraud.repository.FraudsterRepository;
-import com.nebula.shared.fraud.domain.DubiousEmail;
+import com.nebula.shared.domain.Email;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +16,9 @@ public final class FraudChecker {
         this.repository = repository;
     }
 
-    public boolean check(DubiousEmail email) {
-        List<Fraudster> fraudsters = repository.findByEmail(email);
+    public boolean check(Email email) {
+        List<Fraudster> fraudsters = repository.searchByEmail(email);
+
         return !fraudsters.isEmpty();
     }
 
