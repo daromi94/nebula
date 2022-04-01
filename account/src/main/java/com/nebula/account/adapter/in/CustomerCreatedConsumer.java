@@ -20,7 +20,7 @@ final class CustomerCreatedConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queue.account}")
     public void consume(CustomerCreated event) {
-        log.info("new account created event for {}", event);
+        log.info("new customer created event for {}", event);
 
         AccountId  id         = new AccountId(event.id());
         CustomerId customerId = new CustomerId(event.aggregateId());
