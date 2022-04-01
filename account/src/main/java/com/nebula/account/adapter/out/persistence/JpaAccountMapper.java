@@ -4,10 +4,8 @@ import com.nebula.account.domain.Account;
 import com.nebula.shared.domain.account.AccountBalance;
 import com.nebula.shared.domain.account.AccountId;
 import com.nebula.shared.domain.customer.CustomerId;
-import org.springframework.stereotype.Component;
 
-@Component
-class JpaAccountMapper {
+public class JpaAccountMapper {
 
     public Account fromJpa(JpaAccount jpaAccount) {
         AccountId      id         = new AccountId(jpaAccount.getId());

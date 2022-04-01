@@ -3,12 +3,12 @@ package com.nebula.account.adapter.out.persistence;
 import com.nebula.account.application.port.out.AccountRepository;
 import com.nebula.account.domain.Account;
 import com.nebula.shared.domain.account.AccountId;
-import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Component
-class JpaAccountPersistenceAdapter implements AccountRepository {
+@Transactional
+public class JpaAccountPersistenceAdapter implements AccountRepository {
 
     private final JpaAccountRepository repository;
 
