@@ -1,29 +1,26 @@
 package com.nebula.fraud.domain;
 
+import com.nebula.shared.domain.AggregateRoot;
+import com.nebula.shared.domain.Email;
+import com.nebula.shared.domain.fraud.FraudsterId;
 
-import com.nebula.shared.fraud.domain.DubiousEmail;
-import com.nebula.shared.fraud.domain.FraudsterId;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public final class Fraudster extends AggregateRoot {
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+    private final FraudsterId id;
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "fraudsters")
-public class Fraudster {
+    private final Email email;
 
-    @Id
-    @Embedded
-    private FraudsterId id;
+    public Fraudster(FraudsterId id, Email email) {
+        this.id    = id;
+        this.email = email;
+    }
 
-    @Embedded
-    private DubiousEmail email;
+    public FraudsterId id() {
+        return id;
+    }
+
+    public Email email() {
+        return email;
+    }
 
 }
