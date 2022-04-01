@@ -3,12 +3,12 @@ package com.nebula.customer.adapter.persistence;
 import com.nebula.customer.application.port.out.CustomerRepository;
 import com.nebula.customer.domain.Customer;
 import com.nebula.shared.domain.customer.CustomerId;
-import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Component
-class JpaCustomerPersistenceAdapter implements CustomerRepository {
+@Transactional
+public class JpaCustomerPersistenceAdapter implements CustomerRepository {
 
     private final JpaCustomerRepository repository;
 

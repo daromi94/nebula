@@ -5,10 +5,8 @@ import com.nebula.shared.domain.Email;
 import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;
 import com.nebula.shared.domain.customer.CustomerLastName;
-import org.springframework.stereotype.Component;
 
-@Component
-class JpaCustomerMapper {
+public class JpaCustomerMapper {
 
     public Customer fromJpa(JpaCustomer jpaCustomer) {
         CustomerId        id        = new CustomerId(jpaCustomer.getId());
