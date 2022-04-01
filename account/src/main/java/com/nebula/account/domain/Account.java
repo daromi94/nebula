@@ -1,32 +1,49 @@
 package com.nebula.account.domain;
 
-import com.nebula.shared.account.domain.AccountBalance;
-import com.nebula.shared.account.domain.AccountId;
-import com.nebula.shared.customer.domain.CustomerId;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.nebula.shared.domain.AggregateRoot;
+import com.nebula.shared.domain.account.AccountBalance;
+import com.nebula.shared.domain.account.AccountCreated;
+import com.nebula.shared.domain.account.AccountId;
+import com.nebula.shared.domain.customer.CustomerId;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public final class Account extends AggregateRoot {
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "accounts")
-public class Account {
+    public static final double EMPTY_BALANCE = 0.0;
 
-    @Id
-    @Embedded
-    private AccountId id;
+    private final AccountId id;
 
-    @Embedded
-    private CustomerId customerId;
+    private final CustomerId customerId;
 
-    @Embedded
-    private AccountBalance balance;
+    private final AccountBalance balance;
+
+    public Account(AccountId id, CustomerId customerId, AccountBalance balance) {
+        this.id         = id;
+        this.customerId = customerId;
+        this.balance    = balance;
+    }
+
+    public static Account create(AccountId id, CustomerId customerId, AccountBalance balance) {
+        Account account = new Account(id, customerId, balance);
+
+        account.record(new AccountCreated(id.value(), customerId.value(), balance.value()));
+
+        return account;
+    }
+
+    public static Account create(AccountId id, CustomerId customerId) {
+        return create(id, customerId, new AccountBalance(EMPTY_BALANCE));
+    }
+
+    public AccountId id() {
+        return id;
+    }
+
+    public CustomerId customerId() {
+        return customerId;
+    }
+
+    public AccountBalance balance() {
+        return balance;
+    }
 
 }
