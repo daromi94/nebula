@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nebula</groupId>
-    <artifactId>nebula-services</artifactId>
+    <artifactId>nebula</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
@@ -14,8 +14,8 @@
         <module>account</module>
         <module>eureka</module>
     </modules>
-    <name>nebula-services</name>
-    <url>https://nebula-bank.com/</url>
+    <name>nebula</name>
+    <url>https://nebula.com/</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>18</maven.compiler.source>
@@ -24,6 +24,12 @@
         <spring-boot-dependencies.version>2.6.6</spring-boot-dependencies.version>
         <spring-boot-maven-plugin.version>2.6.6</spring-boot-maven-plugin.version>
         <spring-cloud-dependencies.version>2021.0.1</spring-cloud-dependencies.version>
+        <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+        <jib-maven-plugin.from.image>eclipse-temurin:18</jib-maven-plugin.from.image>
+        <jib-maven-plugin.from.digest>
+            sha256:6b0a8fea9d36f851650117a2e81654feae7d98e56b79aa8da209caaa89ce839b
+        </jib-maven-plugin.from.digest>
+        <image>daromi94/${project.parent.artifactId}-${project.artifactId}:${project.version}</image>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -68,6 +74,29 @@
                         <execution>
                             <goals>
                                 <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
+                    <configuration>
+                        <from>
+                            <image>${jib-maven-plugin.from.image}@${jib-maven-plugin.from.digest}</image>
+                        </from>
+                        <to>
+                            <tags>
+                                <tag>latest</tag>
+                            </tags>
+                        </to>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
                             </goals>
                         </execution>
                     </executions>
