@@ -8,20 +8,20 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>shared</module>
         <module>customer</module>
         <module>fraud</module>
         <module>account</module>
         <module>eureka</module>
-        <module>shared</module>
     </modules>
     <name>nebula-services</name>
     <url>https://nebula-bank.com/</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <spring.boot.dependencies.version>2.6.4</spring.boot.dependencies.version>
-        <spring.boot.maven.plugin.version>2.6.4</spring.boot.maven.plugin.version>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
+        <spring.boot.dependencies.version>2.6.6</spring.boot.dependencies.version>
+        <spring.boot.maven.plugin.version>2.6.6</spring.boot.maven.plugin.version>
         <spring.cloud-version>2021.0.1</spring.cloud-version>
     </properties>
     <dependencyManagement>
@@ -42,6 +42,24 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.maven.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -56,15 +74,4 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring.boot.maven.plugin.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 </project>
