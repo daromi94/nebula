@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public final class CustomerCreator {
+public class CustomerCreator {
 
     private final CustomerRepository repository;
 

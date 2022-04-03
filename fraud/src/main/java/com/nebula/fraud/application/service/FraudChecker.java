@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public final class FraudChecker {
+public class FraudChecker {
 
     private final FraudsterRepository repository;
 

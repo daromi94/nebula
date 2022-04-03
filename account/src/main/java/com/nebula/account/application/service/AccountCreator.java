@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public final class AccountCreator {
+public class AccountCreator {
 
     private final AccountRepository repository;
 
