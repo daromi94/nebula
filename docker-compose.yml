@@ -1,50 +1,139 @@
 services:
-  postgres:
-    container_name: postgres
+  db:
+    container_name: db
     image: postgres
     environment:
-      POSTGRES_DB: ${DATABASE_NAME}
-      POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      PGDATA: /data/postgres
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - PGDATA=/data/postgres
     volumes:
       - postgres:/data/postgres
+      - ./sql/start.sql:/docker-entrypoint-initdb.d/start.sql
     ports:
       - ${DATABASE_PORT}:5432
     networks:
-      - postgres
+      - data
     restart: unless-stopped
 
-  pgadmin:
-    container_name: pgadmin
+  db-admin:
+    container_name: db-admin
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-admin}
+      - PGADMIN_CONFIG_SERVER_MODE=False
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
       - ${DATABASE_ADMIN_PORT}:80
     networks:
-      - postgres
+      - data
     restart: unless-stopped
+    depends_on:
+      - db
 
   zipkin:
-    image: openzipkin/zipkin
     container_name: zipkin
+    image: openzipkin/zipkin
     ports:
       - ${ZIPKIN_PORT}:9411
+    networks:
+      - services
 
   rabbitmq:
-    image: rabbitmq:3.9.11-management-alpine
     container_name: rabbitmq
+    image: rabbitmq:3.9.11-management-alpine
     ports:
       - ${RABBITMQ_PORT}:5672
       - ${RABBITMQ_MANAGEMENT_PORT}:15672
+    networks:
+      - services
+
+  eureka:
+    container_name: eureka
+    image: daromi94/nebula-eureka:latest
+    environment:
+      - EUREKA_PORT=${EUREKA_PORT}
+    ports:
+      - ${EUREKA_PORT}:${EUREKA_PORT}
+    networks:
+      - services
+
+  account:
+    container_name: account
+    image: daromi94/nebula-account
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - ACCOUNT_SERVER_PORT=${ACCOUNT_SERVER_PORT}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - ACCOUNT_DATABASE_NAME=${ACCOUNT_DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - ZIPKIN_PORT=9411
+      - RABBITMQ_PORT=5672
+    ports:
+      - ${ACCOUNT_SERVER_PORT}:${ACCOUNT_SERVER_PORT}
+    networks:
+      - services
+      - data
+    depends_on:
+      - data
+      - zipkin
+      - rabbitmq
+      - eureka
+
+  customer:
+    container_name: customer
+    image: daromi94/nebula-customer
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CUSTOMER_SERVER_PORT=${CUSTOMER_SERVER_PORT}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - CUSTOMER_DATABASE_NAME=${CUSTOMER_DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - ZIPKIN_PORT=9411
+      - RABBITMQ_PORT=5672
+      - EUREKA_PORT=${EUREKA_PORT}
+    ports:
+      - ${CUSTOMER_SERVER_PORT}:${CUSTOMER_SERVER_PORT}
+    networks:
+      - services
+      - data
+    depends_on:
+      - data
+      - zipkin
+      - rabbitmq
+      - eureka
+
+  fraud:
+    container_name: fraud
+    image: daromi94/nebula-fraud
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - FRAUD_SERVER_PORT=${FRAUD_SERVER_PORT}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - FRAUD_DATABASE_NAME=${FRAUD_DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - ZIPKIN_PORT=9411
+      - EUREKA_PORT=${EUREKA_PORT}
+    ports:
+      - ${FRAUD_SERVER_PORT}:${FRAUD_SERVER_PORT}
+    networks:
+      - services
+      - data
+    depends_on:
+      - data
+      - zipkin
+      - rabbitmq
+      - eureka
 
 networks:
-  postgres:
+  services:
+    driver: bridge
+  data:
     driver: bridge
 
 volumes:
