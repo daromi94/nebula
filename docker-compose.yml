@@ -11,7 +11,7 @@ services:
       - postgres:/data/postgres
       - ./sql/start.sql:/docker-entrypoint-initdb.d/start.sql
     ports:
-      - ${DATABASE_PORT}:5432
+      - ${DATABASE_EXTERNAL_PORT}:${DATABASE_INTERNAL_PORT:5432}
     networks:
       - data
     restart: unless-stopped
@@ -26,7 +26,7 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
-      - ${DATABASE_ADMIN_PORT}:80
+      - ${DATABASE_ADMIN_EXTERNAL_PORT}:${DATABASE_ADMIN_INTERNAL_PORT:80}
     networks:
       - data
     restart: unless-stopped
@@ -35,7 +35,7 @@ services:
     container_name: zipkin
     image: openzipkin/zipkin
     ports:
-      - ${ZIPKIN_PORT}:9411
+      - ${ZIPKIN_EXTERNAL_PORT}:${ZIPKIN_INTERNAL_PORT:9411}
     networks:
       - services
 
@@ -43,8 +43,8 @@ services:
     container_name: rabbitmq
     image: rabbitmq:3.9.11-management-alpine
     ports:
-      - ${RABBITMQ_PORT}:5672
-      - ${RABBITMQ_MANAGEMENT_PORT}:15672
+      - ${RABBITMQ_EXTERNAL_PORT}:${RABBITMQ_INTERNAL_PORT:5672}
+      - ${RABBITMQ_MANAGEMENT_EXTERNAL_PORT}:${RABBITMQ_MANAGEMENT_INTERNAL_PORT:15672}
     networks:
       - services
 
@@ -52,9 +52,9 @@ services:
     container_name: eureka
     image: daromi94/nebula-eureka:latest
     environment:
-      - EUREKA_PORT=${EUREKA_PORT}
+      - EUREKA_PORT=${EUREKA_INTERNAL_PORT}
     ports:
-      - ${EUREKA_PORT}:${EUREKA_PORT}
+      - ${EUREKA_EXTERNAL_PORT}:${EUREKA_INTERNAL_PORT}
     networks:
       - services
 
@@ -63,22 +63,22 @@ services:
     image: daromi94/nebula-account:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - ACCOUNT_SERVER_PORT=${ACCOUNT_SERVER_PORT}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - ACCOUNT_DATABASE_NAME=${ACCOUNT_DATABASE_NAME}
+      - DATABASE_PORT=${DATABASE_INTERNAL_PORT}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - ZIPKIN_PORT=${ZIPKIN_PORT}
-      - RABBITMQ_PORT=${RABBITMQ_PORT}
+      - ACCOUNT_DATABASE_NAME=${ACCOUNT_DATABASE_NAME}
+      - ACCOUNT_SERVER_PORT=${ACCOUNT_SERVER_INTERNAL_PORT}
+      - ZIPKIN_PORT=${ZIPKIN_INTERNAL_PORT}
+      - RABBITMQ_PORT=${RABBITMQ_INTERNAL_PORT}
     ports:
-      - ${ACCOUNT_SERVER_PORT}:${ACCOUNT_SERVER_PORT}
+      - ${ACCOUNT_SERVER_EXTERNAL_PORT}:${ACCOUNT_SERVER_INTERNAL_PORT}
     networks:
       - services
       - data
     depends_on:
       - data
-      - zipkin
       - rabbitmq
+      - zipkin
       - eureka
 
   customer:
@@ -86,23 +86,23 @@ services:
     image: daromi94/nebula-customer:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - CUSTOMER_SERVER_PORT=${CUSTOMER_SERVER_PORT}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - CUSTOMER_DATABASE_NAME=${CUSTOMER_DATABASE_NAME}
+      - DATABASE_PORT=${DATABASE_INTERNAL_PORT}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - ZIPKIN_PORT=${ZIPKIN_PORT}
-      - RABBITMQ_PORT=${RABBITMQ_PORT}
-      - EUREKA_PORT=${EUREKA_PORT}
+      - CUSTOMER_DATABASE_NAME=${CUSTOMER_DATABASE_NAME}
+      - CUSTOMER_SERVER_PORT=${CUSTOMER_SERVER_INTERNAL_PORT}
+      - ZIPKIN_PORT=${ZIPKIN_INTERNAL_PORT}
+      - RABBITMQ_PORT=${RABBITMQ_INTERNAL_PORT}
+      - EUREKA_PORT=${EUREKA_INTERNAL_PORT}
     ports:
-      - ${CUSTOMER_SERVER_PORT}:${CUSTOMER_SERVER_PORT}
+      - ${CUSTOMER_SERVER_EXTERNAL_PORT}:${CUSTOMER_SERVER_INTERNAL_PORT}
     networks:
       - services
       - data
     depends_on:
       - data
-      - zipkin
       - rabbitmq
+      - zipkin
       - eureka
 
   fraud:
@@ -110,22 +110,22 @@ services:
     image: daromi94/nebula-fraud:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - FRAUD_SERVER_PORT=${FRAUD_SERVER_PORT}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - FRAUD_DATABASE_NAME=${FRAUD_DATABASE_NAME}
+      - DATABASE_PORT=${DATABASE_INTERNAL_PORT}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - ZIPKIN_PORT=${ZIPKIN_PORT}
-      - EUREKA_PORT=${EUREKA_PORT}
+      - FRAUD_DATABASE_NAME=${FRAUD_DATABASE_NAME}
+      - FRAUD_SERVER_PORT=${FRAUD_SERVER_INTERNAL_PORT}
+      - ZIPKIN_PORT=${ZIPKIN_INTERNAL_PORT}
+      - EUREKA_PORT=${EUREKA_INTERNAL_PORT}
     ports:
-      - ${FRAUD_SERVER_PORT}:${FRAUD_SERVER_PORT}
+      - ${FRAUD_SERVER_EXTERNAL_PORT}:${FRAUD_SERVER_INTERNAL_PORT}
     networks:
       - services
       - data
     depends_on:
       - data
-      - zipkin
       - rabbitmq
+      - zipkin
       - eureka
 
 networks:
