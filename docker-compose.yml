@@ -79,7 +79,6 @@ services:
       - data
       - rabbitmq
       - zipkin
-      - eureka
 
   customer:
     container_name: customer
@@ -124,7 +123,6 @@ services:
       - data
     depends_on:
       - data
-      - rabbitmq
       - zipkin
       - eureka
 
