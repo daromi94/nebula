@@ -60,7 +60,7 @@ services:
 
   account:
     container_name: account
-    image: daromi94/nebula-account
+    image: daromi94/nebula-account:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - ACCOUNT_SERVER_PORT=${ACCOUNT_SERVER_PORT}
@@ -83,7 +83,7 @@ services:
 
   customer:
     container_name: customer
-    image: daromi94/nebula-customer
+    image: daromi94/nebula-customer:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - CUSTOMER_SERVER_PORT=${CUSTOMER_SERVER_PORT}
@@ -107,7 +107,7 @@ services:
 
   fraud:
     container_name: fraud
-    image: daromi94/nebula-fraud
+    image: daromi94/nebula-fraud:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - FRAUD_SERVER_PORT=${FRAUD_SERVER_PORT}
