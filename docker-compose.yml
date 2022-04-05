@@ -30,8 +30,6 @@ services:
     networks:
       - data
     restart: unless-stopped
-    depends_on:
-      - db
 
   zipkin:
     container_name: zipkin
