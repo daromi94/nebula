@@ -7,10 +7,8 @@ import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;
 import com.nebula.shared.domain.customer.CustomerLastName;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/customers")
@@ -24,6 +22,7 @@ final class CustomerPostController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void post(@RequestBody CustomerPostRequest request) {
         log.info("new customer post request for {}", request);
 
