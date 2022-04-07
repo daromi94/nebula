@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: customer
+  jackson:
+    serialization:
+      indent-output: true
+    deserialization:
+      fail-on-unknown-properties: true
   datasource:
     url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${CUSTOMER_DATABASE_NAME}
     username: ${DATABASE_USER}
@@ -12,10 +17,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: 'true'
+        format_sql: true
     hibernate:
       ddl-auto: update
-    show-sql: 'true'
+    show-sql: true
   zipkin:
     base-url: http://${ZIPKIN_HOST}:${ZIPKIN_PORT}/
   rabbitmq:
