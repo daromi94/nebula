@@ -21,7 +21,7 @@ class AMQPConfig {
 
     @Bean
     @Primary
-    AmqpTemplate amqpTemplate() {
+    public AmqpTemplate amqpTemplate() {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
 
         template.setMessageConverter(messageConverter());
@@ -30,7 +30,7 @@ class AMQPConfig {
     }
 
     @Bean
-    SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
+    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory containerFactory = new SimpleRabbitListenerContainerFactory();
 
         containerFactory.setConnectionFactory(connectionFactory);
@@ -40,7 +40,7 @@ class AMQPConfig {
     }
 
     @Bean
-    MessageConverter messageConverter() {
+    public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 

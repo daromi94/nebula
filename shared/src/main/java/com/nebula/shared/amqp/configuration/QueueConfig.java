@@ -21,17 +21,17 @@ class QueueConfig {
     private String internalAccountRoutingKey;
 
     @Bean
-    TopicExchange internalTopicExchange() {
+    public TopicExchange internalTopicExchange() {
         return new TopicExchange(internalExchange);
     }
 
     @Bean
-    Queue accountQueue() {
+    public Queue accountQueue() {
         return new Queue(accountQueue);
     }
 
     @Bean
-    Binding internalToAccountBinding() {
+    public Binding internalToAccountBinding() {
         return BindingBuilder.bind(accountQueue()).to(internalTopicExchange()).with(internalAccountRoutingKey);
     }
 
