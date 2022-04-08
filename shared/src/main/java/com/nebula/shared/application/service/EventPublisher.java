@@ -1,4 +1,4 @@
-package com.nebula.shared.application;
+package com.nebula.shared.application.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class EventBus {
+public class EventPublisher {
 
     private final AmqpTemplate template;
 
-    public EventBus(AmqpTemplate template) {
+    public EventPublisher(AmqpTemplate template) {
         this.template = template;
     }
 

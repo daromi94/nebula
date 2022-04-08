@@ -6,7 +6,7 @@ import com.nebula.customer.domain.CustomerAlreadyExistsException;
 import com.nebula.customer.domain.CustomerIsFraudsterException;
 import com.nebula.shared.adapter.web.fraud.FraudCheckClient;
 import com.nebula.shared.adapter.web.fraud.FraudCheckResponse;
-import com.nebula.shared.application.EventBus;
+import com.nebula.shared.application.service.EventPublisher;
 import com.nebula.shared.domain.Email;
 import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;
@@ -21,13 +21,13 @@ public class CustomerCreator {
 
     private final CustomerRepository repository;
 
-    private final EventBus eventBus;
+    private final EventPublisher publisher;
 
     private final FraudCheckClient fraudCheckClient;
 
-    public CustomerCreator(CustomerRepository repository, EventBus eventBus, FraudCheckClient fraudCheckClient) {
+    public CustomerCreator(CustomerRepository repository, EventPublisher publisher, FraudCheckClient fraudCheckClient) {
         this.repository       = repository;
-        this.eventBus         = eventBus;
+        this.publisher        = publisher;
         this.fraudCheckClient = fraudCheckClient;
     }
 
