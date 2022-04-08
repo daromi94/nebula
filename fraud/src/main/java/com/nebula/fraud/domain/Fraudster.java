@@ -1,16 +1,16 @@
 package com.nebula.fraud.domain;
 
 import com.nebula.shared.domain.AggregateRoot;
-import com.nebula.shared.domain.Email;
+import com.nebula.shared.domain.EmailAddress;
 import com.nebula.shared.domain.fraud.FraudsterId;
 
 public final class Fraudster extends AggregateRoot {
 
     private final FraudsterId id;
 
-    private final Email email;
+    private final EmailAddress email;
 
-    public Fraudster(FraudsterId id, Email email) {
+    public Fraudster(FraudsterId id, EmailAddress email) {
         this.id    = id;
         this.email = email;
     }
@@ -19,7 +19,7 @@ public final class Fraudster extends AggregateRoot {
         return id;
     }
 
-    public Email email() {
+    public EmailAddress email() {
         return email;
     }
 

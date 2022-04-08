@@ -2,7 +2,7 @@ package com.nebula.fraud.adapter.out.persistence.jpa;
 
 import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;
-import com.nebula.shared.domain.Email;
+import com.nebula.shared.domain.EmailAddress;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class JpaFraudsterPersistenceAdapter implements FraudsterRepository {
     }
 
     @Override
-    public List<Fraudster> searchByEmail(Email email) {
+    public List<Fraudster> searchByEmail(EmailAddress email) {
         return repository.findByEmail(email.value()).stream().map(mapper::fromJpa).toList();
     }
 

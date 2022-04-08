@@ -2,7 +2,7 @@ package com.nebula.customer.adapter.in.web;
 
 import com.nebula.customer.application.service.CustomerCreator;
 import com.nebula.shared.adapter.web.customer.CustomerPostRequest;
-import com.nebula.shared.domain.Email;
+import com.nebula.shared.domain.EmailAddress;
 import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;
 import com.nebula.shared.domain.customer.CustomerLastName;
@@ -31,7 +31,7 @@ final class CustomerPostController {
         CustomerId        id        = new CustomerId(request.getId());
         CustomerFirstName firstName = new CustomerFirstName(request.getFirstName());
         CustomerLastName  lastName  = new CustomerLastName(request.getLastName());
-        Email             email     = new Email(request.getEmail());
+        EmailAddress      email     = new EmailAddress(request.getEmail());
 
         creator.create(id, firstName, lastName, email);
     }

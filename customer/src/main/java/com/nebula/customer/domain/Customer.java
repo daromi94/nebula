@@ -1,7 +1,7 @@
 package com.nebula.customer.domain;
 
 import com.nebula.shared.domain.AggregateRoot;
-import com.nebula.shared.domain.Email;
+import com.nebula.shared.domain.EmailAddress;
 import com.nebula.shared.domain.customer.CustomerCreated;
 import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;
@@ -15,16 +15,19 @@ public final class Customer extends AggregateRoot {
 
     private final CustomerLastName lastName;
 
-    private final Email email;
+    private final EmailAddress email;
 
-    public Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, Email email) {
+    public Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, EmailAddress email) {
         this.id        = id;
         this.firstName = firstName;
         this.lastName  = lastName;
         this.email     = email;
     }
 
-    public static Customer create(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, Email email) {
+    public static Customer create(CustomerId id,
+                                  CustomerFirstName firstName,
+                                  CustomerLastName lastName,
+                                  EmailAddress email) {
         Customer customer = new Customer(id, firstName, lastName, email);
 
         customer.record(new CustomerCreated(id.value(), firstName.value(), lastName.value(), email.value()));
@@ -44,7 +47,7 @@ public final class Customer extends AggregateRoot {
         return lastName;
     }
 
-    public Email email() {
+    public EmailAddress email() {
         return email;
     }
 

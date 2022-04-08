@@ -1,7 +1,7 @@
 package com.nebula.customer.adapter.out.persistence.jpa;
 
 import com.nebula.customer.domain.Customer;
-import com.nebula.shared.domain.Email;
+import com.nebula.shared.domain.EmailAddress;
 import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;
 import com.nebula.shared.domain.customer.CustomerLastName;
@@ -12,7 +12,7 @@ public class JpaCustomerMapper {
         CustomerId        id        = new CustomerId(jpaCustomer.getId());
         CustomerFirstName firstName = new CustomerFirstName(jpaCustomer.getFirstName());
         CustomerLastName  lastName  = new CustomerLastName(jpaCustomer.getLastName());
-        Email             email     = new Email(jpaCustomer.getEmail());
+        EmailAddress      email     = new EmailAddress(jpaCustomer.getEmail());
 
         return new Customer(id, firstName, lastName, email);
     }
