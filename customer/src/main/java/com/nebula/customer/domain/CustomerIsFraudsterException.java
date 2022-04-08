@@ -1,7 +1,7 @@
 package com.nebula.customer.domain;
 
+import com.nebula.shared.domain.DomainErrorException;
 import com.nebula.shared.domain.customer.CustomerId;
-import com.nebula.shared.exception.DomainErrorException;
 
 public final class CustomerIsFraudsterException extends DomainErrorException {
 

@@ -1,7 +1,7 @@
 package com.nebula.customer.adapter.in.web;
 
 import com.nebula.customer.application.service.CustomerCreator;
-import com.nebula.shared.customer.CustomerPostRequest;
+import com.nebula.shared.adapter.web.customer.CustomerPostRequest;
 import com.nebula.shared.domain.Email;
 import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;

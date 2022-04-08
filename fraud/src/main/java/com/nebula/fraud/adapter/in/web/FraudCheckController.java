@@ -1,8 +1,8 @@
 package com.nebula.fraud.adapter.in.web;
 
 import com.nebula.fraud.application.service.FraudChecker;
+import com.nebula.shared.adapter.web.fraud.FraudCheckResponse;
 import com.nebula.shared.domain.Email;
-import com.nebula.shared.fraud.FraudCheckResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

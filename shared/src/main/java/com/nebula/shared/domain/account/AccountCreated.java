@@ -1,6 +1,6 @@
 package com.nebula.shared.domain.account;
 
-import com.nebula.shared.domain.bus.event.DomainEvent;
+import com.nebula.shared.domain.event.DomainEvent;
 
 public final class AccountCreated extends DomainEvent {
 

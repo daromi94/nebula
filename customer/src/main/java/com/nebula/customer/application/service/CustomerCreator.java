@@ -4,13 +4,13 @@ import com.nebula.customer.application.port.out.CustomerRepository;
 import com.nebula.customer.domain.Customer;
 import com.nebula.customer.domain.CustomerAlreadyExistsException;
 import com.nebula.customer.domain.CustomerIsFraudsterException;
-import com.nebula.shared.amqp.EventBus;
+import com.nebula.shared.adapter.web.fraud.FraudCheckClient;
+import com.nebula.shared.adapter.web.fraud.FraudCheckResponse;
+import com.nebula.shared.application.EventBus;
 import com.nebula.shared.domain.Email;
 import com.nebula.shared.domain.customer.CustomerFirstName;
 import com.nebula.shared.domain.customer.CustomerId;
 import com.nebula.shared.domain.customer.CustomerLastName;
-import com.nebula.shared.fraud.FraudCheckClient;
-import com.nebula.shared.fraud.FraudCheckResponse;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
