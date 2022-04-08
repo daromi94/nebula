@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("api/v1/customers")
 @Slf4j
@@ -23,13 +25,13 @@ final class CustomerPostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void post(@RequestBody CustomerPostRequest request) {
+    public void post(@RequestBody @Valid CustomerPostRequest request) {
         log.info("new customer post request for {}", request);
 
-        CustomerId        id        = new CustomerId(request.id());
-        CustomerFirstName firstName = new CustomerFirstName(request.firstName());
-        CustomerLastName  lastName  = new CustomerLastName(request.lastName());
-        Email             email     = new Email(request.email());
+        CustomerId        id        = new CustomerId(request.getId());
+        CustomerFirstName firstName = new CustomerFirstName(request.getFirstName());
+        CustomerLastName  lastName  = new CustomerLastName(request.getLastName());
+        Email             email     = new Email(request.getEmail());
 
         creator.create(id, firstName, lastName, email);
     }
