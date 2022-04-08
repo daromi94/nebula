@@ -2,7 +2,7 @@ package com.nebula.account.application.service;
 
 import com.nebula.account.application.port.out.AccountRepository;
 import com.nebula.account.domain.Account;
-import com.nebula.account.domain.AccountAlreadyExists;
+import com.nebula.account.domain.AccountAlreadyExistsException;
 import com.nebula.shared.amqp.EventBus;
 import com.nebula.shared.domain.account.AccountId;
 import com.nebula.shared.domain.customer.CustomerId;
@@ -23,11 +23,11 @@ public class AccountCreator {
         this.eventBus   = eventBus;
     }
 
-    public void create(AccountId id, CustomerId customerId) throws AccountAlreadyExists {
+    public void create(AccountId id, CustomerId customerId) throws AccountAlreadyExistsException {
         Account account = Account.create(id, customerId);
 
         repository.search(id).ifPresent((entity) -> {
-            throw new AccountAlreadyExists(id);
+            throw new AccountAlreadyExistsException(id);
         });
 
         repository.save(account);

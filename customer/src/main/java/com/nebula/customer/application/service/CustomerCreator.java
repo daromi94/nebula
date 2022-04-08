@@ -2,8 +2,8 @@ package com.nebula.customer.application.service;
 
 import com.nebula.customer.application.port.out.CustomerRepository;
 import com.nebula.customer.domain.Customer;
-import com.nebula.customer.domain.CustomerAlreadyExists;
-import com.nebula.customer.domain.CustomerIsFraudster;
+import com.nebula.customer.domain.CustomerAlreadyExistsException;
+import com.nebula.customer.domain.CustomerIsFraudsterException;
 import com.nebula.shared.amqp.EventBus;
 import com.nebula.shared.domain.Email;
 import com.nebula.shared.domain.customer.CustomerFirstName;
@@ -34,14 +34,14 @@ public class CustomerCreator {
     public void create(CustomerId id,
                        CustomerFirstName firstName,
                        CustomerLastName lastName,
-                       Email email) throws CustomerAlreadyExists, CustomerIsFraudster {
+                       Email email) throws CustomerAlreadyExistsException, CustomerIsFraudsterException {
         Customer customer = Customer.create(id, firstName, lastName, email);
 
         repository.search(id).ifPresent((entity) -> {
-            throw new CustomerAlreadyExists(id);
+            throw new CustomerAlreadyExistsException(id);
         });
         if (isFraudster(email)) {
-            throw new CustomerIsFraudster(id);
+            throw new CustomerIsFraudsterException(id);
         }
 
         repository.save(customer);
