@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: account
+  jackson:
+    serialization:
+      indent-output: true
+    deserialization:
+      fail-on-unknown-properties: true
   datasource:
     url: jdbc:postgresql://db:${DATABASE_PORT}/${ACCOUNT_DATABASE_NAME}
     username: ${DATABASE_USER}
