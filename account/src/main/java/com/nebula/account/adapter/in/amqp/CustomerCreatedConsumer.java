@@ -1,4 +1,4 @@
-package com.nebula.account.adapter.in.bus;
+package com.nebula.account.adapter.in.amqp;
 
 import com.nebula.account.application.service.AccountCreator;
 import com.nebula.shared.domain.account.AccountId;
@@ -18,12 +18,12 @@ final class CustomerCreatedConsumer {
         this.creator = creator;
     }
 
-    @RabbitListener(queues = "${rabbitmq.queue.account}")
+    @RabbitListener(queues = "${amqp.queues.customer-created}")
     public void consume(CustomerCreated event) {
-        log.info("new customer created event for {}", event);
+        log.info("customer created event for {}", event);
 
-        AccountId  id         = new AccountId(event.id());
-        CustomerId customerId = new CustomerId(event.aggregateId());
+        AccountId  id         = new AccountId(event.getId());
+        CustomerId customerId = new CustomerId(event.getAggregateId());
 
         creator.create(id, customerId);
     }

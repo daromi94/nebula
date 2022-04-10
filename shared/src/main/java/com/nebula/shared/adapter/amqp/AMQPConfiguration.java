@@ -1,4 +1,4 @@
-package com.nebula.shared.adapter.bus;
+package com.nebula.shared.adapter.amqp;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
