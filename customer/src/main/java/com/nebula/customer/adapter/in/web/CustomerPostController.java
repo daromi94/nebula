@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/v1/customers")
+@RequestMapping("${api.request-mappings.customer-post}")
 @Slf4j
 final class CustomerPostController {
 
@@ -26,7 +26,7 @@ final class CustomerPostController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void post(@RequestBody @Valid CustomerPostRequest request) {
-        log.info("new customer post request for {}", request);
+        log.info("customer post request for {}", request);
 
         CustomerId        id        = new CustomerId(request.getId());
         CustomerFirstName firstName = new CustomerFirstName(request.getFirstName());

@@ -1,15 +1,18 @@
 package com.nebula.shared.adapter.web.fraud;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.constraints.Email;
+import javax.validation.Valid;
 
-@FeignClient(value = "fraud", path = "api/v1/fraud-check")
+@FeignClient(value = "${api.clients.fraud-check.service-name}", path = "${api.clients.fraud-check.path}")
 public interface FraudCheckClient {
 
-    @GetMapping(path = "{email}")
-    FraudCheckResponse check(@PathVariable("email") @Email String email);
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    FraudCheckResponse check(@RequestBody @Valid FraudCheckRequest request);
 
 }
