@@ -1,32 +1,51 @@
+domain:
+  events:
+    customer-created: ${CUSTOMER_CREATED_EVENT}
+    account-created: ${ACCOUNT_CREATED_EVENT}
+    fraud-checked: ${FRAUD_CHECKED_EVENT}
+api:
+  request-mappings:
+    fraud-check: ${API_FRAUD_CHECK_PATH}
+
 server:
-  port: ${FRAUD_SERVER_PORT}
+  port: ${SERVER_PORT}
 
 spring:
   application:
-    name: fraud
+    name: ${APPLICATION_NAME}
   jackson:
     serialization:
-      indent-output: true
+      indent-output: ${JACKSON_SERIALIZATION_INDENT_OUTPUT}
     deserialization:
-      fail-on-unknown-properties: true
+      fail-on-unknown-properties: ${JACKSON_DESERIALIZATION_FAIL_ON_UNKNOWN_PROPERTIES}
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${FRAUD_DATABASE_NAME}
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD}
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+        dialect: ${JPA_PROPERTY_HIBERNATE_DIALECT}
+        format_sql: ${JPA_PROPERTY_HIBERNATE_FORMAT_SQL}
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: ${JPA_HIBERNATE_DDL_AUTO}
+    show-sql: ${JPA_SHOW_SQL}
   zipkin:
-    base-url: http://${ZIPKIN_HOST}:${ZIPKIN_PORT}/
+    base-url: ${ZIPKIN_URL}
+  rabbitmq:
+    addresses: ${AMQP_URL}
+
+amqp:
+  exchanges:
+    internal: internal
+  queues:
+    customer-created: ${CUSTOMER_CREATED_EVENT}
+    account-created: ${ACCOUNT_CREATED_EVENT}
+    fraud-checked: ${FRAUD_CHECKED_EVENT}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://${EUREKA_HOST}:${EUREKA_PORT}/eureka
-    fetch-registry: true
-    register-with-eureka: true
+      defaultZone: ${EUREKA_URL}
+    fetch-registry: ${EUREKA_CLIENT_FETCH_REGISTRY}
+    register-with-eureka: ${EUREKA_CLIENT_REGISTER}
