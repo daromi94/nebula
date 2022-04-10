@@ -22,16 +22,12 @@ public final class Account extends AggregateRoot {
         this.balance    = balance;
     }
 
-    public static Account create(AccountId id, CustomerId customerId, AccountBalance balance) {
-        Account account = new Account(id, customerId, balance);
+    public static Account create(AccountId id, CustomerId customerId) {
+        Account account = new Account(id, customerId, new AccountBalance(EMPTY_BALANCE));
 
-        account.record(new AccountCreated(id.value(), customerId.value(), balance.value()));
+        account.record(new AccountCreated(id.value(), customerId.value()));
 
         return account;
-    }
-
-    public static Account create(AccountId id, CustomerId customerId) {
-        return create(id, customerId, new AccountBalance(EMPTY_BALANCE));
     }
 
     public AccountId id() {
