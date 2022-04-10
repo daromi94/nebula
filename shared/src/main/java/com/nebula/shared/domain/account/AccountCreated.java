@@ -1,31 +1,23 @@
 package com.nebula.shared.domain.account;
 
 import com.nebula.shared.domain.event.DomainEvent;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-public final class AccountCreated extends DomainEvent {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class AccountCreated extends DomainEvent {
 
-    private final String customerId;
+    private String customerId;
 
-    private final double balance;
-
-    public AccountCreated(String id, String customerId, double balance) {
-        super(id);
+    public AccountCreated(String aggregateId, String customerId) {
+        super(aggregateId);
 
         this.customerId = customerId;
-        this.balance    = balance;
-    }
-
-    @Override
-    public String name() {
-        return "account.created";
-    }
-
-    public String customerId() {
-        return customerId;
-    }
-
-    public double balance() {
-        return balance;
     }
 
 }
