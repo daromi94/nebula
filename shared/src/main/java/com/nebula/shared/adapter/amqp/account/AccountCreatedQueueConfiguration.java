@@ -1,6 +1,6 @@
 package com.nebula.shared.adapter.amqp.account;
 
-import com.nebula.shared.adapter.amqp.CommonQueueConfiguration;
+import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
 import com.nebula.shared.domain.account.AccountCreated;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -11,10 +11,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class AccountCreatedQueueConfiguration extends CommonQueueConfiguration {
+class AccountCreatedQueueConfiguration {
+
+    private final ExchangeConfiguration exchangeConfiguration;
 
     @Value("${amqp.queues.account-created}")
     private String accountCreatedQueue;
+
+    private AccountCreatedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
+        this.exchangeConfiguration = exchangeConfiguration;
+    }
 
     @Bean
     @Qualifier("${amqp.queues.account-created}")
@@ -26,7 +32,7 @@ class AccountCreatedQueueConfiguration extends CommonQueueConfiguration {
     @Qualifier("${amqp.exchanges.internal}-${amqp.queues.account-created}")
     public Binding internalToAccountCreatedBinding() {
         return BindingBuilder.bind(accountCreatedQueue())
-                .to(internalTopicExchange())
+                .to(exchangeConfiguration.internalTopicExchange())
                 .with(AccountCreated.class.getName());
     }
 
