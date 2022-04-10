@@ -1,25 +1,34 @@
 package com.nebula.shared.application.service;
 
-import lombok.extern.slf4j.Slf4j;
+import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
+import com.nebula.shared.domain.event.DomainEvent;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
-@Slf4j
+@Transactional
 public class EventPublisher {
 
     private final AmqpTemplate template;
 
-    public EventPublisher(AmqpTemplate template) {
-        this.template = template;
+    private final ExchangeConfiguration exchangeConfiguration;
+
+    public EventPublisher(AmqpTemplate template, ExchangeConfiguration exchangeConfiguration) {
+        this.template              = template;
+        this.exchangeConfiguration = exchangeConfiguration;
     }
 
-    public void publish(Object payload, String exchange, String routingKey) {
-        log.info("publishing to exchange {} using routing key {} - payload {}", exchange, routingKey, payload);
+    public void publish(List<DomainEvent> events) {
+        String exchange = exchangeConfiguration.internalTopicExchange().getName();
 
-        template.convertAndSend(exchange, routingKey, payload);
+        events.forEach(event -> template.convertAndSend(exchange, event.getClass().getName(), event));
+    }
 
-        log.info("published to exchange {} using routing key {} - payload {}", exchange, routingKey, payload);
+    public void publish(DomainEvent event) {
+        publish(List.of(event));
     }
 
 }
