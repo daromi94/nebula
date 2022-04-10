@@ -13,10 +13,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class CustomerPostRequest {
 
-    @NotEmpty(message = "Email must not be empty!")
-    @Email(message = "Email should be valid!")
-    private String email;
-
     @NotEmpty(message = "Id must not be empty!")
     @Size(min = 36, message = "Id must be at least 36 characters long!")
     private String id;
@@ -26,5 +22,9 @@ public class CustomerPostRequest {
 
     @NotEmpty(message = "Last name must not be empty!")
     private String lastName;
+
+    @NotEmpty(message = "Email must not be empty!")
+    @Email(message = "Email should be valid!")
+    private String email;
 
 }
