@@ -31,7 +31,7 @@ public class AccountCreator {
         });
 
         repository.save(account);
-        // TODO: Publish domain events
+        publisher.publish(account.pull());
     }
 
 }

@@ -5,6 +5,7 @@ import com.nebula.customer.domain.Customer;
 import com.nebula.customer.domain.CustomerAlreadyExistsException;
 import com.nebula.customer.domain.CustomerIsFraudsterException;
 import com.nebula.shared.adapter.web.fraud.FraudCheckClient;
+import com.nebula.shared.adapter.web.fraud.FraudCheckRequest;
 import com.nebula.shared.adapter.web.fraud.FraudCheckResponse;
 import com.nebula.shared.application.service.EventPublisher;
 import com.nebula.shared.domain.EmailAddress;
@@ -45,11 +46,12 @@ public class CustomerCreator {
         }
 
         repository.save(customer);
-        // TODO: Publish domain events to the event bus
+        publisher.publish(customer.pull());
     }
 
     private boolean isFraudster(EmailAddress email) {
-        FraudCheckResponse response = fraudCheckClient.check(email.value());
+        FraudCheckRequest  request  = new FraudCheckRequest(email.value());
+        FraudCheckResponse response = fraudCheckClient.check(request);
 
         return response.isFraudster();
     }
