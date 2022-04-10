@@ -1,34 +1,31 @@
 package com.nebula.shared.domain.event;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public abstract class DomainEvent {
+
+    private static final String NO_AGGREGATE = "";
 
     private final String id;
 
     private final String aggregateId;
 
-    private final LocalDateTime occurredOn;
+    public DomainEvent() {
+        this.id          = UUID.randomUUID().toString();
+        this.aggregateId = NO_AGGREGATE;
+    }
 
     public DomainEvent(String aggregateId) {
         this.id          = UUID.randomUUID().toString();
         this.aggregateId = aggregateId;
-        this.occurredOn  = LocalDateTime.now();
     }
-
-    public abstract String name();
-
-    public String id() {
+    
+    public String getId() {
         return id;
     }
 
-    public String aggregateId() {
+    public String getAggregateId() {
         return aggregateId;
-    }
-
-    public LocalDateTime occurredOn() {
-        return occurredOn;
     }
 
 }
