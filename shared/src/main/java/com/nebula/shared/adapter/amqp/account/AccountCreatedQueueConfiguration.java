@@ -18,7 +18,7 @@ class AccountCreatedQueueConfiguration {
     @Value("${amqp.queues.account-created}")
     private String accountCreatedQueue;
 
-    private AccountCreatedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
+    public AccountCreatedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
         this.exchangeConfiguration = exchangeConfiguration;
     }
 

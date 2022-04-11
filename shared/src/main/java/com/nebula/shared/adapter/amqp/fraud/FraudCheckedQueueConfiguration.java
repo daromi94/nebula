@@ -18,7 +18,7 @@ class FraudCheckedQueueConfiguration {
     @Value("${amqp.queues.fraud-checked}")
     private String fraudCheckedQueue;
 
-    private FraudCheckedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
+    public FraudCheckedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
         this.exchangeConfiguration = exchangeConfiguration;
     }
 
