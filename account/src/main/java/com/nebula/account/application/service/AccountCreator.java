@@ -26,7 +26,7 @@ public class AccountCreator {
     public void create(AccountId id, CustomerId customerId) throws AccountAlreadyExistsException {
         Account account = Account.create(id, customerId);
 
-        repository.search(id).ifPresent((entity) -> {
+        repository.search(id).ifPresent(entity -> {
             throw new AccountAlreadyExistsException(id);
         });
 
