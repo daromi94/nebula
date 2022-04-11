@@ -42,7 +42,7 @@ spring:
 
 amqp:
   exchanges:
-    internal: internal
+    internal: ${INTERNAL_EXCHANGE}
   queues:
     customer-created: ${CUSTOMER_CREATED_EVENT}
     account-created: ${ACCOUNT_CREATED_EVENT}
