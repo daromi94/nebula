@@ -14,14 +14,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 final class MethodArgumentNotValidExceptionController extends ResponseEntityExceptionHandler {
 
-    public static final String INVALID_METHOD_ARGUMENT_ERROR_CODE = "invalid-method-argument";
+    public static final String ERROR_CODE = "invalid-method-argument";
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        HttpCustomError httpError = new HttpCustomError(INVALID_METHOD_ARGUMENT_ERROR_CODE, exception.getMessage());
+        HttpCustomError httpError = new HttpCustomError(ERROR_CODE, exception.getMessage());
 
         log.error("method argument not valid exception for {}", httpError);
 
