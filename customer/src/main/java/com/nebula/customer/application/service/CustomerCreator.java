@@ -38,7 +38,7 @@ public class CustomerCreator {
                        EmailAddress email) throws CustomerAlreadyExistsException, CustomerIsFraudsterException {
         Customer customer = Customer.create(id, firstName, lastName, email);
 
-        repository.search(id).ifPresent((entity) -> {
+        repository.search(id).ifPresent(entity -> {
             throw new CustomerAlreadyExistsException(id);
         });
         if (isFraudster(email)) {
