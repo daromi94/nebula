@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerPostRequest {
+public class CustomersPostRequest {
 
     @NotEmpty(message = "Id must not be empty!")
     @Size(min = 36, message = "Id must be at least 36 characters long!")

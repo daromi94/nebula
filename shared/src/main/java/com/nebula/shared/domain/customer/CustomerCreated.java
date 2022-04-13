@@ -1,6 +1,10 @@
 package com.nebula.shared.domain.customer;
 
 import com.nebula.shared.domain.event.DomainEvent;
+import com.nebula.shared.domain.value.EmailAddress;
+import com.nebula.shared.domain.value.FirstName;
+import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.value.LastName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,12 +22,12 @@ public class CustomerCreated extends DomainEvent {
 
     private String email;
 
-    public CustomerCreated(String aggregateId, String firstName, String lastName, String email) {
-        super(aggregateId);
+    public CustomerCreated(Id aggregateId, FirstName firstName, LastName lastName, EmailAddress email) {
+        super(aggregateId.value());
 
-        this.firstName = firstName;
-        this.lastName  = lastName;
-        this.email     = email;
+        this.firstName = firstName.value();
+        this.lastName  = lastName.value();
+        this.email     = email.value();
     }
 
 }

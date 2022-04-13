@@ -1,49 +1,46 @@
 package com.nebula.customer.domain;
 
 import com.nebula.shared.domain.AggregateRoot;
-import com.nebula.shared.domain.EmailAddress;
 import com.nebula.shared.domain.customer.CustomerCreated;
-import com.nebula.shared.domain.customer.CustomerFirstName;
-import com.nebula.shared.domain.customer.CustomerId;
-import com.nebula.shared.domain.customer.CustomerLastName;
+import com.nebula.shared.domain.value.EmailAddress;
+import com.nebula.shared.domain.value.FirstName;
+import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.value.LastName;
 
 public final class Customer extends AggregateRoot {
 
-    private final CustomerId id;
+    private final Id id;
 
-    private final CustomerFirstName firstName;
+    private final FirstName firstName;
 
-    private final CustomerLastName lastName;
+    private final LastName lastName;
 
     private final EmailAddress email;
 
-    public Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, EmailAddress email) {
+    public Customer(Id id, FirstName firstName, LastName lastName, EmailAddress email) {
         this.id        = id;
         this.firstName = firstName;
         this.lastName  = lastName;
         this.email     = email;
     }
 
-    public static Customer create(CustomerId id,
-                                  CustomerFirstName firstName,
-                                  CustomerLastName lastName,
-                                  EmailAddress email) {
+    public static Customer create(Id id, FirstName firstName, LastName lastName, EmailAddress email) {
         Customer customer = new Customer(id, firstName, lastName, email);
 
-        customer.record(new CustomerCreated(id.value(), firstName.value(), lastName.value(), email.value()));
+        customer.record(new CustomerCreated(id, firstName, lastName, email));
 
         return customer;
     }
 
-    public CustomerId id() {
+    public Id id() {
         return id;
     }
 
-    public CustomerFirstName firstName() {
+    public FirstName firstName() {
         return firstName;
     }
 
-    public CustomerLastName lastName() {
+    public LastName lastName() {
         return lastName;
     }
 

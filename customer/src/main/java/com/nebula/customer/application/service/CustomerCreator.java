@@ -4,14 +4,14 @@ import com.nebula.customer.application.port.out.CustomerRepository;
 import com.nebula.customer.domain.Customer;
 import com.nebula.customer.domain.CustomerAlreadyExistsException;
 import com.nebula.customer.domain.CustomerIsFraudsterException;
-import com.nebula.shared.adapter.web.fraud.FraudCheckClient;
-import com.nebula.shared.adapter.web.fraud.FraudCheckRequest;
-import com.nebula.shared.adapter.web.fraud.FraudCheckResponse;
+import com.nebula.shared.adapter.web.fraud.FraudChecksPostClient;
+import com.nebula.shared.adapter.web.fraud.FraudChecksPostRequest;
+import com.nebula.shared.adapter.web.fraud.FraudChecksPostResponse;
 import com.nebula.shared.application.service.EventPublisher;
-import com.nebula.shared.domain.EmailAddress;
-import com.nebula.shared.domain.customer.CustomerFirstName;
-import com.nebula.shared.domain.customer.CustomerId;
-import com.nebula.shared.domain.customer.CustomerLastName;
+import com.nebula.shared.domain.value.EmailAddress;
+import com.nebula.shared.domain.value.FirstName;
+import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.value.LastName;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,24 +24,24 @@ public class CustomerCreator {
 
     private final EventPublisher publisher;
 
-    private final FraudCheckClient fraudCheckClient;
+    private final FraudChecksPostClient client;
 
-    public CustomerCreator(CustomerRepository repository, EventPublisher publisher, FraudCheckClient fraudCheckClient) {
-        this.repository       = repository;
-        this.publisher        = publisher;
-        this.fraudCheckClient = fraudCheckClient;
+    public CustomerCreator(CustomerRepository repository, EventPublisher publisher, FraudChecksPostClient client) {
+        this.repository = repository;
+        this.publisher  = publisher;
+        this.client     = client;
     }
 
-    public void create(CustomerId id,
-                       CustomerFirstName firstName,
-                       CustomerLastName lastName,
+    public void create(Id id,
+                       FirstName firstName,
+                       LastName lastName,
                        EmailAddress email) throws CustomerAlreadyExistsException, CustomerIsFraudsterException {
         Customer customer = Customer.create(id, firstName, lastName, email);
 
         repository.search(id).ifPresent(entity -> {
             throw new CustomerAlreadyExistsException(id);
         });
-        if (isFraudster(email)) {
+        if (isFraudster(customer)) {
             throw new CustomerIsFraudsterException(id);
         }
 
@@ -49,9 +49,13 @@ public class CustomerCreator {
         publisher.publish(customer.pull());
     }
 
-    private boolean isFraudster(EmailAddress email) {
-        FraudCheckRequest  request  = new FraudCheckRequest(email.value());
-        FraudCheckResponse response = fraudCheckClient.check(request);
+    private boolean isFraudster(Customer customer) {
+        FraudChecksPostRequest request = new FraudChecksPostRequest(customer.id().value(),
+                customer.firstName().value(),
+                customer.lastName().value(),
+                customer.email().value());
+
+        FraudChecksPostResponse response = client.post(request);
 
         return response.isFraudster();
     }

@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Configuration
-class FraudPersistenceConfiguration {
+class FraudsterPersistenceConfiguration {
 
     @PersistenceContext
     private EntityManager entityManager;

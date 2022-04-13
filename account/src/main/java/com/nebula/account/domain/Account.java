@@ -1,44 +1,43 @@
 package com.nebula.account.domain;
 
 import com.nebula.shared.domain.AggregateRoot;
-import com.nebula.shared.domain.account.AccountBalance;
 import com.nebula.shared.domain.account.AccountCreated;
-import com.nebula.shared.domain.account.AccountId;
-import com.nebula.shared.domain.customer.CustomerId;
+import com.nebula.shared.domain.value.Balance;
+import com.nebula.shared.domain.value.Id;
 
 public final class Account extends AggregateRoot {
 
     public static final double EMPTY_BALANCE = 0.0;
 
-    private final AccountId id;
+    private final Id id;
 
-    private final CustomerId customerId;
+    private final Id customerId;
 
-    private final AccountBalance balance;
+    private final Balance balance;
 
-    public Account(AccountId id, CustomerId customerId, AccountBalance balance) {
+    public Account(Id id, Id customerId, Balance balance) {
         this.id         = id;
         this.customerId = customerId;
         this.balance    = balance;
     }
 
-    public static Account create(AccountId id, CustomerId customerId) {
-        Account account = new Account(id, customerId, new AccountBalance(EMPTY_BALANCE));
+    public static Account create(Id id, Id customerId) {
+        Account account = new Account(id, customerId, new Balance(EMPTY_BALANCE));
 
-        account.record(new AccountCreated(id.value(), customerId.value()));
+        account.record(new AccountCreated(id, customerId));
 
         return account;
     }
 
-    public AccountId id() {
+    public Id id() {
         return id;
     }
 
-    public CustomerId customerId() {
+    public Id customerId() {
         return customerId;
     }
 
-    public AccountBalance balance() {
+    public Balance balance() {
         return balance;
     }
 
