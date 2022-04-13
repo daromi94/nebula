@@ -1,16 +1,15 @@
 package com.nebula.account.adapter.out.persistence.jpa;
 
 import com.nebula.account.domain.Account;
-import com.nebula.shared.domain.account.AccountBalance;
-import com.nebula.shared.domain.account.AccountId;
-import com.nebula.shared.domain.customer.CustomerId;
+import com.nebula.shared.domain.value.Balance;
+import com.nebula.shared.domain.value.Id;
 
 public class JpaAccountMapper {
 
     public Account fromJpa(JpaAccount jpaAccount) {
-        AccountId      id         = new AccountId(jpaAccount.getId());
-        CustomerId     customerId = new CustomerId(jpaAccount.getCustomerId());
-        AccountBalance balance    = new AccountBalance(jpaAccount.getBalance());
+        Id      id         = new Id(jpaAccount.getId());
+        Id      customerId = new Id(jpaAccount.getCustomerId());
+        Balance balance    = new Balance(jpaAccount.getBalance());
 
         return new Account(id, customerId, balance);
     }

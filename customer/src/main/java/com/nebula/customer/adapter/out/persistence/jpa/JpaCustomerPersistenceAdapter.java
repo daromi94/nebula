@@ -2,7 +2,7 @@ package com.nebula.customer.adapter.out.persistence.jpa;
 
 import com.nebula.customer.application.port.out.CustomerRepository;
 import com.nebula.customer.domain.Customer;
-import com.nebula.shared.domain.customer.CustomerId;
+import com.nebula.shared.domain.value.Id;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public class JpaCustomerPersistenceAdapter implements CustomerRepository {
     }
 
     @Override
-    public Optional<Customer> search(CustomerId id) {
+    public Optional<Customer> search(Id id) {
         Optional<JpaCustomer> optional = repository.findById(id.value());
 
         if (optional.isEmpty()) return Optional.empty();

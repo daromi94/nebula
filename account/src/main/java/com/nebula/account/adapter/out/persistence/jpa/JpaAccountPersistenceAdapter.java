@@ -2,7 +2,7 @@ package com.nebula.account.adapter.out.persistence.jpa;
 
 import com.nebula.account.application.port.out.AccountRepository;
 import com.nebula.account.domain.Account;
-import com.nebula.shared.domain.account.AccountId;
+import com.nebula.shared.domain.value.Id;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public class JpaAccountPersistenceAdapter implements AccountRepository {
     }
 
     @Override
-    public Optional<Account> search(AccountId id) {
+    public Optional<Account> search(Id id) {
         Optional<JpaAccount> optional = repository.findById(id.value());
 
         if (optional.isEmpty()) return Optional.empty();
