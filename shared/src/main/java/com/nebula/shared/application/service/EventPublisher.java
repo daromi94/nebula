@@ -1,7 +1,7 @@
 package com.nebula.shared.application.service;
 
 import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
-import com.nebula.shared.domain.event.DomainEvent;
+import com.nebula.shared.domain.DomainEvent;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

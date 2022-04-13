@@ -1,4 +1,4 @@
-package com.nebula.shared.domain.event;
+package com.nebula.shared.domain;
 
 import java.util.UUID;
 

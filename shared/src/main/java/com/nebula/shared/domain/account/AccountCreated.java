@@ -1,6 +1,6 @@
 package com.nebula.shared.domain.account;
 
-import com.nebula.shared.domain.event.DomainEvent;
+import com.nebula.shared.domain.DomainEvent;
 import com.nebula.shared.domain.value.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;

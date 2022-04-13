@@ -1,6 +1,6 @@
 package com.nebula.shared.domain.fraud;
 
-import com.nebula.shared.domain.event.DomainEvent;
+import com.nebula.shared.domain.DomainEvent;
 import com.nebula.shared.domain.value.EmailAddress;
 import com.nebula.shared.domain.value.FirstName;
 import com.nebula.shared.domain.value.Id;

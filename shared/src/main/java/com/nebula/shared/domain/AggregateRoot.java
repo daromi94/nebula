@@ -1,7 +1,5 @@
 package com.nebula.shared.domain;
 
-import com.nebula.shared.domain.event.DomainEvent;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
