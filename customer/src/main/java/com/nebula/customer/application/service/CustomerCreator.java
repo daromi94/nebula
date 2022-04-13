@@ -50,10 +50,12 @@ public class CustomerCreator {
     }
 
     private boolean isFraudster(Customer customer) {
-        FraudChecksPostRequest request = new FraudChecksPostRequest(customer.id().value(),
-                customer.firstName().value(),
-                customer.lastName().value(),
-                customer.email().value());
+        FraudChecksPostRequest request = FraudChecksPostRequest.builder()
+                .id(customer.id().value())
+                .firstName(customer.firstName().value())
+                .lastName(customer.lastName().value())
+                .email(customer.email().value())
+                .build();
 
         FraudChecksPostResponse response = client.post(request);
 
