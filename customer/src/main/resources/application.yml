@@ -1,16 +1,10 @@
-domain:
-  events:
-    customer-created: ${CUSTOMER_CREATED_EVENT}
-    account-created: ${ACCOUNT_CREATED_EVENT}
-    fraud-checked: ${FRAUD_CHECKED_EVENT}
-
 api:
   request-mappings:
-    customer-post: ${API_CUSTOMER_POST_PATH}
+    customers-post: ${API_CUSTOMERS_POST_PATH}
   clients:
-    fraud-check:
-      service-name: ${API_FRAUD_CHECK_SERVICE_NAME}
-      path: ${API_FRAUD_CHECK_PATH}
+    fraud-checks-post:
+      service-name: ${API_FRAUD_CHECKS_POST_SERVICE_NAME}
+      path: ${API_FRAUD_CHECKS_POST_PATH}
 
 server:
   port: ${SERVER_PORT}
@@ -46,7 +40,7 @@ amqp:
   queues:
     customer-created: ${CUSTOMER_CREATED_EVENT}
     account-created: ${ACCOUNT_CREATED_EVENT}
-    fraud-checked: ${FRAUD_CHECKED_EVENT}
+    fraud-check-created: ${FRAUD_CHECK_CREATED_EVENT}
 
 eureka:
   client:

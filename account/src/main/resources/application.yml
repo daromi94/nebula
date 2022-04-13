@@ -1,9 +1,3 @@
-domain:
-  events:
-    customer-created: ${CUSTOMER_CREATED_EVENT}
-    account-created: ${ACCOUNT_CREATED_EVENT}
-    fraud-checked: ${FRAUD_CHECKED_EVENT}
-
 server:
   port: ${SERVER_PORT}
 
@@ -38,4 +32,4 @@ amqp:
   queues:
     customer-created: ${CUSTOMER_CREATED_EVENT}
     account-created: ${ACCOUNT_CREATED_EVENT}
-    fraud-checked: ${FRAUD_CHECKED_EVENT}
+    fraud-check-created: ${FRAUD_CHECK_CREATED_EVENT}

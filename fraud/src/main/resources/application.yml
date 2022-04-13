@@ -1,11 +1,10 @@
 domain:
-  events:
-    customer-created: ${CUSTOMER_CREATED_EVENT}
-    account-created: ${ACCOUNT_CREATED_EVENT}
-    fraud-checked: ${FRAUD_CHECKED_EVENT}
+  fraud:
+    similarity-threshold: ${FRAUD_SIMILARITY_THRESHOLD}
+
 api:
   request-mappings:
-    fraud-check: ${API_FRAUD_CHECK_PATH}
+    fraud-checks-post: ${API_FRAUD_CHECKS_POST_PATH}
 
 server:
   port: ${SERVER_PORT}
@@ -41,7 +40,7 @@ amqp:
   queues:
     customer-created: ${CUSTOMER_CREATED_EVENT}
     account-created: ${ACCOUNT_CREATED_EVENT}
-    fraud-checked: ${FRAUD_CHECKED_EVENT}
+    fraud-check-created: ${FRAUD_CHECK_CREATED_EVENT}
 
 eureka:
   client:
