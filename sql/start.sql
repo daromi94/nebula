@@ -1,3 +1,6 @@
 CREATE DATABASE account;
 CREATE DATABASE customer;
 CREATE DATABASE fraud;
+
+\c fraud
+CREATE EXTENSION pg_trgm;
