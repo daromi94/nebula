@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.Valid;
 
-@FeignClient(value = "${api.clients.fraud-check.service-name}", path = "${api.clients.fraud-check.path}")
-public interface FraudCheckClient {
+@FeignClient(value = "${api.clients.fraud-checks-post.service-name}", path = "${api.clients.fraud-checks-post.path}")
+public interface FraudChecksPostClient {
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    FraudCheckResponse check(@RequestBody @Valid FraudCheckRequest request);
+    @ResponseStatus(HttpStatus.CREATED)
+    FraudChecksPostResponse post(@RequestBody @Valid FraudChecksPostRequest request);
 
 }

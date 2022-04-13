@@ -1,7 +1,7 @@
 package com.nebula.shared.adapter.amqp.fraud;
 
 import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
-import com.nebula.shared.domain.fraud.FraudChecked;
+import com.nebula.shared.domain.fraud.FraudCheckCreated;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -15,7 +15,7 @@ class FraudCheckedQueueConfiguration {
 
     private final ExchangeConfiguration exchangeConfiguration;
 
-    @Value("${amqp.queues.fraud-checked}")
+    @Value("${amqp.queues.fraud-check-created}")
     private String fraudCheckedQueue;
 
     public FraudCheckedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
@@ -23,17 +23,17 @@ class FraudCheckedQueueConfiguration {
     }
 
     @Bean
-    @Qualifier("${amqp.queues.fraud-checked}")
+    @Qualifier("${amqp.queues.fraud-check-created}")
     public Queue fraudCheckedQueue() {
         return new Queue(fraudCheckedQueue);
     }
 
     @Bean
-    @Qualifier("${amqp.exchanges.internal}-${amqp.queues.fraud-checked}")
+    @Qualifier("${amqp.exchanges.internal}-${amqp.queues.fraud-check-created}")
     public Binding internalToFraudCheckedBinding() {
         return BindingBuilder.bind(fraudCheckedQueue())
                 .to(exchangeConfiguration.internalTopicExchange())
-                .with(FraudChecked.class.getName());
+                .with(FraudCheckCreated.class.getName());
     }
 
 }
