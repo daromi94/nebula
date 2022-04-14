@@ -24,7 +24,10 @@ public class JpaFraudsterPersistenceAdapter implements FraudsterRepository {
                                               LastName lastName,
                                               EmailAddress email,
                                               double threshold) {
-        return repository.findBySimilarity(firstName.value(), threshold).stream().map(mapper::fromJpa).toList();
+        return repository.findBySimilarity(firstName.value(), lastName.value(), email.value(), threshold)
+                .stream()
+                .map(mapper::fromJpa)
+                .toList();
     }
 
 }
