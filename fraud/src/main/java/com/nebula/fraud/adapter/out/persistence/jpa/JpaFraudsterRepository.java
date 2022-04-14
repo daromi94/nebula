@@ -11,10 +11,10 @@ public interface JpaFraudsterRepository extends JpaRepository<JpaFraudster, Stri
     String FIND_BY_SIMILARITY_QUERY = """
             SELECT *
             FROM fraudsters f
-            WHERE
+            WHERE (
               SIMILARITY(f.first_name, :first_name) >= :threshold
-            OR
-              SIMILARITY(f.last_name, :last_name) >= :threshold
+            AND
+              SIMILARITY(f.last_name, :last_name) >= :threshold )
             OR
               SIMILARITY(f.email, :email) >= :threshold
             """;
