@@ -1,10 +1,37 @@
+api:
+  request-mappings:
+    fraud-checks-post: /api/v1/fraud-checks
+
 spring:
   application:
     name: fraud
+  jackson:
+    serialization:
+      indent-output: true
+    deserialization:
+      fail-on-unknown-properties: true
   jpa:
     properties:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: false
+  zipkin:
+    enabled: false
+
+amqp:
+  exchanges:
+    internal: internal
+  queues:
+    customer-created: customer-created
+    account-created: account-created
+    fraud-check-created: fraud-check-created
+
+eureka:
+  client:
+    enabled: false

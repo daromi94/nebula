@@ -1,7 +1,3 @@
-domain:
-  fraud:
-    similarity-threshold: ${FRAUD_SIMILARITY_THRESHOLD}
-
 api:
   request-mappings:
     fraud-checks-post: ${API_FRAUD_CHECKS_POST_PATH}
