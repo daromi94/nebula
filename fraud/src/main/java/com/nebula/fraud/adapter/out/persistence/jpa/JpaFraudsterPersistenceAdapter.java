@@ -2,9 +2,6 @@ package com.nebula.fraud.adapter.out.persistence.jpa;
 
 import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;
-import com.nebula.shared.domain.value.EmailAddress;
-import com.nebula.shared.domain.value.FirstName;
-import com.nebula.shared.domain.value.LastName;
 
 import java.util.List;
 
@@ -20,14 +17,8 @@ public class JpaFraudsterPersistenceAdapter implements FraudsterRepository {
     }
 
     @Override
-    public List<Fraudster> searchBySimilarity(FirstName firstName,
-                                              LastName lastName,
-                                              EmailAddress email,
-                                              double threshold) {
-        return repository.findBySimilarity(firstName.value(), lastName.value(), email.value(), threshold)
-                .stream()
-                .map(mapper::fromJpa)
-                .toList();
+    public List<Fraudster> search() {
+        return repository.findAll().stream().map(mapper::fromJpa).toList();
     }
 
 }

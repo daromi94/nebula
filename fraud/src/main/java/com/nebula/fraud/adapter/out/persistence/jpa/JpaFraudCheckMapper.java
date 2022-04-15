@@ -1,7 +1,6 @@
 package com.nebula.fraud.adapter.out.persistence.jpa;
 
 import com.nebula.fraud.domain.FraudCheck;
-import com.nebula.shared.domain.fraud.IsFraudster;
 import com.nebula.shared.domain.value.*;
 
 import java.time.LocalDateTime;
