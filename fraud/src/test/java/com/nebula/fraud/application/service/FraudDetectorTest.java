@@ -5,9 +5,7 @@ import com.nebula.fraud.domain.Fraudster;
 import com.nebula.shared.domain.value.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -15,14 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-@SpringBootTest
 class FraudDetectorTest {
 
-    @Autowired
-    private FraudDetector underTest;
+    private final FraudsterRepository repository = Mockito.mock(FraudsterRepository.class);
 
-    @MockBean
-    private FraudsterRepository repository;
+    private final FraudDetector underTest = new FraudDetector(repository);
 
     private Fraudster dave;
 
