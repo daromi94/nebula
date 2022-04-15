@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 public class FraudCheckCreateCommandMapper {
 
     public FraudCheckCreateCommand fromRequest(FraudChecksPostRequest request) {
-        Id           id        = Id.of(request.getId());
-        FirstName    firstName = FirstName.of(request.getFirstName());
-        LastName     lastName  = LastName.of(request.getLastName());
-        EmailAddress email     = EmailAddress.of(request.getEmail());
+        var id        = Id.of(request.getId());
+        var firstName = FirstName.of(request.getFirstName());
+        var lastName  = LastName.of(request.getLastName());
+        var email     = EmailAddress.of(request.getEmail());
 
         return new FraudCheckCreateCommand(id, firstName, lastName, email);
     }

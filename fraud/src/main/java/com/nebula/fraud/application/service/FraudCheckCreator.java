@@ -27,8 +27,8 @@ public class FraudCheckCreator {
     }
 
     public IsFraudster create(FraudCheckCreateCommand command) throws FraudCheckAlreadyExistsException {
-        IsFraudster isFraudster = detector.detect(command.firstName(), command.lastName(), command.email());
-        FraudCheck  fraudCheck  = FraudCheck.create(command, isFraudster);
+        var isFraudster = detector.detect(command.firstName(), command.lastName(), command.email());
+        var fraudCheck  = FraudCheck.create(command, isFraudster);
 
         repository.search(fraudCheck.id()).ifPresent(entity -> {
             throw new FraudCheckAlreadyExistsException(entity.id());

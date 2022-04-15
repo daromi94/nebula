@@ -36,13 +36,13 @@ public final class FraudCheck extends AggregateRoot {
     }
 
     public static FraudCheck create(FraudCheckCreateCommand command, IsFraudster isFraudster) {
-        Id           id        = command.id();
-        FirstName    firstName = command.firstName();
-        LastName     lastName  = command.lastName();
-        EmailAddress email     = command.email();
-        CreatedAt    createdAt = new CreatedAt(LocalDateTime.now());
+        var id        = command.id();
+        var firstName = command.firstName();
+        var lastName  = command.lastName();
+        var email     = command.email();
+        var createdAt = new CreatedAt(LocalDateTime.now());
 
-        FraudCheck fraudCheck = new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
+        var fraudCheck = new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
 
         fraudCheck.record(new FraudCheckCreated(id, firstName, lastName, email, isFraudster));
 

@@ -19,19 +19,19 @@ public class JpaFraudCheckPersistenceAdapter implements FraudCheckRepository {
 
     @Override
     public void save(FraudCheck fraudCheck) {
-        JpaFraudCheck jpaFraudCheck = mapper.fromDomain(fraudCheck);
+        var jpaFraudCheck = mapper.fromDomain(fraudCheck);
 
         repository.saveAndFlush(jpaFraudCheck);
     }
 
     @Override
     public Optional<FraudCheck> search(Id id) {
-        Optional<JpaFraudCheck> optional = repository.findById(id.value());
+        var optional = repository.findById(id.value());
 
         if (optional.isEmpty()) return Optional.empty();
 
-        JpaFraudCheck jpaFraudCheck = optional.get();
-        FraudCheck    fraudCheck    = mapper.fromJpa(jpaFraudCheck);
+        var jpaFraudCheck = optional.get();
+        var fraudCheck    = mapper.fromJpa(jpaFraudCheck);
 
         return Optional.of(fraudCheck);
     }

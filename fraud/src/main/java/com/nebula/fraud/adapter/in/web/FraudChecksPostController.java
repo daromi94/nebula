@@ -1,11 +1,9 @@
 package com.nebula.fraud.adapter.in.web;
 
-import com.nebula.fraud.application.command.FraudCheckCreateCommand;
 import com.nebula.fraud.application.command.FraudCheckCreateCommandMapper;
 import com.nebula.fraud.application.service.FraudCheckCreator;
 import com.nebula.shared.adapter.web.fraud.FraudChecksPostRequest;
 import com.nebula.shared.adapter.web.fraud.FraudChecksPostResponse;
-import com.nebula.shared.domain.value.IsFraudster;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +29,9 @@ final class FraudChecksPostController {
     public FraudChecksPostResponse post(@RequestBody @Valid FraudChecksPostRequest request) {
         log.info("fraud checks post request for {}", request);
 
-        FraudCheckCreateCommand command = mapper.fromRequest(request);
+        var command = mapper.fromRequest(request);
 
-        IsFraudster isFraudster = creator.create(command);
+        var isFraudster = creator.create(command);
 
         return new FraudChecksPostResponse(isFraudster.value());
     }

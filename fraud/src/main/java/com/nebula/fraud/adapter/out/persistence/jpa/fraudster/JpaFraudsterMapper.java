@@ -9,19 +9,19 @@ import com.nebula.shared.domain.value.LastName;
 public class JpaFraudsterMapper {
 
     public Fraudster fromJpa(JpaFraudster jpaFraudster) {
-        Id           id        = new Id(jpaFraudster.getId());
-        FirstName    firstName = new FirstName(jpaFraudster.getFirstName());
-        LastName     lastName  = new LastName(jpaFraudster.getLastName());
-        EmailAddress email     = new EmailAddress(jpaFraudster.getEmail());
+        var id        = new Id(jpaFraudster.getId());
+        var firstName = new FirstName(jpaFraudster.getFirstName());
+        var lastName  = new LastName(jpaFraudster.getLastName());
+        var email     = new EmailAddress(jpaFraudster.getEmail());
 
         return new Fraudster(id, firstName, lastName, email);
     }
 
     public JpaFraudster fromDomain(Fraudster fraudster) {
-        String id        = fraudster.id().value();
-        String firstName = fraudster.firstName().value();
-        String lastName  = fraudster.lastName().value();
-        String email     = fraudster.email().value();
+        var id        = fraudster.id().value();
+        var firstName = fraudster.firstName().value();
+        var lastName  = fraudster.lastName().value();
+        var email     = fraudster.email().value();
 
         return new JpaFraudster(id, firstName, lastName, email);
     }

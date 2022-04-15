@@ -9,7 +9,6 @@ import com.nebula.shared.domain.value.LastName;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.function.Predicate;
 
 @Service
@@ -24,13 +23,13 @@ public class FraudDetector {
 
     public IsFraudster detect(FirstName firstName, LastName lastName, EmailAddress email) {
         Predicate<Fraudster> sameName = fraudster -> {
-            boolean sameFirst = fraudster.firstName().equals(firstName);
-            boolean sameLast  = fraudster.lastName().equals(lastName);
+            var sameFirst = fraudster.firstName().equals(firstName);
+            var sameLast  = fraudster.lastName().equals(lastName);
 
             return sameFirst && sameLast;
         };
 
-        List<Fraudster> fraudsters = repository.search()
+        var fraudsters = repository.search()
                 .stream()
                 .filter(fraudster -> sameName.test(fraudster) || fraudster.email().equals(email))
                 .toList();
