@@ -1,10 +1,7 @@
 package com.nebula.shared.domain.fraud;
 
 import com.nebula.shared.domain.DomainEvent;
-import com.nebula.shared.domain.value.EmailAddress;
-import com.nebula.shared.domain.value.FirstName;
-import com.nebula.shared.domain.value.Id;
-import com.nebula.shared.domain.value.LastName;
+import com.nebula.shared.domain.value.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class FraudCheckCreated extends DomainEvent {
+public final class FraudCheckCreated extends DomainEvent {
 
     private String firstName;
 

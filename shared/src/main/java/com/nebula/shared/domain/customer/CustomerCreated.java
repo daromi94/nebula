@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CustomerCreated extends DomainEvent {
+public final class CustomerCreated extends DomainEvent {
 
     private String firstName;
 
