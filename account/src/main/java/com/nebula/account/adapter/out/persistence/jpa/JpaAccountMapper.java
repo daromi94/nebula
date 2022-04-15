@@ -7,17 +7,17 @@ import com.nebula.shared.domain.value.Id;
 public class JpaAccountMapper {
 
     public Account fromJpa(JpaAccount jpaAccount) {
-        Id      id         = new Id(jpaAccount.getId());
-        Id      customerId = new Id(jpaAccount.getCustomerId());
-        Balance balance    = new Balance(jpaAccount.getBalance());
+        var id         = new Id(jpaAccount.getId());
+        var customerId = new Id(jpaAccount.getCustomerId());
+        var balance    = new Balance(jpaAccount.getBalance());
 
         return new Account(id, customerId, balance);
     }
 
     public JpaAccount fromDomain(Account account) {
-        String id         = account.id().value();
-        String customerId = account.customerId().value();
-        double balance    = account.balance().value();
+        var id         = account.id().value();
+        var customerId = account.customerId().value();
+        var balance    = account.balance().value();
 
         return new JpaAccount(id, customerId, balance);
     }

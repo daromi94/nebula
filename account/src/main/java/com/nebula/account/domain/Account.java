@@ -22,7 +22,7 @@ public final class Account extends AggregateRoot {
     }
 
     public static Account create(Id id, Id customerId) {
-        Account account = new Account(id, customerId, new Balance(EMPTY_BALANCE));
+        var account = new Account(id, customerId, new Balance(EMPTY_BALANCE));
 
         account.record(new AccountCreated(id, customerId));
 

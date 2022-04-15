@@ -25,7 +25,7 @@ public final class Customer extends AggregateRoot {
     }
 
     public static Customer create(Id id, FirstName firstName, LastName lastName, EmailAddress email) {
-        Customer customer = new Customer(id, firstName, lastName, email);
+        var customer = new Customer(id, firstName, lastName, email);
 
         customer.record(new CustomerCreated(id, firstName, lastName, email));
 

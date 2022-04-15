@@ -19,19 +19,19 @@ public class JpaAccountPersistenceAdapter implements AccountRepository {
 
     @Override
     public void save(Account account) {
-        JpaAccount jpaAccount = mapper.fromDomain(account);
+        var jpaAccount = mapper.fromDomain(account);
 
         repository.saveAndFlush(jpaAccount);
     }
 
     @Override
     public Optional<Account> search(Id id) {
-        Optional<JpaAccount> optional = repository.findById(id.value());
+        var optional = repository.findById(id.value());
 
         if (optional.isEmpty()) return Optional.empty();
 
-        JpaAccount jpaAccount = optional.get();
-        Account    account    = mapper.fromJpa(jpaAccount);
+        var jpaAccount = optional.get();
+        var account    = mapper.fromJpa(jpaAccount);
 
         return Optional.of(account);
     }

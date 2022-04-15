@@ -21,8 +21,8 @@ final class CustomerCreatedConsumer {
     public void consume(CustomerCreated event) {
         log.info("customer created event for {}", event);
 
-        Id id         = new Id(event.getId());
-        Id customerId = new Id(event.getAggregateId());
+        var id         = new Id(event.getId());
+        var customerId = new Id(event.getAggregateId());
 
         creator.create(id, customerId);
     }

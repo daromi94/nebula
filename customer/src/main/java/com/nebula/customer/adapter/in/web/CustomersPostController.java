@@ -28,10 +28,10 @@ final class CustomersPostController {
     public void post(@RequestBody @Valid CustomersPostRequest request) {
         log.info("customers post request for {}", request);
 
-        Id           id        = new Id(request.getId());
-        FirstName    firstName = new FirstName(request.getFirstName());
-        LastName     lastName  = new LastName(request.getLastName());
-        EmailAddress email     = new EmailAddress(request.getEmail());
+        var id        = new Id(request.getId());
+        var firstName = new FirstName(request.getFirstName());
+        var lastName  = new LastName(request.getLastName());
+        var email     = new EmailAddress(request.getEmail());
 
         creator.create(id, firstName, lastName, email);
     }

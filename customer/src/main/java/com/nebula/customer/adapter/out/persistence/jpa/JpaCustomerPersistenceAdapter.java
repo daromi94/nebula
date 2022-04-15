@@ -19,19 +19,19 @@ public class JpaCustomerPersistenceAdapter implements CustomerRepository {
 
     @Override
     public void save(Customer customer) {
-        JpaCustomer jpaCustomer = mapper.fromDomain(customer);
+        var jpaCustomer = mapper.fromDomain(customer);
 
         repository.saveAndFlush(jpaCustomer);
     }
 
     @Override
     public Optional<Customer> search(Id id) {
-        Optional<JpaCustomer> optional = repository.findById(id.value());
+        var optional = repository.findById(id.value());
 
         if (optional.isEmpty()) return Optional.empty();
 
-        JpaCustomer jpaCustomer = optional.get();
-        Customer    customer    = mapper.fromJpa(jpaCustomer);
+        var jpaCustomer = optional.get();
+        var customer    = mapper.fromJpa(jpaCustomer);
 
         return Optional.of(customer);
     }
