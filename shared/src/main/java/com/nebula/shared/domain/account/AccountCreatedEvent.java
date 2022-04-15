@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public final class AccountCreated extends DomainEvent {
+public final class AccountCreatedEvent extends DomainEvent {
 
     private String customerId;
 
-    public AccountCreated(Id aggregateId, Id customerId) {
+    public AccountCreatedEvent(Id aggregateId, Id customerId) {
         super(aggregateId.value());
 
         this.customerId = customerId.value();

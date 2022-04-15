@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public final class CustomerCreated extends DomainEvent {
+public final class CustomerCreatedEvent extends DomainEvent {
 
     private String firstName;
 
@@ -22,7 +22,7 @@ public final class CustomerCreated extends DomainEvent {
 
     private String email;
 
-    public CustomerCreated(Id aggregateId, FirstName firstName, LastName lastName, EmailAddress email) {
+    public CustomerCreatedEvent(Id aggregateId, FirstName firstName, LastName lastName, EmailAddress email) {
         super(aggregateId.value());
 
         this.firstName = firstName.value();

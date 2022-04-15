@@ -54,17 +54,17 @@ class FraudCheckCreatorTest {
     @Test
     void givenNotTakenId_whenCreationAttempt_thenCreationSucceeds() {
         // Given
-        Id           id          = Id.of("917d15ee");
-        FirstName    firstName   = FirstName.of("Dave");
-        LastName     lastName    = LastName.of("Richards");
-        EmailAddress email       = EmailAddress.of("dave@email.com");
-        IsFraudster  isFraudster = IsFraudster.of(false);
+        var id          = Id.of("917d15ee");
+        var firstName   = FirstName.of("Dave");
+        var lastName    = LastName.of("Richards");
+        var email       = EmailAddress.of("dave@email.com");
+        var isFraudster = IsFraudster.of(false);
 
         given(repository.search(id)).willReturn(Optional.empty());
         given(detector.detect(firstName, lastName, email)).willReturn(isFraudster);
 
         // When-Then
-        FraudCheckCreateCommand command = new FraudCheckCreateCommand(id, firstName, lastName, email);
+        var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
 
         assertThat(underTest.create(command)).isEqualTo(isFraudster);
 
@@ -74,27 +74,27 @@ class FraudCheckCreatorTest {
         then(repository).should().save(any());
         then(publisher).should().publish(eventsCaptor.capture());
 
-        List<DomainEvent> events = eventsCaptor.getValue();
+        var events = eventsCaptor.getValue();
         events.forEach(event -> assertThat(event.getAggregateId()).isEqualTo(id.value()));
     }
 
     @Test
     void givenTakenId_whenCreationAttempt_thenCreationFails() {
         // Given
-        Id           id          = Id.of("9a544bec");
-        FirstName    firstName   = FirstName.of("Larry");
-        LastName     lastName    = LastName.of("Ellison");
-        EmailAddress email       = EmailAddress.of("larry@email.com");
-        IsFraudster  isFraudster = IsFraudster.of(false);
-        CreatedAt    createdAt   = CreatedAt.of(LocalDateTime.now().minusMonths(1));
+        var id          = Id.of("9a544bec");
+        var firstName   = FirstName.of("Larry");
+        var lastName    = LastName.of("Ellison");
+        var email       = EmailAddress.of("larry@email.com");
+        var isFraudster = IsFraudster.of(false);
+        var createdAt   = CreatedAt.of(LocalDateTime.now().minusMonths(1));
 
-        FraudCheck fraudCheck = new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
+        var fraudCheck = new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
 
         given(repository.search(id)).willReturn(Optional.of(fraudCheck));
         given(detector.detect(firstName, lastName, email)).willReturn(isFraudster);
 
         // When-Then
-        FraudCheckCreateCommand command = new FraudCheckCreateCommand(id, firstName, lastName, email);
+        var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
 
         assertThatThrownBy(() -> underTest.create(command)).isInstanceOf(FraudCheckAlreadyExistsException.class);
 

@@ -1,7 +1,7 @@
 package com.nebula.account.domain;
 
 import com.nebula.shared.domain.AggregateRoot;
-import com.nebula.shared.domain.account.AccountCreated;
+import com.nebula.shared.domain.account.AccountCreatedEvent;
 import com.nebula.shared.domain.value.Balance;
 import com.nebula.shared.domain.value.Id;
 
@@ -24,7 +24,7 @@ public final class Account extends AggregateRoot {
     public static Account create(Id id, Id customerId) {
         var account = new Account(id, customerId, new Balance(EMPTY_BALANCE));
 
-        account.record(new AccountCreated(id, customerId));
+        account.register(new AccountCreatedEvent(id, customerId));
 
         return account;
     }

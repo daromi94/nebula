@@ -14,8 +14,8 @@ final class HttpMessageNotReadableExceptionController {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<HttpCustomError> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
-        String          message   = exception.getMostSpecificCause().getMessage();
-        HttpCustomError httpError = new HttpCustomError(ERROR_CODE, message);
+        var message   = exception.getMostSpecificCause().getMessage();
+        var httpError = new HttpCustomError(ERROR_CODE, message);
 
         return new ResponseEntity<>(httpError, HttpStatus.BAD_REQUEST);
     }

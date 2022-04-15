@@ -22,7 +22,7 @@ public class EventPublisher {
     }
 
     public void publish(List<DomainEvent> events) {
-        String exchange = exchangeConfiguration.internalTopicExchange().getName();
+        var exchange = exchangeConfiguration.internalTopicExchange().getName();
 
         events.forEach(event -> template.convertAndSend(exchange, event.getClass().getName(), event));
     }

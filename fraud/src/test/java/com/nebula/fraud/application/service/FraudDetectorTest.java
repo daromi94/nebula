@@ -28,10 +28,10 @@ class FraudDetectorTest {
         MockitoAnnotations.openMocks(this);
         underTest = new FraudDetector(repository);
 
-        Id           id        = Id.of("917d15ee");
-        FirstName    firstName = FirstName.of("Dave");
-        LastName     lastName  = LastName.of("Richards");
-        EmailAddress email     = EmailAddress.of("dave@email.com");
+        var id        = Id.of("917d15ee");
+        var firstName = FirstName.of("Dave");
+        var lastName  = LastName.of("Richards");
+        var email     = EmailAddress.of("dave@email.com");
 
         dave = new Fraudster(id, firstName, lastName, email);
     }
@@ -42,9 +42,9 @@ class FraudDetectorTest {
         given(repository.search()).willReturn(List.of(dave));
 
         // When
-        EmailAddress email = EmailAddress.of("larry@email.com");
+        var email = EmailAddress.of("larry@email.com");
 
-        IsFraudster isFraudster = underTest.detect(dave.firstName(), dave.lastName(), email);
+        var isFraudster = underTest.detect(dave.firstName(), dave.lastName(), email);
 
         // Then
         assertThat(isFraudster).isEqualTo(IsFraudster.of(true));
@@ -57,10 +57,10 @@ class FraudDetectorTest {
         given(repository.search()).willReturn(List.of(dave));
 
         // When
-        FirstName firstName = FirstName.of("Larry");
-        LastName  lastName  = LastName.of("Ellison");
+        var firstName = FirstName.of("Larry");
+        var lastName  = LastName.of("Ellison");
 
-        IsFraudster isFraudster = underTest.detect(firstName, lastName, dave.email());
+        var isFraudster = underTest.detect(firstName, lastName, dave.email());
 
         // Then
         assertThat(isFraudster).isEqualTo(IsFraudster.of(true));
@@ -73,11 +73,11 @@ class FraudDetectorTest {
         given(repository.search()).willReturn(List.of(dave));
 
         // When
-        FirstName    firstName = FirstName.of("Larry");
-        LastName     lastName  = LastName.of("Ellison");
-        EmailAddress email     = EmailAddress.of("larry@email.com");
+        var firstName = FirstName.of("Larry");
+        var lastName  = LastName.of("Ellison");
+        var email     = EmailAddress.of("larry@email.com");
 
-        IsFraudster isFraudster = underTest.detect(firstName, lastName, email);
+        var isFraudster = underTest.detect(firstName, lastName, email);
 
         // Then
         assertThat(isFraudster).isEqualTo(IsFraudster.of(false));

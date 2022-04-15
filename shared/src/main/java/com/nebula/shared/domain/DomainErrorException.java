@@ -4,7 +4,7 @@ public abstract class DomainErrorException extends RuntimeException {
 
     private final CustomError error;
 
-    public DomainErrorException(String code, String message) {
+    protected DomainErrorException(String code, String message) {
         super(message);
 
         this.error = new CustomError(code, message);

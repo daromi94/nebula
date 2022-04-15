@@ -8,12 +8,12 @@ public abstract class DomainEvent {
 
     private final String aggregateId;
 
-    public DomainEvent() {
+    protected DomainEvent() {
         this.id          = null;
         this.aggregateId = null;
     }
 
-    public DomainEvent(String aggregateId) {
+    protected DomainEvent(String aggregateId) {
         this.id          = UUID.randomUUID().toString();
         this.aggregateId = aggregateId;
     }

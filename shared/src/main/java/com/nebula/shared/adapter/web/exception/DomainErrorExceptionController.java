@@ -1,7 +1,6 @@
 package com.nebula.shared.adapter.web.exception;
 
 import com.nebula.shared.adapter.web.HttpCustomError;
-import com.nebula.shared.domain.CustomError;
 import com.nebula.shared.domain.DomainErrorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +12,8 @@ final class DomainErrorExceptionController {
 
     @ExceptionHandler(DomainErrorException.class)
     public ResponseEntity<HttpCustomError> handleDomainErrorException(DomainErrorException exception) {
-        CustomError     error     = exception.error();
-        HttpCustomError httpError = new HttpCustomError(error.code(), error.message());
+        var error     = exception.error();
+        var httpError = new HttpCustomError(error.code(), error.message());
 
         return new ResponseEntity<>(httpError, HttpStatus.BAD_REQUEST);
     }

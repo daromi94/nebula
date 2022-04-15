@@ -1,7 +1,7 @@
 package com.nebula.shared.adapter.amqp.fraud;
 
 import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
-import com.nebula.shared.domain.fraud.FraudCheckCreated;
+import com.nebula.shared.domain.fraud.FraudCheckCreatedEvent;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -33,7 +33,7 @@ class FraudCheckedQueueConfiguration {
     public Binding internalToFraudCheckedBinding() {
         return BindingBuilder.bind(fraudCheckedQueue())
                 .to(exchangeConfiguration.internalTopicExchange())
-                .with(FraudCheckCreated.class.getName());
+                .with(FraudCheckCreatedEvent.class.getName());
     }
 
 }

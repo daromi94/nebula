@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public final class FraudCheckCreated extends DomainEvent {
+public final class FraudCheckCreatedEvent extends DomainEvent {
 
     private String firstName;
 
@@ -21,11 +21,11 @@ public final class FraudCheckCreated extends DomainEvent {
 
     private boolean isFraudster;
 
-    public FraudCheckCreated(Id aggregateId,
-                             FirstName firstName,
-                             LastName lastName,
-                             EmailAddress email,
-                             IsFraudster isFraudster) {
+    public FraudCheckCreatedEvent(Id aggregateId,
+                                  FirstName firstName,
+                                  LastName lastName,
+                                  EmailAddress email,
+                                  IsFraudster isFraudster) {
         super(aggregateId.value());
 
         this.firstName   = firstName.value();

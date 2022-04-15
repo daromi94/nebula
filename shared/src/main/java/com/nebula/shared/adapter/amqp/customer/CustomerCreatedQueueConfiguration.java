@@ -1,7 +1,7 @@
 package com.nebula.shared.adapter.amqp.customer;
 
 import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
-import com.nebula.shared.domain.customer.CustomerCreated;
+import com.nebula.shared.domain.customer.CustomerCreatedEvent;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -33,7 +33,7 @@ class CustomerCreatedQueueConfiguration {
     public Binding internalToCustomerCreatedBinding() {
         return BindingBuilder.bind(customerCreatedQueue())
                 .to(exchangeConfiguration.internalTopicExchange())
-                .with(CustomerCreated.class.getName());
+                .with(CustomerCreatedEvent.class.getName());
     }
 
 }

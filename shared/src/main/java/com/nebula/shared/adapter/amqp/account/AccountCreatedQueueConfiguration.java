@@ -1,7 +1,7 @@
 package com.nebula.shared.adapter.amqp.account;
 
 import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
-import com.nebula.shared.domain.account.AccountCreated;
+import com.nebula.shared.domain.account.AccountCreatedEvent;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -33,7 +33,7 @@ class AccountCreatedQueueConfiguration {
     public Binding internalToAccountCreatedBinding() {
         return BindingBuilder.bind(accountCreatedQueue())
                 .to(exchangeConfiguration.internalTopicExchange())
-                .with(AccountCreated.class.getName());
+                .with(AccountCreatedEvent.class.getName());
     }
 
 }

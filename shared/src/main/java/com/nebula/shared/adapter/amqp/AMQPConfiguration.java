@@ -22,7 +22,7 @@ class AMQPConfiguration {
     @Bean
     @Primary
     public AmqpTemplate amqpTemplate() {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        var template = new RabbitTemplate(connectionFactory);
 
         template.setMessageConverter(messageConverter());
 
@@ -31,7 +31,7 @@ class AMQPConfiguration {
 
     @Bean
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
-        SimpleRabbitListenerContainerFactory containerFactory = new SimpleRabbitListenerContainerFactory();
+        var containerFactory = new SimpleRabbitListenerContainerFactory();
 
         containerFactory.setConnectionFactory(connectionFactory);
         containerFactory.setMessageConverter(messageConverter());

@@ -3,7 +3,6 @@ package com.nebula.shared.adapter.web.exception;
 import com.nebula.shared.adapter.web.HttpCustomError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,9 +16,9 @@ final class MethodArgumentNotValidExceptionController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<HttpCustomError>> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
-        List<FieldError> fieldErrors = exception.getFieldErrors();
+        var fieldErrors = exception.getFieldErrors();
 
-        List<HttpCustomError> httpErrors = fieldErrors.stream()
+        var httpErrors = fieldErrors.stream()
                 .map(error -> new HttpCustomError(ERROR_CODE, error.getDefaultMessage()))
                 .toList();
 

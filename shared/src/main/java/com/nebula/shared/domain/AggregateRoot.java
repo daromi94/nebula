@@ -8,17 +8,17 @@ public abstract class AggregateRoot {
 
     private List<DomainEvent> events;
 
-    public AggregateRoot() {
+    protected AggregateRoot() {
         this.events = new ArrayList<>();
     }
 
     public final List<DomainEvent> pull() {
-        List<DomainEvent> domainEvents = this.events;
+        var domainEvents = this.events;
         this.events = Collections.emptyList();
         return domainEvents;
     }
 
-    protected final void record(DomainEvent event) {
+    protected final void register(DomainEvent event) {
         events.add(event);
     }
 
