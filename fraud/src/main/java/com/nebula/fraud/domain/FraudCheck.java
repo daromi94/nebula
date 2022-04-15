@@ -1,8 +1,8 @@
 package com.nebula.fraud.domain;
 
+import com.nebula.fraud.application.command.FraudCheckCreateCommand;
 import com.nebula.shared.domain.AggregateRoot;
 import com.nebula.shared.domain.fraud.FraudCheckCreated;
-import com.nebula.shared.domain.fraud.IsFraudster;
 import com.nebula.shared.domain.value.*;
 
 import java.time.LocalDateTime;
@@ -35,12 +35,13 @@ public final class FraudCheck extends AggregateRoot {
         this.createdAt   = createdAt;
     }
 
-    public static FraudCheck create(Id id,
-                                    FirstName firstName,
-                                    LastName lastName,
-                                    EmailAddress email,
-                                    IsFraudster isFraudster) {
-        CreatedAt  createdAt  = new CreatedAt(LocalDateTime.now());
+    public static FraudCheck create(FraudCheckCreateCommand command, IsFraudster isFraudster) {
+        Id           id        = command.id();
+        FirstName    firstName = command.firstName();
+        LastName     lastName  = command.lastName();
+        EmailAddress email     = command.email();
+        CreatedAt    createdAt = new CreatedAt(LocalDateTime.now());
+
         FraudCheck fraudCheck = new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
 
         fraudCheck.record(new FraudCheckCreated(id, firstName, lastName, email, isFraudster));
