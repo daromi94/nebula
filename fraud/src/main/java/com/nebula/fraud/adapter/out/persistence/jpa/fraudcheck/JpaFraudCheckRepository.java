@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.out.persistence.jpa;
+package com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

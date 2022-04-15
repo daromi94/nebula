@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.out.persistence.jpa;
+package com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck;
 
 import com.nebula.fraud.application.port.out.FraudCheckRepository;
 import com.nebula.fraud.domain.FraudCheck;

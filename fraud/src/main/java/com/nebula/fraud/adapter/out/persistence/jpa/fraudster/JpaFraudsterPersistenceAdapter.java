@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.out.persistence.jpa;
+package com.nebula.fraud.adapter.out.persistence.jpa.fraudster;
 
 import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;

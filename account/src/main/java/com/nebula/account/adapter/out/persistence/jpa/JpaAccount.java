@@ -20,7 +20,7 @@ class JpaAccount {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", nullable = false)
     private String customerId;
 
     @Column(name = "balance")

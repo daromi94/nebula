@@ -1,8 +1,8 @@
 package com.nebula.fraud.adapter.out.persistence;
 
-import com.nebula.fraud.adapter.out.persistence.jpa.JpaFraudCheckMapper;
-import com.nebula.fraud.adapter.out.persistence.jpa.JpaFraudCheckPersistenceAdapter;
-import com.nebula.fraud.adapter.out.persistence.jpa.JpaFraudCheckRepository;
+import com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck.JpaFraudCheckMapper;
+import com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck.JpaFraudCheckPersistenceAdapter;
+import com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck.JpaFraudCheckRepository;
 import com.nebula.fraud.application.port.out.FraudCheckRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

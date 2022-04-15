@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.out.persistence.jpa;
+package com.nebula.fraud.adapter.out.persistence.jpa.fraudster;
 
 import com.nebula.fraud.domain.Fraudster;
 import com.nebula.shared.domain.value.EmailAddress;

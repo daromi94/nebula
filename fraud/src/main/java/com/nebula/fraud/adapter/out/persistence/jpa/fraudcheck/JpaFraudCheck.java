@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.out.persistence.jpa;
+package com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,19 +21,19 @@ public class JpaFraudCheck {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "is_fraudster")
     private boolean isFraudster;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
 }
