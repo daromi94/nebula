@@ -7,11 +7,13 @@ import com.nebula.fraud.domain.FraudCheckAlreadyExistsException;
 import com.nebula.shared.application.service.EventPublisher;
 import com.nebula.shared.domain.DomainEvent;
 import com.nebula.shared.domain.value.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -29,16 +31,25 @@ import static org.mockito.Mockito.never;
 @ExtendWith(MockitoExtension.class)
 class FraudCheckCreatorTest {
 
-    private final FraudCheckRepository repository = Mockito.mock(FraudCheckRepository.class);
+    private FraudCheckCreator underTest;
 
-    private final FraudDetector detector = Mockito.mock(FraudDetector.class);
+    @Mock
+    private FraudCheckRepository repository;
 
-    private final EventPublisher publisher = Mockito.mock(EventPublisher.class);
+    @Mock
+    private FraudDetector detector;
 
-    private final FraudCheckCreator underTest = new FraudCheckCreator(repository, detector, publisher);
+    @Mock
+    private EventPublisher publisher;
 
     @Captor
     private ArgumentCaptor<List<DomainEvent>> eventsCaptor;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        underTest = new FraudCheckCreator(repository, detector, publisher);
+    }
 
     @Test
     void givenNotTakenId_whenCreationAttempt_thenCreationSucceeds() {

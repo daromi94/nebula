@@ -5,7 +5,8 @@ import com.nebula.fraud.domain.Fraudster;
 import com.nebula.shared.domain.value.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
@@ -15,14 +16,18 @@ import static org.mockito.BDDMockito.then;
 
 class FraudDetectorTest {
 
-    private final FraudsterRepository repository = Mockito.mock(FraudsterRepository.class);
+    private FraudDetector underTest;
 
-    private final FraudDetector underTest = new FraudDetector(repository);
+    @Mock
+    private FraudsterRepository repository;
 
     private Fraudster dave;
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
+        underTest = new FraudDetector(repository);
+
         Id           id        = Id.of("917d15ee");
         FirstName    firstName = FirstName.of("Dave");
         LastName     lastName  = LastName.of("Richards");
