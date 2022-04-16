@@ -1,7 +1,7 @@
 package com.nebula.customer.application.port.out;
 
 import com.nebula.customer.domain.Customer;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Id;
 
 import java.util.Optional;
 

@@ -1,10 +1,10 @@
 package com.nebula.shared.domain.customer;
 
-import com.nebula.shared.domain.DomainEvent;
-import com.nebula.shared.domain.value.EmailAddress;
-import com.nebula.shared.domain.value.FirstName;
-import com.nebula.shared.domain.value.Id;
-import com.nebula.shared.domain.value.LastName;
+import com.nebula.shared.domain.commons.DomainEvent;
+import com.nebula.shared.domain.commons.value.EmailAddress;
+import com.nebula.shared.domain.commons.value.FirstName;
+import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.commons.value.LastName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

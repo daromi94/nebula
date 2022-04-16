@@ -1,7 +1,8 @@
 package com.nebula.shared.application.service;
 
 import com.nebula.shared.adapter.amqp.ExchangeConfiguration;
-import com.nebula.shared.domain.DomainEvent;
+import com.nebula.shared.domain.commons.DomainEvent;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +25,14 @@ public class EventPublisher {
     public void publish(List<DomainEvent> events) {
         var exchange = exchangeConfiguration.internalTopicExchange().getName();
 
-        events.forEach(event -> template.convertAndSend(exchange, event.getClass().getName(), event));
+        try {
+            events.forEach(event -> template.convertAndSend(exchange, event.getClass().getName(), event));
+        } catch (AmqpException exception) {
+            throw new EventPublishingErrorException(exchange, exception);
+        }
     }
 
-    public void publish(DomainEvent event) {
+    public void publish(DomainEvent event) throws EventPublishingErrorException {
         publish(List.of(event));
     }
 

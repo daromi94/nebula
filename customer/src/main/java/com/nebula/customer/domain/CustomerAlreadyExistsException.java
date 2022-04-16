@@ -1,9 +1,9 @@
 package com.nebula.customer.domain;
 
-import com.nebula.shared.domain.DomainErrorException;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.util.CustomRuntimeException;
 
-public final class CustomerAlreadyExistsException extends DomainErrorException {
+public final class CustomerAlreadyExistsException extends CustomRuntimeException {
 
     public static final String ERROR_CODE = "customer-already-exists";
 

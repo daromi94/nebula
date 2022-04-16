@@ -2,7 +2,7 @@ package com.nebula.account.adapter.out.persistence.jpa;
 
 import com.nebula.account.application.port.out.AccountRepository;
 import com.nebula.account.domain.Account;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Id;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class JpaAccountPersistenceAdapter implements AccountRepository {
     public void save(Account account) {
         var jpaAccount = mapper.fromDomain(account);
 
-        repository.saveAndFlush(jpaAccount);
+        repository.save(jpaAccount);
     }
 
     @Override

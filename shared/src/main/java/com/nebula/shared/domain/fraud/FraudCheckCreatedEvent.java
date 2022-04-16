@@ -1,6 +1,7 @@
 package com.nebula.shared.domain.fraud;
 
-import com.nebula.shared.domain.DomainEvent;
+import com.nebula.shared.domain.commons.DomainEvent;
+import com.nebula.shared.domain.commons.value.*;
 import com.nebula.shared.domain.value.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

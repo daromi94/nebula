@@ -2,7 +2,7 @@ package com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck;
 
 import com.nebula.fraud.application.port.out.FraudCheckRepository;
 import com.nebula.fraud.domain.FraudCheck;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Id;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class JpaFraudCheckPersistenceAdapter implements FraudCheckRepository {
     public void save(FraudCheck fraudCheck) {
         var jpaFraudCheck = mapper.fromDomain(fraudCheck);
 
-        repository.saveAndFlush(jpaFraudCheck);
+        repository.save(jpaFraudCheck);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.nebula.shared.domain.value;
+package com.nebula.shared.domain.commons.value;
 
 import java.time.LocalDateTime;
 

@@ -2,10 +2,10 @@ package com.nebula.fraud.application.service;
 
 import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;
-import com.nebula.shared.domain.value.EmailAddress;
-import com.nebula.shared.domain.value.FirstName;
-import com.nebula.shared.domain.value.IsFraudster;
-import com.nebula.shared.domain.value.LastName;
+import com.nebula.shared.domain.commons.value.EmailAddress;
+import com.nebula.shared.domain.commons.value.FirstName;
+import com.nebula.shared.domain.commons.value.IsFraudster;
+import com.nebula.shared.domain.commons.value.LastName;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

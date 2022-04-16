@@ -1,9 +1,9 @@
 package com.nebula.account.domain;
 
-import com.nebula.shared.domain.AggregateRoot;
+import com.nebula.shared.domain.commons.AggregateRoot;
 import com.nebula.shared.domain.account.AccountCreatedEvent;
-import com.nebula.shared.domain.value.Balance;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Balance;
+import com.nebula.shared.domain.commons.value.Id;
 
 public final class Account extends AggregateRoot {
 

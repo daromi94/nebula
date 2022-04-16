@@ -5,7 +5,7 @@ import com.nebula.fraud.application.port.out.FraudCheckRepository;
 import com.nebula.fraud.domain.FraudCheck;
 import com.nebula.fraud.domain.FraudCheckAlreadyExistsException;
 import com.nebula.shared.application.service.EventPublisher;
-import com.nebula.shared.domain.value.IsFraudster;
+import com.nebula.shared.domain.commons.value.IsFraudster;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,7 +26,7 @@ public class FraudCheckCreator {
         this.publisher  = publisher;
     }
 
-    public IsFraudster create(FraudCheckCreateCommand command) throws FraudCheckAlreadyExistsException {
+    public IsFraudster create(FraudCheckCreateCommand command) {
         var isFraudster = detector.detect(command.firstName(), command.lastName(), command.email());
         var fraudCheck  = FraudCheck.create(command, isFraudster);
 

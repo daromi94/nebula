@@ -1,8 +1,8 @@
 package com.nebula.account.adapter.out.persistence.jpa;
 
 import com.nebula.account.domain.Account;
-import com.nebula.shared.domain.value.Balance;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Balance;
+import com.nebula.shared.domain.commons.value.Id;
 
 public class JpaAccountMapper {
 

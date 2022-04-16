@@ -5,8 +5,9 @@ import com.nebula.fraud.application.port.out.FraudCheckRepository;
 import com.nebula.fraud.domain.FraudCheck;
 import com.nebula.fraud.domain.FraudCheckAlreadyExistsException;
 import com.nebula.shared.application.service.EventPublisher;
-import com.nebula.shared.domain.DomainEvent;
-import com.nebula.shared.domain.value.*;
+import com.nebula.shared.domain.commons.DomainEvent;
+import com.nebula.shared.domain.commons.value.*;
+import com.nebula.shared.util.CustomRuntimeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,6 +54,55 @@ class FraudCheckCreatorTest {
     }
 
     @Test
+    void givenDetectionFailsDueToRuntimeException_whenCreationAttempt_thenCreationFails() {
+        // Given
+        var id        = Id.of("917d15ee");
+        var firstName = FirstName.of("Dave");
+        var lastName  = LastName.of("Richards");
+        var email     = EmailAddress.of("dave@email.com");
+
+        given(detector.detect(firstName, lastName, email)).willThrow(CustomRuntimeException.class);
+
+        // When-Then
+        var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
+
+        assertThatThrownBy(() -> underTest.create(command)).isInstanceOf(CustomRuntimeException.class);
+
+        // Then
+        then(detector).should().detect(firstName, lastName, email);
+        then(repository).should(never()).search(id);
+        then(repository).should(never()).save(any());
+        then(publisher).should(never()).publish(anyList());
+    }
+
+    @Test
+    void givenTakenId_whenCreationAttempt_thenCreationFails() {
+        // Given
+        var id          = Id.of("9a544bec");
+        var firstName   = FirstName.of("Larry");
+        var lastName    = LastName.of("Ellison");
+        var email       = EmailAddress.of("larry@email.com");
+        var isFraudster = IsFraudster.of(false);
+        var createdAt   = CreatedAt.of(LocalDateTime.now().minusMonths(1));
+
+        var fraudCheck = new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
+
+        given(detector.detect(firstName, lastName, email)).willReturn(isFraudster);
+        given(repository.search(id)).willReturn(Optional.of(fraudCheck));
+
+        // When-Then
+        var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
+
+        assertThatThrownBy(() -> underTest.create(command)).isInstanceOf(FraudCheckAlreadyExistsException.class);
+
+        // Then
+        then(detector).should().detect(firstName, lastName, email);
+        then(repository).should().search(id);
+        then(repository).should(never()).save(any());
+        then(publisher).should(never()).publish(anyList());
+    }
+
+    @Test
     void givenNotTakenId_whenCreationAttempt_thenCreationSucceeds() {
         // Given
         var id          = Id.of("917d15ee");
@@ -60,8 +111,8 @@ class FraudCheckCreatorTest {
         var email       = EmailAddress.of("dave@email.com");
         var isFraudster = IsFraudster.of(false);
 
-        given(repository.search(id)).willReturn(Optional.empty());
         given(detector.detect(firstName, lastName, email)).willReturn(isFraudster);
+        given(repository.search(id)).willReturn(Optional.empty());
 
         // When-Then
         var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
@@ -79,30 +130,28 @@ class FraudCheckCreatorTest {
     }
 
     @Test
-    void givenTakenId_whenCreationAttempt_thenCreationFails() {
+    void givenEventPublishingFailsDueToRuntimeException_whenCreationAttempt_thenCreationFails() {
         // Given
-        var id          = Id.of("9a544bec");
-        var firstName   = FirstName.of("Larry");
-        var lastName    = LastName.of("Ellison");
-        var email       = EmailAddress.of("larry@email.com");
+        var id          = Id.of("917d15ee");
+        var firstName   = FirstName.of("Dave");
+        var lastName    = LastName.of("Richards");
+        var email       = EmailAddress.of("dave@email.com");
         var isFraudster = IsFraudster.of(false);
-        var createdAt   = CreatedAt.of(LocalDateTime.now().minusMonths(1));
 
-        var fraudCheck = new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
-
-        given(repository.search(id)).willReturn(Optional.of(fraudCheck));
         given(detector.detect(firstName, lastName, email)).willReturn(isFraudster);
+        given(repository.search(id)).willReturn(Optional.empty());
+        doThrow(CustomRuntimeException.class).when(publisher).publish(anyList());
 
         // When-Then
         var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
 
-        assertThatThrownBy(() -> underTest.create(command)).isInstanceOf(FraudCheckAlreadyExistsException.class);
+        assertThatThrownBy(() -> underTest.create(command)).isInstanceOf(CustomRuntimeException.class);
 
         // Then
         then(detector).should().detect(firstName, lastName, email);
         then(repository).should().search(id);
-        then(repository).should(never()).save(any());
-        then(publisher).should(never()).publish(anyList());
+        then(repository).should().save(any());
+        then(publisher).should().publish(anyList());
     }
 
 }

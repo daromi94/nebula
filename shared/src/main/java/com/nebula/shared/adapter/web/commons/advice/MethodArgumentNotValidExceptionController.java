@@ -1,6 +1,6 @@
-package com.nebula.shared.adapter.web.exception;
+package com.nebula.shared.adapter.web.commons.advice;
 
-import com.nebula.shared.adapter.web.HttpCustomError;
+import com.nebula.shared.util.CustomError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,14 +15,12 @@ final class MethodArgumentNotValidExceptionController {
     public static final String ERROR_CODE = "invalid-method-argument";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<HttpCustomError>> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
+    public ResponseEntity<List<CustomError>> handle(MethodArgumentNotValidException exception) {
         var fieldErrors = exception.getFieldErrors();
 
-        var httpErrors = fieldErrors.stream()
-                .map(error -> new HttpCustomError(ERROR_CODE, error.getDefaultMessage()))
-                .toList();
+        var errors = fieldErrors.stream().map(error -> new CustomError(ERROR_CODE, error.getDefaultMessage())).toList();
 
-        return new ResponseEntity<>(httpErrors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
 }

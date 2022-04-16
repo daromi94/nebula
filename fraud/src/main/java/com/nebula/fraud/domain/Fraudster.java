@@ -1,10 +1,10 @@
 package com.nebula.fraud.domain;
 
-import com.nebula.shared.domain.AggregateRoot;
-import com.nebula.shared.domain.value.EmailAddress;
-import com.nebula.shared.domain.value.FirstName;
-import com.nebula.shared.domain.value.Id;
-import com.nebula.shared.domain.value.LastName;
+import com.nebula.shared.domain.commons.AggregateRoot;
+import com.nebula.shared.domain.commons.value.EmailAddress;
+import com.nebula.shared.domain.commons.value.FirstName;
+import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.commons.value.LastName;
 
 public final class Fraudster extends AggregateRoot {
 

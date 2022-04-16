@@ -1,17 +1,18 @@
 package com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck;
 
 import com.nebula.fraud.domain.FraudCheck;
+import com.nebula.shared.domain.commons.value.*;
 import com.nebula.shared.domain.value.*;
 
 public class JpaFraudCheckMapper {
 
     public FraudCheck fromJpa(JpaFraudCheck jpaFraudCheck) {
-        var id          = new Id(jpaFraudCheck.getId());
-        var firstName   = new FirstName(jpaFraudCheck.getFirstName());
-        var lastName    = new LastName(jpaFraudCheck.getLastName());
-        var email       = new EmailAddress(jpaFraudCheck.getEmail());
-        var isFraudster = new IsFraudster(jpaFraudCheck.isFraudster());
-        var createdAt   = new CreatedAt(jpaFraudCheck.getCreatedAt());
+        var id          = Id.of(jpaFraudCheck.getId());
+        var firstName   = FirstName.of(jpaFraudCheck.getFirstName());
+        var lastName    = LastName.of(jpaFraudCheck.getLastName());
+        var email       = EmailAddress.of(jpaFraudCheck.getEmail());
+        var isFraudster = IsFraudster.of(jpaFraudCheck.isFraudster());
+        var createdAt   = CreatedAt.of(jpaFraudCheck.getCreatedAt());
 
         return new FraudCheck(id, firstName, lastName, email, isFraudster, createdAt);
     }

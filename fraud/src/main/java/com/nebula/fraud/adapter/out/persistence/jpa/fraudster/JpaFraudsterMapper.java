@@ -1,18 +1,18 @@
 package com.nebula.fraud.adapter.out.persistence.jpa.fraudster;
 
 import com.nebula.fraud.domain.Fraudster;
-import com.nebula.shared.domain.value.EmailAddress;
-import com.nebula.shared.domain.value.FirstName;
-import com.nebula.shared.domain.value.Id;
-import com.nebula.shared.domain.value.LastName;
+import com.nebula.shared.domain.commons.value.EmailAddress;
+import com.nebula.shared.domain.commons.value.FirstName;
+import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.commons.value.LastName;
 
 public class JpaFraudsterMapper {
 
     public Fraudster fromJpa(JpaFraudster jpaFraudster) {
-        var id        = new Id(jpaFraudster.getId());
-        var firstName = new FirstName(jpaFraudster.getFirstName());
-        var lastName  = new LastName(jpaFraudster.getLastName());
-        var email     = new EmailAddress(jpaFraudster.getEmail());
+        var id        = Id.of(jpaFraudster.getId());
+        var firstName = FirstName.of(jpaFraudster.getFirstName());
+        var lastName  = LastName.of(jpaFraudster.getLastName());
+        var email     = EmailAddress.of(jpaFraudster.getEmail());
 
         return new Fraudster(id, firstName, lastName, email);
     }

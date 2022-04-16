@@ -2,6 +2,7 @@ package com.nebula.fraud.application.service;
 
 import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;
+import com.nebula.shared.domain.commons.value.*;
 import com.nebula.shared.domain.value.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

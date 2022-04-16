@@ -1,9 +1,9 @@
 package com.nebula.fraud.domain;
 
-import com.nebula.shared.domain.DomainErrorException;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.util.CustomRuntimeException;
 
-public final class FraudCheckAlreadyExistsException extends DomainErrorException {
+public final class FraudCheckAlreadyExistsException extends CustomRuntimeException {
 
     public static final String ERROR_CODE = "fraud-check-already-exists";
 

@@ -2,7 +2,7 @@ package com.nebula.account.adapter.in.amqp;
 
 import com.nebula.account.application.service.AccountCreator;
 import com.nebula.shared.domain.customer.CustomerCreatedEvent;
-import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.commons.value.Id;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
