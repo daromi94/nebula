@@ -1,7 +1,7 @@
 package com.nebula.account.domain;
 
-import com.nebula.shared.domain.commons.AggregateRoot;
 import com.nebula.shared.domain.account.AccountCreatedEvent;
+import com.nebula.shared.domain.commons.AggregateRoot;
 import com.nebula.shared.domain.commons.value.Balance;
 import com.nebula.shared.domain.commons.value.Id;
 
