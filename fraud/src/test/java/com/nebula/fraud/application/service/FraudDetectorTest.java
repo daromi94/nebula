@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,22 +38,24 @@ class FraudDetectorTest {
     }
 
     @Test
-    void givenSameNames_whenDetectionAttempt_thenFraudsterDetected() {
+    void givenNoReportedFraudsters_whenDetectionAttempt_thenFraudsterNotDetected() {
         // Given
-        given(repository.search()).willReturn(List.of(dave));
+        given(repository.search()).willReturn(Collections.emptyList());
 
         // When
-        var email = EmailAddress.of("larry@email.com");
+        var firstName = FirstName.of("Larry");
+        var lastName  = LastName.of("Ellison");
+        var email     = EmailAddress.of("larry@email.com");
 
-        var isFraudster = underTest.detect(dave.firstName(), dave.lastName(), email);
+        var isFraudster = underTest.detect(firstName, lastName, email);
 
         // Then
-        assertThat(isFraudster).isEqualTo(IsFraudster.of(true));
+        assertThat(isFraudster).isEqualTo(IsFraudster.of(false));
         then(repository).should().search();
     }
 
     @Test
-    void givenSameEmail_whenDetectionAttempt_thenFraudsterDetected() {
+    void givenSameEmailOfReportedFraudster_whenDetectionAttempt_thenFraudsterDetected() {
         // Given
         given(repository.search()).willReturn(List.of(dave));
 
@@ -68,7 +71,22 @@ class FraudDetectorTest {
     }
 
     @Test
-    void givenLegitPII_whenDetectionAttempt_thenFraudsterNotDetected() {
+    void givenSameNamesOfReportedFraudster_whenDetectionAttempt_thenFraudsterDetected() {
+        // Given
+        given(repository.search()).willReturn(List.of(dave));
+
+        // When
+        var email = EmailAddress.of("larry@email.com");
+
+        var isFraudster = underTest.detect(dave.firstName(), dave.lastName(), email);
+
+        // Then
+        assertThat(isFraudster).isEqualTo(IsFraudster.of(true));
+        then(repository).should().search();
+    }
+
+    @Test
+    void givenLawAbidingCitizen_whenDetectionAttempt_thenFraudsterNotDetected() {
         // Given
         given(repository.search()).willReturn(List.of(dave));
 

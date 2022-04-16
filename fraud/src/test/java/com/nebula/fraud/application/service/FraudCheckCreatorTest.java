@@ -103,7 +103,32 @@ class FraudCheckCreatorTest {
     }
 
     @Test
-    void givenNotTakenId_whenCreationAttempt_thenCreationSucceeds() {
+    void givenEventPublishingFailsDueToRuntimeException_whenCreationAttempt_thenCreationFails() {
+        // Given
+        var id          = Id.of("917d15ee");
+        var firstName   = FirstName.of("Dave");
+        var lastName    = LastName.of("Richards");
+        var email       = EmailAddress.of("dave@email.com");
+        var isFraudster = IsFraudster.of(false);
+
+        given(detector.detect(firstName, lastName, email)).willReturn(isFraudster);
+        given(repository.search(id)).willReturn(Optional.empty());
+        doThrow(CustomRuntimeException.class).when(publisher).publish(anyList());
+
+        // When-Then
+        var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
+
+        assertThatThrownBy(() -> underTest.create(command)).isInstanceOf(CustomRuntimeException.class);
+
+        // Then
+        then(detector).should().detect(firstName, lastName, email);
+        then(repository).should().search(id);
+        then(repository).should().save(any());
+        then(publisher).should().publish(anyList());
+    }
+
+    @Test
+    void givenErrorlessFraudCheck_whenCreationAttempt_thenCreationSucceeds() {
         // Given
         var id          = Id.of("917d15ee");
         var firstName   = FirstName.of("Dave");
@@ -127,31 +152,6 @@ class FraudCheckCreatorTest {
 
         var events = eventsCaptor.getValue();
         events.forEach(event -> assertThat(event.getAggregateId()).isEqualTo(id.value()));
-    }
-
-    @Test
-    void givenEventPublishingFailsDueToRuntimeException_whenCreationAttempt_thenCreationFails() {
-        // Given
-        var id          = Id.of("917d15ee");
-        var firstName   = FirstName.of("Dave");
-        var lastName    = LastName.of("Richards");
-        var email       = EmailAddress.of("dave@email.com");
-        var isFraudster = IsFraudster.of(false);
-
-        given(detector.detect(firstName, lastName, email)).willReturn(isFraudster);
-        given(repository.search(id)).willReturn(Optional.empty());
-        doThrow(CustomRuntimeException.class).when(publisher).publish(anyList());
-
-        // When-Then
-        var command = new FraudCheckCreateCommand(id, firstName, lastName, email);
-
-        assertThatThrownBy(() -> underTest.create(command)).isInstanceOf(CustomRuntimeException.class);
-
-        // Then
-        then(detector).should().detect(firstName, lastName, email);
-        then(repository).should().search(id);
-        then(repository).should().save(any());
-        then(publisher).should().publish(anyList());
     }
 
 }
