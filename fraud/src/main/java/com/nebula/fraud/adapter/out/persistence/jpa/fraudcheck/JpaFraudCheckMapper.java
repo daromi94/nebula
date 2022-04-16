@@ -2,7 +2,6 @@ package com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck;
 
 import com.nebula.fraud.domain.FraudCheck;
 import com.nebula.shared.domain.commons.value.*;
-import com.nebula.shared.domain.value.*;
 
 public class JpaFraudCheckMapper {
 

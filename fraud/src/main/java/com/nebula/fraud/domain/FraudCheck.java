@@ -4,7 +4,6 @@ import com.nebula.fraud.application.command.FraudCheckCreateCommand;
 import com.nebula.shared.domain.commons.AggregateRoot;
 import com.nebula.shared.domain.commons.value.*;
 import com.nebula.shared.domain.fraud.FraudCheckCreatedEvent;
-import com.nebula.shared.domain.value.*;
 
 import java.time.LocalDateTime;
 
