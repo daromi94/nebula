@@ -29,12 +29,12 @@ public class FraudDetector {
             return sameFirst && sameLast;
         };
 
-        var fraudsters = repository.search()
+        var count = repository.search()
                 .stream()
                 .filter(fraudster -> sameName.test(fraudster) || fraudster.email().equals(email))
-                .toList();
+                .count();
 
-        return new IsFraudster(!fraudsters.isEmpty());
+        return new IsFraudster(count > 0);
     }
 
 }
