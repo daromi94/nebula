@@ -22,7 +22,7 @@ public class FraudDetector {
     }
 
     public IsFraudster detect(FirstName firstName, LastName lastName, EmailAddress email) {
-        Predicate<Fraudster> sameName = fraudster -> {
+        Predicate<Fraudster> hasSameName = fraudster -> {
             var sameFirst = fraudster.firstName().equals(firstName);
             var sameLast  = fraudster.lastName().equals(lastName);
 
@@ -31,7 +31,7 @@ public class FraudDetector {
 
         var count = repository.search()
                 .stream()
-                .filter(fraudster -> sameName.test(fraudster) || fraudster.email().equals(email))
+                .filter(fraudster -> hasSameName.test(fraudster) || fraudster.email().equals(email))
                 .count();
 
         return new IsFraudster(count > 0);
