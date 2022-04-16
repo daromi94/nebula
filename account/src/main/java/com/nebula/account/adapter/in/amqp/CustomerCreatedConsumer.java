@@ -1,8 +1,8 @@
 package com.nebula.account.adapter.in.amqp;
 
 import com.nebula.account.application.service.AccountCreator;
-import com.nebula.shared.domain.customer.CustomerCreatedEvent;
 import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.customer.CustomerCreatedEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -21,8 +21,8 @@ final class CustomerCreatedConsumer {
     public void consume(CustomerCreatedEvent event) {
         log.info("customer created event for {}", event);
 
-        var id         = new Id(event.getId());
-        var customerId = new Id(event.getAggregateId());
+        var id         = Id.of(event.getId());
+        var customerId = Id.of(event.getAggregateId());
 
         creator.create(id, customerId);
     }
