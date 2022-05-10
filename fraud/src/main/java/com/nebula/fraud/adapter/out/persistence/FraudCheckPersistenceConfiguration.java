@@ -4,26 +4,23 @@ import com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck.JpaFraudCheckMapp
 import com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck.JpaFraudCheckPersistenceAdapter;
 import com.nebula.fraud.adapter.out.persistence.jpa.fraudcheck.JpaFraudCheckRepository;
 import com.nebula.fraud.application.port.out.FraudCheckRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 @Configuration
 class FraudCheckPersistenceConfiguration {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+  @PersistenceContext private EntityManager entityManager;
 
-    @Bean
-    public FraudCheckRepository fraudCheckRepository() {
-        var mapper     = new JpaFraudCheckMapper();
-        var factory    = new JpaRepositoryFactory(entityManager);
-        var repository = factory.getRepository(JpaFraudCheckRepository.class);
+  @Bean
+  public FraudCheckRepository fraudCheckRepository() {
+    var mapper = new JpaFraudCheckMapper();
+    var factory = new JpaRepositoryFactory(entityManager);
+    var repository = factory.getRepository(JpaFraudCheckRepository.class);
 
-        return new JpaFraudCheckPersistenceAdapter(repository, mapper);
-    }
-
+    return new JpaFraudCheckPersistenceAdapter(repository, mapper);
+  }
 }

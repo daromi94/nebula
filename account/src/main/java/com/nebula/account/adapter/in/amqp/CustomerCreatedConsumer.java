@@ -11,20 +11,19 @@ import org.springframework.stereotype.Component;
 @Slf4j
 final class CustomerCreatedConsumer {
 
-    private final AccountCreator creator;
+  private final AccountCreator creator;
 
-    public CustomerCreatedConsumer(AccountCreator creator) {
-        this.creator = creator;
-    }
+  public CustomerCreatedConsumer(AccountCreator creator) {
+    this.creator = creator;
+  }
 
-    @RabbitListener(queues = "${amqp.queues.customer-created}")
-    public void consume(CustomerCreatedEvent event) {
-        log.info("customer created event for {}", event);
+  @RabbitListener(queues = "${amqp.queues.customer-created}")
+  public void consume(CustomerCreatedEvent event) {
+    log.info("customer created event for {}", event);
 
-        var id         = Id.of(event.getId());
-        var customerId = Id.of(event.getAggregateId());
+    var id = Id.of(event.getId());
+    var customerId = Id.of(event.getAggregateId());
 
-        creator.create(id, customerId);
-    }
-
+    creator.create(id, customerId);
+  }
 }

@@ -5,6 +5,4 @@ import com.nebula.shared.domain.commons.value.FirstName;
 import com.nebula.shared.domain.commons.value.Id;
 import com.nebula.shared.domain.commons.value.LastName;
 
-public record CustomerCreateCommand(Id id, FirstName firstName, LastName lastName, EmailAddress email) {
-
-}
+public record CustomerCreateCommand(Id id, FirstName firstName, LastName lastName, EmailAddress email) { }

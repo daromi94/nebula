@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 final class CustomRuntimeExceptionController {
 
-    @ExceptionHandler(CustomRuntimeException.class)
-    public ResponseEntity<CustomError> handle(CustomRuntimeException exception) {
-        return new ResponseEntity<>(exception.error(), HttpStatus.BAD_REQUEST);
-    }
-
+  @ExceptionHandler(CustomRuntimeException.class)
+  public ResponseEntity<CustomError> handle(CustomRuntimeException exception) {
+    return new ResponseEntity<>(exception.error(), HttpStatus.BAD_REQUEST);
+  }
 }

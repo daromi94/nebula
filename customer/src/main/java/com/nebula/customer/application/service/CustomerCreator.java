@@ -10,56 +10,58 @@ import com.nebula.shared.adapter.web.fraud.FraudChecksPostClientErrorException;
 import com.nebula.shared.adapter.web.fraud.FraudChecksPostRequest;
 import com.nebula.shared.adapter.web.fraud.FraudChecksPostResponse;
 import com.nebula.shared.application.service.EventPublisher;
-import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
 public class CustomerCreator {
 
-    private final CustomerRepository repository;
+  private final CustomerRepository repository;
 
-    private final EventPublisher publisher;
+  private final EventPublisher publisher;
 
-    private final FraudChecksPostClient client;
+  private final FraudChecksPostClient client;
 
-    public CustomerCreator(CustomerRepository repository, EventPublisher publisher, FraudChecksPostClient client) {
-        this.repository = repository;
-        this.publisher  = publisher;
-        this.client     = client;
+  public CustomerCreator(
+      CustomerRepository repository, EventPublisher publisher, FraudChecksPostClient client) {
+    this.repository = repository;
+    this.publisher = publisher;
+    this.client = client;
+  }
+
+  public void create(CustomerCreateCommand command) {
+    var customer = Customer.create(command);
+
+    repository
+        .search(customer.id())
+        .ifPresent(
+            entity -> {
+              throw new CustomerAlreadyExistsException(entity.id());
+            });
+    if (isFraudster(customer)) {
+      throw new CustomerIsFraudsterException(customer.id());
     }
 
-    public void create(CustomerCreateCommand command) {
-        var customer = Customer.create(command);
+    repository.save(customer);
+    publisher.publish(customer.pull());
+  }
 
-        repository.search(customer.id()).ifPresent(entity -> {
-            throw new CustomerAlreadyExistsException(entity.id());
-        });
-        if (isFraudster(customer)) {
-            throw new CustomerIsFraudsterException(customer.id());
-        }
+  private boolean isFraudster(Customer customer) {
+    var id = customer.id().value();
+    var firstName = customer.firstName().value();
+    var lastName = customer.lastName().value();
+    var email = customer.email().value();
+    var request = new FraudChecksPostRequest(id, firstName, lastName, email);
 
-        repository.save(customer);
-        publisher.publish(customer.pull());
+    FraudChecksPostResponse response;
+
+    try {
+      response = client.post(request);
+    } catch (RuntimeException exception) {
+      throw new FraudChecksPostClientErrorException(exception);
     }
 
-    private boolean isFraudster(Customer customer) {
-        var id        = customer.id().value();
-        var firstName = customer.firstName().value();
-        var lastName  = customer.lastName().value();
-        var email     = customer.email().value();
-        var request   = new FraudChecksPostRequest(id, firstName, lastName, email);
-
-        FraudChecksPostResponse response;
-
-        try {
-            response = client.post(request);
-        } catch (RuntimeException exception) {
-            throw new FraudChecksPostClientErrorException(exception);
-        }
-
-        return response.isFraudster();
-    }
-
+    return response.isFraudster();
+  }
 }

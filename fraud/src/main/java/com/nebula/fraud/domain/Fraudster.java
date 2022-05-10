@@ -8,35 +8,34 @@ import com.nebula.shared.domain.commons.value.LastName;
 
 public final class Fraudster extends AggregateRoot {
 
-    private final Id id;
+  private final Id id;
 
-    private final FirstName firstName;
+  private final FirstName firstName;
 
-    private final LastName lastName;
+  private final LastName lastName;
 
-    private final EmailAddress email;
+  private final EmailAddress email;
 
-    public Fraudster(Id id, FirstName firstName, LastName lastName, EmailAddress email) {
-        this.id        = id;
-        this.firstName = firstName;
-        this.lastName  = lastName;
-        this.email     = email;
-    }
+  public Fraudster(Id id, FirstName firstName, LastName lastName, EmailAddress email) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+  }
 
-    public Id id() {
-        return id;
-    }
+  public Id id() {
+    return id;
+  }
 
-    public FirstName firstName() {
-        return firstName;
-    }
+  public FirstName firstName() {
+    return firstName;
+  }
 
-    public LastName lastName() {
-        return lastName;
-    }
+  public LastName lastName() {
+    return lastName;
+  }
 
-    public EmailAddress email() {
-        return email;
-    }
-
+  public EmailAddress email() {
+    return email;
+  }
 }

@@ -1,6 +1,7 @@
 package com.nebula.fraud;
 
-import org.springframework.boot.SpringApplication;
+import static org.springframework.boot.SpringApplication.run;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
@@ -8,8 +9,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 class FraudApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(FraudApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    run(FraudApplication.class, args);
+  }
 }

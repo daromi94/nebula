@@ -8,12 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ExchangeConfiguration {
 
-    @Value("${amqp.exchanges.internal}")
-    private String internalTopicExchange;
+  @Value("${amqp.exchanges.internal}")
+  private String internalTopicExchange;
 
-    @Bean
-    public TopicExchange internalTopicExchange() {
-        return new TopicExchange(internalTopicExchange);
-    }
-
+  @Bean
+  public TopicExchange internalTopicExchange() {
+    return new TopicExchange(internalTopicExchange);
+  }
 }

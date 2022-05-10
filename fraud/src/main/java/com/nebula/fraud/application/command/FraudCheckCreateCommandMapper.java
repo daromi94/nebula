@@ -10,13 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public final class FraudCheckCreateCommandMapper {
 
-    public FraudCheckCreateCommand fromRequest(FraudChecksPostRequest request) {
-        var id        = Id.of(request.getId());
-        var firstName = FirstName.of(request.getFirstName());
-        var lastName  = LastName.of(request.getLastName());
-        var email     = EmailAddress.of(request.getEmail());
+  public FraudCheckCreateCommand fromRequest(FraudChecksPostRequest request) {
+    var id = Id.of(request.getId());
+    var firstName = FirstName.of(request.getFirstName());
+    var lastName = LastName.of(request.getLastName());
+    var email = EmailAddress.of(request.getEmail());
 
-        return new FraudCheckCreateCommand(id, firstName, lastName, email);
-    }
-
+    return new FraudCheckCreateCommand(id, firstName, lastName, email);
+  }
 }

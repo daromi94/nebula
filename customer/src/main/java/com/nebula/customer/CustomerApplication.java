@@ -1,6 +1,7 @@
 package com.nebula.customer;
 
-import org.springframework.boot.SpringApplication;
+import static org.springframework.boot.SpringApplication.run;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -10,8 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients(basePackages = "com.nebula.shared")
 class CustomerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(CustomerApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    run(CustomerApplication.class, args);
+  }
 }

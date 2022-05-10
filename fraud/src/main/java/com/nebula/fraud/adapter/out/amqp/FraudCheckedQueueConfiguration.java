@@ -13,27 +13,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class FraudCheckedQueueConfiguration {
 
-    private final ExchangeConfiguration exchangeConfiguration;
+  private final ExchangeConfiguration exchangeConfiguration;
 
-    @Value("${amqp.queues.fraud-check-created}")
-    private String queue;
+  @Value("${amqp.queues.fraud-check-created}")
+  private String queue;
 
-    public FraudCheckedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
-        this.exchangeConfiguration = exchangeConfiguration;
-    }
+  public FraudCheckedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
+    this.exchangeConfiguration = exchangeConfiguration;
+  }
 
-    @Bean
-    @Qualifier("${amqp.queues.fraud-check-created}")
-    public Queue queue() {
-        return new Queue(queue);
-    }
+  @Bean
+  @Qualifier("${amqp.queues.fraud-check-created}")
+  public Queue queue() {
+    return new Queue(queue);
+  }
 
-    @Bean
-    @Qualifier("${amqp.exchanges.internal}-${amqp.queues.fraud-check-created}")
-    public Binding internalToFraudCheckedBinding() {
-        return BindingBuilder.bind(queue())
-                .to(exchangeConfiguration.internalTopicExchange())
-                .with(FraudCheckCreatedEvent.class.getName());
-    }
-
+  @Bean
+  @Qualifier("${amqp.exchanges.internal}-${amqp.queues.fraud-check-created}")
+  public Binding internalToFraudCheckedBinding() {
+    return BindingBuilder.bind(queue())
+        .to(exchangeConfiguration.internalTopicExchange())
+        .with(FraudCheckCreatedEvent.class.getName());
+  }
 }

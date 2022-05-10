@@ -8,22 +8,21 @@ import com.nebula.shared.domain.commons.value.LastName;
 
 public class JpaFraudsterMapper {
 
-    public Fraudster fromJpa(JpaFraudster jpaFraudster) {
-        var id        = Id.of(jpaFraudster.getId());
-        var firstName = FirstName.of(jpaFraudster.getFirstName());
-        var lastName  = LastName.of(jpaFraudster.getLastName());
-        var email     = EmailAddress.of(jpaFraudster.getEmail());
+  public Fraudster fromJpa(JpaFraudster jpaFraudster) {
+    var id = Id.of(jpaFraudster.getId());
+    var firstName = FirstName.of(jpaFraudster.getFirstName());
+    var lastName = LastName.of(jpaFraudster.getLastName());
+    var email = EmailAddress.of(jpaFraudster.getEmail());
 
-        return new Fraudster(id, firstName, lastName, email);
-    }
+    return new Fraudster(id, firstName, lastName, email);
+  }
 
-    public JpaFraudster fromDomain(Fraudster fraudster) {
-        var id        = fraudster.id().value();
-        var firstName = fraudster.firstName().value();
-        var lastName  = fraudster.lastName().value();
-        var email     = fraudster.email().value();
+  public JpaFraudster fromDomain(Fraudster fraudster) {
+    var id = fraudster.id().value();
+    var firstName = fraudster.firstName().value();
+    var lastName = fraudster.lastName().value();
+    var email = fraudster.email().value();
 
-        return new JpaFraudster(id, firstName, lastName, email);
-    }
-
+    return new JpaFraudster(id, firstName, lastName, email);
+  }
 }

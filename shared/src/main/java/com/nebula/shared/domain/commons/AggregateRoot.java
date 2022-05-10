@@ -6,20 +6,19 @@ import java.util.List;
 
 public abstract class AggregateRoot {
 
-    private List<DomainEvent> events;
+  private List<DomainEvent> events;
 
-    protected AggregateRoot() {
-        this.events = new ArrayList<>();
-    }
+  protected AggregateRoot() {
+    this.events = new ArrayList<>();
+  }
 
-    public final List<DomainEvent> pull() {
-        var domainEvents = this.events;
-        this.events = Collections.emptyList();
-        return domainEvents;
-    }
+  public final List<DomainEvent> pull() {
+    var domainEvents = this.events;
+    this.events = Collections.emptyList();
+    return domainEvents;
+  }
 
-    protected final void register(DomainEvent event) {
-        events.add(event);
-    }
-
+  protected final void register(DomainEvent event) {
+    events.add(event);
+  }
 }

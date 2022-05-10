@@ -16,18 +16,18 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 public final class CustomerCreatedEvent extends DomainEvent {
 
-    private String firstName;
+  private String firstName;
 
-    private String lastName;
+  private String lastName;
 
-    private String email;
+  private String email;
 
-    public CustomerCreatedEvent(Id aggregateId, FirstName firstName, LastName lastName, EmailAddress email) {
-        super(aggregateId.value());
+  public CustomerCreatedEvent(
+      Id aggregateId, FirstName firstName, LastName lastName, EmailAddress email) {
+    super(aggregateId.value());
 
-        this.firstName = firstName.value();
-        this.lastName  = lastName.value();
-        this.email     = email.value();
-    }
-
+    this.firstName = firstName.value();
+    this.lastName = lastName.value();
+    this.email = email.value();
+  }
 }

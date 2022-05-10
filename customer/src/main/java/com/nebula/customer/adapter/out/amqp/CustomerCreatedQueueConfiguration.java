@@ -13,27 +13,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class CustomerCreatedQueueConfiguration {
 
-    private final ExchangeConfiguration exchangeConfiguration;
+  private final ExchangeConfiguration exchangeConfiguration;
 
-    @Value("${amqp.queues.customer-created}")
-    private String queue;
+  @Value("${amqp.queues.customer-created}")
+  private String queue;
 
-    public CustomerCreatedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
-        this.exchangeConfiguration = exchangeConfiguration;
-    }
+  public CustomerCreatedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
+    this.exchangeConfiguration = exchangeConfiguration;
+  }
 
-    @Bean
-    @Qualifier("${amqp.queues.customer-created}")
-    public Queue queue() {
-        return new Queue(queue);
-    }
+  @Bean
+  @Qualifier("${amqp.queues.customer-created}")
+  public Queue queue() {
+    return new Queue(queue);
+  }
 
-    @Bean
-    @Qualifier("${amqp.exchanges.internal}-${amqp.queues.customer-created}")
-    public Binding internalToCustomerCreatedBinding() {
-        return BindingBuilder.bind(queue())
-                .to(exchangeConfiguration.internalTopicExchange())
-                .with(CustomerCreatedEvent.class.getName());
-    }
-
+  @Bean
+  @Qualifier("${amqp.exchanges.internal}-${amqp.queues.customer-created}")
+  public Binding internalToCustomerCreatedBinding() {
+    return BindingBuilder.bind(queue())
+        .to(exchangeConfiguration.internalTopicExchange())
+        .with(CustomerCreatedEvent.class.getName());
+  }
 }

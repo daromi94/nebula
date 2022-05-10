@@ -13,27 +13,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class AccountCreatedQueueConfiguration {
 
-    private final ExchangeConfiguration exchangeConfiguration;
+  private final ExchangeConfiguration exchangeConfiguration;
 
-    @Value("${amqp.queues.account-created}")
-    private String queue;
+  @Value("${amqp.queues.account-created}")
+  private String queue;
 
-    public AccountCreatedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
-        this.exchangeConfiguration = exchangeConfiguration;
-    }
+  public AccountCreatedQueueConfiguration(ExchangeConfiguration exchangeConfiguration) {
+    this.exchangeConfiguration = exchangeConfiguration;
+  }
 
-    @Bean
-    @Qualifier("${amqp.queues.account-created}")
-    public Queue queue() {
-        return new Queue(queue);
-    }
+  @Bean
+  @Qualifier("${amqp.queues.account-created}")
+  public Queue queue() {
+    return new Queue(queue);
+  }
 
-    @Bean
-    @Qualifier("${amqp.exchanges.internal}-${amqp.queues.account-created}")
-    public Binding internalToAccountCreatedBinding() {
-        return BindingBuilder.bind(queue())
-                .to(exchangeConfiguration.internalTopicExchange())
-                .with(AccountCreatedEvent.class.getName());
-    }
-
+  @Bean
+  @Qualifier("${amqp.exchanges.internal}-${amqp.queues.account-created}")
+  public Binding internalToAccountCreatedBinding() {
+    return BindingBuilder.bind(queue())
+        .to(exchangeConfiguration.internalTopicExchange())
+        .with(AccountCreatedEvent.class.getName());
+  }
 }

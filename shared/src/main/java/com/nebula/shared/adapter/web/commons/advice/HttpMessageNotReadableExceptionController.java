@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 final class HttpMessageNotReadableExceptionController {
 
-    public static final String ERROR_CODE = "http-message-not-readable";
+  public static final String ERROR_CODE = "http-message-not-readable";
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<CustomError> handle(HttpMessageNotReadableException exception) {
-        var message = exception.getMostSpecificCause().getMessage();
-        var error   = new CustomError(ERROR_CODE, message);
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<CustomError> handle(HttpMessageNotReadableException exception) {
+    var message = exception.getMostSpecificCause().getMessage();
+    var error = new CustomError(ERROR_CODE, message);
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
 }

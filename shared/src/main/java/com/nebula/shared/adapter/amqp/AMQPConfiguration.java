@@ -13,35 +13,34 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 class AMQPConfiguration {
 
-    private final ConnectionFactory connectionFactory;
+  private final ConnectionFactory connectionFactory;
 
-    public AMQPConfiguration(ConnectionFactory connectionFactory) {
-        this.connectionFactory = connectionFactory;
-    }
+  public AMQPConfiguration(ConnectionFactory connectionFactory) {
+    this.connectionFactory = connectionFactory;
+  }
 
-    @Bean
-    @Primary
-    public AmqpTemplate amqpTemplate() {
-        var template = new RabbitTemplate(connectionFactory);
+  @Bean
+  @Primary
+  public AmqpTemplate amqpTemplate() {
+    var template = new RabbitTemplate(connectionFactory);
 
-        template.setMessageConverter(messageConverter());
+    template.setMessageConverter(messageConverter());
 
-        return template;
-    }
+    return template;
+  }
 
-    @Bean
-    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
-        var containerFactory = new SimpleRabbitListenerContainerFactory();
+  @Bean
+  public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
+    var containerFactory = new SimpleRabbitListenerContainerFactory();
 
-        containerFactory.setConnectionFactory(connectionFactory);
-        containerFactory.setMessageConverter(messageConverter());
+    containerFactory.setConnectionFactory(connectionFactory);
+    containerFactory.setMessageConverter(messageConverter());
 
-        return containerFactory;
-    }
+    return containerFactory;
+  }
 
-    @Bean
-    public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-
+  @Bean
+  public MessageConverter messageConverter() {
+    return new Jackson2JsonMessageConverter();
+  }
 }
