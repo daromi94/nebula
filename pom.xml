@@ -101,7 +101,6 @@
     <module>customer</module>
     <module>fraud</module>
     <module>account</module>
-    <module>eureka</module>
   </modules>
   <name>nebula</name>
   <packaging>pom</packaging>

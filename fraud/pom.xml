@@ -23,10 +23,6 @@
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
-      <artifactId>spring-cloud-starter-openfeign</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
@@ -36,10 +32,6 @@
     </dependency>
     <dependency>
       <artifactId>spring-cloud-starter-sleuth</artifactId>
-      <groupId>org.springframework.cloud</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
     <dependency>

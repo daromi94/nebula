@@ -37,10 +37,3 @@ amqp:
     customer-created: ${CUSTOMER_CREATED_EVENT}
     account-created: ${ACCOUNT_CREATED_EVENT}
     fraud-check-created: ${FRAUD_CHECK_CREATED_EVENT}
-
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URL}
-    fetch-registry: ${EUREKA_CLIENT_FETCH_REGISTRY}
-    register-with-eureka: ${EUREKA_CLIENT_REGISTER}
