@@ -15,14 +15,18 @@ public final class Account extends AggregateRoot {
 
   private final Balance balance;
 
-  public Account(Id id, Id customerId, Balance balance) {
+  private final AccountStatus status;
+
+  public Account(Id id, Id customerId, Balance balance, AccountStatus status) {
     this.id = id;
     this.customerId = customerId;
     this.balance = balance;
+    this.status = status;
   }
 
   public static Account create(Id id, Id customerId) {
-    var account = new Account(id, customerId, new Balance(EMPTY_BALANCE));
+    var account =
+        new Account(id, customerId, new Balance(EMPTY_BALANCE), AccountStatus.PENDING_APPROVAL);
 
     account.register(new AccountCreatedEvent(id, customerId));
 
@@ -39,5 +43,9 @@ public final class Account extends AggregateRoot {
 
   public Balance balance() {
     return balance;
+  }
+
+  public AccountStatus status() {
+    return status;
   }
 }

@@ -1,4 +1,4 @@
-package com.nebula.fraud.adapter.out.persistence.jpa.fraudster;
+package com.nebula.fraud.adapter.out.persistence.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

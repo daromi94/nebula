@@ -24,4 +24,7 @@ class JpaAccount {
 
   @Column(name = "balance")
   private double balance;
+
+  @Column(name = "status", nullable = false)
+  private String status;
 }
