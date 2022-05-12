@@ -19,16 +19,16 @@ import org.mockito.Mock;
 
 class FraudsterFinderTest {
 
-  private FraudsterFinder underTest;
+  FraudsterFinder underTest;
 
-  @Mock private FraudsterRepository repository;
+  @Mock FraudsterRepository repository;
 
-  private Fraudster dave;
+  Fraudster dave;
 
-  private Fraudster larry;
+  Fraudster larry;
 
   @BeforeEach
-  void setUp() {
+  void setup() {
     openMocks(this);
 
     underTest = new FraudsterFinder(repository);
