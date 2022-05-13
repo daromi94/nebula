@@ -27,27 +27,23 @@ class FraudsterFinderTest {
 
   AutoCloseable closeable;
 
-  Fraudster dave;
+  Fraudster dave =
+      new Fraudster(
+          Id.of("917d15ee"),
+          FirstName.of("Dave"),
+          LastName.of("Richards"),
+          EmailAddress.of("dave@email.com"));
 
-  Fraudster larry;
+  Fraudster larry =
+      new Fraudster(
+          Id.of("816y15k7"),
+          FirstName.of("Larry"),
+          LastName.of("Ellison"),
+          EmailAddress.of("larry@email.com"));
 
   @BeforeEach
   void setup() {
     closeable = openMocks(this);
-
-    dave =
-        new Fraudster(
-            Id.of("917d15ee"),
-            FirstName.of("Dave"),
-            LastName.of("Richards"),
-            EmailAddress.of("dave@email.com"));
-
-    larry =
-        new Fraudster(
-            Id.of("816y15k7"),
-            FirstName.of("Larry"),
-            LastName.of("Ellison"),
-            EmailAddress.of("larry@email.com"));
   }
 
   @AfterEach
@@ -68,43 +64,43 @@ class FraudsterFinderTest {
       then(repository).should().search();
     }
 
-    @Test
-    void givenSameEmailOfReportedFraudster_thenFraudsterIsFound() {
-      // Given
-      given(repository.search()).willReturn(List.of(dave));
+    @Nested
+    class GivenReportedFraudsters {
 
-      // When
-      var fraudsters = underTest.find(larry.firstName(), larry.lastName(), dave.email());
+      @BeforeEach
+      void setup() {
+        given(repository.search()).willReturn(List.of(dave));
+      }
 
-      // Then
-      assertThat(fraudsters).contains(dave);
-      then(repository).should().search();
-    }
+      @Test
+      void givenSameEmailAsReportedFraudster_thenFraudsterIsFound() {
+        // When
+        var fraudsters = underTest.find(larry.firstName(), larry.lastName(), dave.email());
 
-    @Test
-    void givenSameNamesOfReportedFraudster_thenFraudsterIsFound() {
-      // Given
-      given(repository.search()).willReturn(List.of(dave));
+        // Then
+        assertThat(fraudsters).contains(dave);
+        then(repository).should().search();
+      }
 
-      // When
-      var fraudsters = underTest.find(dave.firstName(), dave.lastName(), larry.email());
+      @Test
+      void givenSameNameAsReportedFraudster_thenFraudsterIsFound() {
+        // When
+        var fraudsters = underTest.find(dave.firstName(), dave.lastName(), larry.email());
 
-      // Then
-      assertThat(fraudsters).contains(dave);
-      then(repository).should().search();
-    }
+        // Then
+        assertThat(fraudsters).contains(dave);
+        then(repository).should().search();
+      }
 
-    @Test
-    void givenLawAbidingCitizen_thenNoFraudstersAreFound() {
-      // Given
-      given(repository.search()).willReturn(List.of(dave));
+      @Test
+      void givenLawAbidingCitizen_thenNoFraudstersAreFound() {
+        // When
+        var fraudsters = underTest.find(larry.firstName(), larry.lastName(), larry.email());
 
-      // When
-      var fraudsters = underTest.find(larry.firstName(), larry.lastName(), larry.email());
-
-      // Then
-      assertThat(fraudsters).isEmpty();
-      then(repository).should().search();
+        // Then
+        assertThat(fraudsters).isEmpty();
+        then(repository).should().search();
+      }
     }
   }
 }
