@@ -13,6 +13,7 @@ import com.nebula.shared.domain.commons.value.Id;
 import com.nebula.shared.domain.commons.value.LastName;
 import java.util.Collections;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,13 +24,15 @@ class FraudsterFinderTest {
 
   @Mock FraudsterRepository repository;
 
+  AutoCloseable closeable;
+
   Fraudster dave;
 
   Fraudster larry;
 
   @BeforeEach
   void setup() {
-    openMocks(this);
+    closeable = openMocks(this);
 
     underTest = new FraudsterFinder(repository);
 
@@ -100,5 +103,10 @@ class FraudsterFinderTest {
     // Then
     assertThat(fraudsters).isEmpty();
     then(repository).should().search();
+  }
+
+  @AfterEach
+  void teardown() throws Exception {
+    closeable.close();
   }
 }
