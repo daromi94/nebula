@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -50,62 +51,64 @@ class FraudsterFinderTest {
             EmailAddress.of("larry@email.com"));
   }
 
-  @Test
-  void givenNoReportedFraudsters_whenFindingAttempt_thenNoFraudstersAreFound() {
-    // Given
-    given(repository.search()).willReturn(Collections.emptyList());
-
-    // When
-    var fraudsters = underTest.find(larry.firstName(), larry.lastName(), larry.email());
-
-    // Then
-    assertThat(fraudsters).isEmpty();
-    then(repository).should().search();
-  }
-
-  @Test
-  void givenSameEmailOfReportedFraudster_whenFindingAttempt_thenFraudsterIsFound() {
-    // Given
-    given(repository.search()).willReturn(List.of(dave));
-
-    // When
-    var fraudsters = underTest.find(larry.firstName(), larry.lastName(), dave.email());
-
-    // Then
-    assertThat(fraudsters.stream().anyMatch(fraudster -> fraudster.id().equals(dave.id())))
-        .isTrue();
-    then(repository).should().search();
-  }
-
-  @Test
-  void givenSameNamesOfReportedFraudster_whenFindingAttempt_thenFraudsterIsFound() {
-    // Given
-    given(repository.search()).willReturn(List.of(dave));
-
-    // When
-    var fraudsters = underTest.find(dave.firstName(), dave.lastName(), larry.email());
-
-    // Then
-    assertThat(fraudsters.stream().anyMatch(fraudster -> fraudster.id().equals(dave.id())))
-        .isTrue();
-    then(repository).should().search();
-  }
-
-  @Test
-  void givenLawAbidingCitizen_whenFindingAttempt_thenNoFraudstersAreFound() {
-    // Given
-    given(repository.search()).willReturn(List.of(dave));
-
-    // When
-    var fraudsters = underTest.find(larry.firstName(), larry.lastName(), larry.email());
-
-    // Then
-    assertThat(fraudsters).isEmpty();
-    then(repository).should().search();
-  }
-
   @AfterEach
   void teardown() throws Exception {
     closeable.close();
+  }
+
+  @Nested
+  class WhenFindingAttempt {
+
+    @Test
+    void givenNoReportedFraudsters_thenNoFraudstersAreFound() {
+      // Given
+      given(repository.search()).willReturn(Collections.emptyList());
+
+      // When
+      var fraudsters = underTest.find(larry.firstName(), larry.lastName(), larry.email());
+
+      // Then
+      assertThat(fraudsters).isEmpty();
+      then(repository).should().search();
+    }
+
+    @Test
+    void givenSameEmailOfReportedFraudster_thenFraudsterIsFound() {
+      // Given
+      given(repository.search()).willReturn(List.of(dave));
+
+      // When
+      var fraudsters = underTest.find(larry.firstName(), larry.lastName(), dave.email());
+
+      // Then
+      assertThat(fraudsters).contains(dave);
+      then(repository).should().search();
+    }
+
+    @Test
+    void givenSameNamesOfReportedFraudster_thenFraudsterIsFound() {
+      // Given
+      given(repository.search()).willReturn(List.of(dave));
+
+      // When
+      var fraudsters = underTest.find(dave.firstName(), dave.lastName(), larry.email());
+
+      // Then
+      assertThat(fraudsters).contains(dave);
+      then(repository).should().search();
+    }
+
+    @Test
+    void givenLawAbidingCitizen_thenNoFraudstersAreFound() {
+      // Given
+      given(repository.search()).willReturn(List.of(dave));
+
+      // When
+      var fraudsters = underTest.find(larry.firstName(), larry.lastName(), larry.email());
+
+      // Then
+      assertThat(fraudsters).isEmpty();
+      then(repository).should().search();
+    }
   }
 }
