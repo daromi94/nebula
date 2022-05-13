@@ -16,11 +16,12 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 class FraudsterFinderTest {
 
-  FraudsterFinder underTest;
+  @InjectMocks FraudsterFinder underTest;
 
   @Mock FraudsterRepository repository;
 
@@ -33,8 +34,6 @@ class FraudsterFinderTest {
   @BeforeEach
   void setup() {
     closeable = openMocks(this);
-
-    underTest = new FraudsterFinder(repository);
 
     dave =
         new Fraudster(
