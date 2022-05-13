@@ -11,7 +11,6 @@ import com.nebula.shared.domain.commons.value.EmailAddress;
 import com.nebula.shared.domain.commons.value.FirstName;
 import com.nebula.shared.domain.commons.value.Id;
 import com.nebula.shared.domain.commons.value.LastName;
-import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,9 +60,6 @@ class FraudsterFinderTest {
 
     @Test
     void givenNoReportedFraudsters_thenNoFraudstersAreFound() {
-      // Given
-      given(repository.search()).willReturn(Collections.emptyList());
-
       // When
       var fraudsters = underTest.find(larry.firstName(), larry.lastName(), larry.email());
 
