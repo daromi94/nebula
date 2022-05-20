@@ -4,7 +4,6 @@ import com.nebula.customer.application.command.CustomerCreateCommand;
 import com.nebula.customer.application.port.out.CustomerRepository;
 import com.nebula.customer.domain.Customer;
 import com.nebula.customer.domain.CustomerAlreadyExistsException;
-import com.nebula.shared.adapter.web.fraud.FraudChecksPostClient;
 import com.nebula.shared.application.service.EventPublisher;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -17,13 +16,9 @@ public class CustomerCreator {
 
   private final EventPublisher publisher;
 
-  private final FraudChecksPostClient client;
-
-  public CustomerCreator(
-      CustomerRepository repository, EventPublisher publisher, FraudChecksPostClient client) {
+  public CustomerCreator(CustomerRepository repository, EventPublisher publisher) {
     this.repository = repository;
     this.publisher = publisher;
-    this.client = client;
   }
 
   public void create(CustomerCreateCommand command) {
