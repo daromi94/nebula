@@ -31,7 +31,7 @@ public class EventPublisher {
     }
   }
 
-  public void publish(DomainEvent event) throws EventPublishingErrorException {
+  public void publish(DomainEvent event) {
     publish(List.of(event));
   }
 }
