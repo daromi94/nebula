@@ -3,7 +3,6 @@ package com.nebula.fraud.application.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.MockitoAnnotations.openMocks;
 
 import com.nebula.fraud.application.port.out.FraudsterRepository;
 import com.nebula.fraud.domain.Fraudster;
@@ -12,44 +11,34 @@ import com.nebula.shared.domain.commons.value.FirstName;
 import com.nebula.shared.domain.commons.value.Id;
 import com.nebula.shared.domain.commons.value.LastName;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class FraudsterFinderTest {
 
-  @InjectMocks FraudsterFinder underTest;
-
-  @Mock FraudsterRepository repository;
-
-  AutoCloseable closeable;
-
-  Fraudster dave =
+  private final Fraudster dave =
       new Fraudster(
           Id.of("917d15ee"),
           FirstName.of("Dave"),
           LastName.of("Richards"),
           EmailAddress.of("dave@email.com"));
 
-  Fraudster larry =
+  private final Fraudster larry =
       new Fraudster(
           Id.of("816y15k7"),
           FirstName.of("Larry"),
           LastName.of("Ellison"),
           EmailAddress.of("larry@email.com"));
 
-  @BeforeEach
-  void setup() {
-    closeable = openMocks(this);
-  }
+  @InjectMocks FraudsterFinder underTest;
 
-  @AfterEach
-  void teardown() throws Exception {
-    closeable.close();
-  }
+  @Mock FraudsterRepository repository;
 
   @Nested
   class WhenFindingAttempt {
