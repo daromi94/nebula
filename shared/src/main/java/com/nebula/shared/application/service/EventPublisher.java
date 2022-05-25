@@ -6,10 +6,8 @@ import java.util.List;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class EventPublisher {
 
   private final AmqpTemplate template;
