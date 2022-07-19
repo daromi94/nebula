@@ -1,11 +1,7 @@
 package com.nebula.customer.domain;
 
 import com.nebula.customer.application.command.CustomerCreateCommand;
-import com.nebula.shared.domain.commons.AggregateRoot;
-import com.nebula.shared.domain.commons.value.EmailAddress;
-import com.nebula.shared.domain.commons.value.FirstName;
 import com.nebula.shared.domain.commons.value.Id;
-import com.nebula.shared.domain.commons.value.LastName;
 import com.nebula.shared.domain.customer.CustomerCreatedEvent;
 
 public final class Customer extends AggregateRoot {

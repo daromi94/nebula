@@ -1,10 +1,7 @@
 package com.nebula.customer.adapter.out.persistence.jpa;
 
 import com.nebula.customer.domain.Customer;
-import com.nebula.shared.domain.commons.value.EmailAddress;
-import com.nebula.shared.domain.commons.value.FirstName;
 import com.nebula.shared.domain.commons.value.Id;
-import com.nebula.shared.domain.commons.value.LastName;
 
 public class JpaCustomerMapper {
 

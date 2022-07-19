@@ -1,51 +1,46 @@
 package com.nebula.account.domain;
 
-import com.nebula.shared.domain.account.AccountCreatedEvent;
-import com.nebula.shared.domain.commons.AggregateRoot;
-import com.nebula.shared.domain.commons.value.Balance;
+import com.nebula.shared.domain.commons.value.CreatedAt;
 import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.commons.value.Money;
 
-public final class Account extends AggregateRoot {
+import java.util.Optional;
+import java.util.function.BiPredicate;
 
-  public static final double EMPTY_BALANCE = 0.0;
+public final class Account {
 
   private final Id id;
 
-  private final Id customerId;
+  private final Id userId;
 
-  private final Balance balance;
+  private final CreatedAt createdAt;
 
-  private final AccountStatus status;
+  private final Money balance;
 
-  public Account(Id id, Id customerId, Balance balance, AccountStatus status) {
+  private Account(Id id, Id userId, Money balance, CreatedAt createdAt) {
     this.id = id;
-    this.customerId = customerId;
+    this.userId = userId;
     this.balance = balance;
-    this.status = status;
+    this.createdAt = createdAt;
   }
 
-  public static Account create(Id id, Id customerId) {
-    var account =
-        new Account(id, customerId, new Balance(EMPTY_BALANCE), AccountStatus.PENDING_APPROVAL);
+  public static Account of(Id id, Id userId) {
+    return new Account(id, userId, Money.ZERO, CreatedAt.NOW);
+  }
 
-    account.register(new AccountCreatedEvent(id, customerId));
+  public Optional<Operation> withdraw(Money cash) {
+    BiPredicate<Money, Money> mayWithdraw = Money::isGreaterOrEqualThan;
 
-    return account;
+    if (!mayWithdraw.test(balance, cash)) return Optional.empty();
+
+    return Optional.of(new Operation(id, cash.negate()));
+  }
+
+  public Optional<Operation> deposit(Money cash) {
+    return Optional.of(new Operation(id, cash));
   }
 
   public Id id() {
     return id;
-  }
-
-  public Id customerId() {
-    return customerId;
-  }
-
-  public Balance balance() {
-    return balance;
-  }
-
-  public AccountStatus status() {
-    return status;
   }
 }
