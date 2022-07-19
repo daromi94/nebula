@@ -5,10 +5,12 @@ import com.nebula.account.application.port.in.AccountCreateUseCase;
 import com.nebula.account.application.port.out.SaveAccountPort;
 import com.nebula.account.application.port.out.SearchAccountPort;
 import com.nebula.account.domain.Account;
+import com.nebula.shared.domain.commons.value.Id;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 @Service
 @Transactional
@@ -25,10 +27,13 @@ final class AccountCreator implements AccountCreateUseCase {
 
   @Override
   public Optional<Account> create(AccountCreateCommand command) {
-    if (searcher.exists(command.id())) {
-      // TODO: throw a dedicated exception
-      throw new RuntimeException();
-    }
+    BiConsumer<Id, SearchAccountPort> requireAccountNotExists =
+        (id, fetcher) -> {
+          // TODO: throw a dedicated exception
+          if (fetcher.exists(id)) throw new RuntimeException();
+        };
+
+    requireAccountNotExists.accept(command.id(), searcher);
 
     Account account = Account.of(command.id(), command.userId());
 
