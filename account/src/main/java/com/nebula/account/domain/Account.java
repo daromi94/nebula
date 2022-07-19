@@ -31,7 +31,7 @@ public final class Account {
   public Optional<Operation> withdraw(Money cash) {
     BiPredicate<Money, Money> mayWithdraw = Money::isGreaterOrEqualThan;
 
-    if (!mayWithdraw.test(balance, cash)) return Optional.empty();
+    if (mayWithdraw.negate().test(balance, cash)) return Optional.empty();
 
     return Optional.of(new Operation(id, cash.negate()));
   }
