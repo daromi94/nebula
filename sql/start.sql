@@ -1,0 +1,2 @@
+CREATE DATABASE account;
+CREATE DATABASE customer;

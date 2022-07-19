@@ -1,0 +1,110 @@
+services:
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - PGDATA=/data/postgres
+    volumes:
+      - postgres:/data/postgres
+      - ./sql/start.sql:/docker-entrypoint-initdb.d/start.sql
+    ports:
+      - ${DATABASE_EXTERNAL_PORT}:${DATABASE_INTERNAL_PORT}
+    networks:
+      - data
+    restart: unless-stopped
+
+  db-admin:
+    container_name: db-admin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${DATABASE_ADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${DATABASE_ADMIN_PASSWORD}
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - ${DATABASE_ADMIN_EXTERNAL_PORT}:${DATABASE_ADMIN_INTERNAL_PORT}
+    networks:
+      - data
+    restart: unless-stopped
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - ${ZIPKIN_EXTERNAL_PORT}:${ZIPKIN_INTERNAL_PORT}
+    networks:
+      - services
+
+  amqp:
+    container_name: amqp
+    image: rabbitmq:3.9.11-management-alpine
+    ports:
+      - ${AMQP_EXTERNAL_PORT}:${AMQP_INTERNAL_PORT}
+      - ${AMQP_MANAGEMENT_EXTERNAL_PORT}:${AMQP_MANAGEMENT_INTERNAL_PORT}
+    networks:
+      - services
+
+  account:
+    container_name: account
+    image: daromi94/nebula-account
+    environment:
+      - SERVER_PORT=${ACCOUNT_SERVER_INTERNAL_PORT}
+      - APPLICATION_NAME=${ACCOUNT_APPLICATION_NAME}
+      - JACKSON_SERIALIZATION_INDENT_OUTPUT=${ACCOUNT_JACKSON_SERIALIZATION_INDENT_OUTPUT}
+      - JACKSON_DESERIALIZATION_FAIL_ON_UNKNOWN_PROPERTIES=${ACCOUNT_JACKSON_DESERIALIZATION_FAIL_ON_UNKNOWN_PROPERTIES}
+      - DATASOURCE_URL=jdbc:postgresql://db:${DATABASE_INTERNAL_PORT}/${ACCOUNT_DATABASE_NAME}
+      - DATASOURCE_USERNAME=${DATABASE_USERNAME}
+      - DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
+      - JPA_PROPERTY_HIBERNATE_DIALECT=${ACCOUNT_JPA_PROPERTY_HIBERNATE_DIALECT}
+      - JPA_PROPERTY_HIBERNATE_FORMAT_SQL=${ACCOUNT_JPA_PROPERTY_HIBERNATE_FORMAT_SQL}
+      - JPA_HIBERNATE_DDL_AUTO=${ACCOUNT_JPA_HIBERNATE_DDL_AUTO}
+      - JPA_SHOW_SQL=${ACCOUNT_JPA_SHOW_SQL}
+      - ZIPKIN_URL=http://zipkin:${ZIPKIN_INTERNAL_PORT}/
+    ports:
+      - ${ACCOUNT_SERVER_EXTERNAL_PORT}:${ACCOUNT_SERVER_INTERNAL_PORT}
+    networks:
+      - services
+      - data
+    depends_on:
+      - db
+      - amqp
+      - zipkin
+
+  customer:
+    container_name: customer
+    image: daromi94/nebula-customer
+    environment:
+      - SERVER_PORT=${CUSTOMER_SERVER_INTERNAL_PORT}
+      - APPLICATION_NAME=${CUSTOMER_APPLICATION_NAME}
+      - JACKSON_SERIALIZATION_INDENT_OUTPUT=${CUSTOMER_JACKSON_SERIALIZATION_INDENT_OUTPUT}
+      - JACKSON_DESERIALIZATION_FAIL_ON_UNKNOWN_PROPERTIES=${CUSTOMER_JACKSON_DESERIALIZATION_FAIL_ON_UNKNOWN_PROPERTIES}
+      - DATASOURCE_URL=jdbc:postgresql://db:${DATABASE_INTERNAL_PORT}/${CUSTOMER_DATABASE_NAME}
+      - DATASOURCE_USERNAME=${DATABASE_USERNAME}
+      - DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
+      - JPA_PROPERTY_HIBERNATE_DIALECT=${CUSTOMER_JPA_PROPERTY_HIBERNATE_DIALECT}
+      - JPA_PROPERTY_HIBERNATE_FORMAT_SQL=${CUSTOMER_JPA_PROPERTY_HIBERNATE_FORMAT_SQL}
+      - JPA_HIBERNATE_DDL_AUTO=${CUSTOMER_JPA_HIBERNATE_DDL_AUTO}
+      - JPA_SHOW_SQL=${CUSTOMER_JPA_SHOW_SQL}
+      - ZIPKIN_URL=http://zipkin:${ZIPKIN_INTERNAL_PORT}/
+    ports:
+      - ${CUSTOMER_SERVER_EXTERNAL_PORT}:${CUSTOMER_SERVER_INTERNAL_PORT}
+    networks:
+      - services
+      - data
+    depends_on:
+      - db
+      - amqp
+      - zipkin
+
+networks:
+  services:
+    driver: bridge
+  data:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
