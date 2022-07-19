@@ -27,13 +27,13 @@ final class AccountCreator implements AccountCreateUseCase {
 
   @Override
   public Optional<Account> create(AccountCreateCommand command) {
-    BiConsumer<Id, SearchAccountPort> requireNonexistentAccount =
+    BiConsumer<Id, SearchAccountPort> requireNonExistentAccountId =
         (id, fetcher) -> {
           // TODO: throw a dedicated exception
           if (fetcher.exists(id)) throw new RuntimeException();
         };
 
-    requireNonexistentAccount.accept(command.id(), searcher);
+    requireNonExistentAccountId.accept(command.id(), searcher);
 
     Account account = Account.of(command.id(), command.userId());
 
