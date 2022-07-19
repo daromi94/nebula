@@ -4,8 +4,7 @@ import com.nebula.shared.domain.commons.value.CreatedAt;
 import com.nebula.shared.domain.commons.value.Id;
 import com.nebula.shared.domain.commons.value.Money;
 
-import java.util.Optional;
-import java.util.function.BiPredicate;
+import java.util.function.BiConsumer;
 
 public final class Account {
 
@@ -28,16 +27,22 @@ public final class Account {
     return new Account(id, userId, Money.ZERO, CreatedAt.NOW);
   }
 
-  public Optional<Operation> withdraw(Money cash) {
-    BiPredicate<Money, Money> mayWithdraw = Money::isGreaterOrEqualThan;
+  public Operation withdraw(Money cash) {
+    BiConsumer<Money, Money> mayWithdraw =
+        (funds, money) -> {
+          if (!funds.isGreaterOrEqualThan(money)) {
+            // TODO: throw a dedicated exception
+            throw new RuntimeException();
+          }
+        };
 
-    if (mayWithdraw.negate().test(balance, cash)) return Optional.empty();
+    mayWithdraw.accept(balance, cash);
 
-    return Optional.of(new Operation(id, cash.negate()));
+    return new Operation(id, cash.negate());
   }
 
-  public Optional<Operation> deposit(Money cash) {
-    return Optional.of(new Operation(id, cash));
+  public Operation deposit(Money cash) {
+    return new Operation(id, cash);
   }
 
   public Id id() {
