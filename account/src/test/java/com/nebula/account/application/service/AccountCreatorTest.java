@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -36,10 +37,10 @@ class AccountCreatorTest {
   void givenExistingAccountId_thenAccountCreationShouldFail() {
     given(searcher.exists(ACCOUNT_ID)).willReturn(true);
 
-    Optional<Account> optionalAccount =
-        underTest.create(new AccountCreateCommand(ACCOUNT_ID, USER_ID));
+    AccountCreateCommand command = new AccountCreateCommand(ACCOUNT_ID, USER_ID);
 
-    assertThat(optionalAccount).isEmpty();
+    // TODO: throw a dedicated exception
+    assertThrows(RuntimeException.class, () -> underTest.create(command));
 
     then(searcher).should().exists(ACCOUNT_ID);
     then(saver).should(never()).save(any());

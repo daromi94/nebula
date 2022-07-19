@@ -26,7 +26,8 @@ final class AccountCreator implements AccountCreateUseCase {
   @Override
   public Optional<Account> create(AccountCreateCommand command) {
     if (searcher.exists(command.id())) {
-      return Optional.empty();
+      // TODO: throw a dedicated exception
+      throw new RuntimeException();
     }
 
     Account account = Account.of(command.id(), command.userId());
