@@ -22,6 +22,10 @@ import static org.mockito.Mockito.never;
 @ExtendWith(MockitoExtension.class)
 class AccountCreatorTest {
 
+  private static final Id ACCOUNT_ID = new Id("917d15ee");
+
+  private static final Id USER_ID = new Id("825e17ff");
+
   @InjectMocks AccountCreator underTest;
 
   @Mock SearchAccountPort searcher;
@@ -30,31 +34,27 @@ class AccountCreatorTest {
 
   @Test
   void givenExistingAccountId_thenAccountCreationShouldFail() {
-    Id id = new Id("917d15ee");
-
-    given(searcher.exists(id)).willReturn(true);
+    given(searcher.exists(ACCOUNT_ID)).willReturn(true);
 
     Optional<Account> optionalAccount =
-        underTest.create(new AccountCreateCommand(id, new Id("825e17ff")));
+        underTest.create(new AccountCreateCommand(ACCOUNT_ID, USER_ID));
 
     assertThat(optionalAccount).isEmpty();
 
-    then(searcher).should().exists(id);
+    then(searcher).should().exists(ACCOUNT_ID);
     then(saver).should(never()).save(any());
   }
 
   @Test
   void givenNonexistentAccountId_thenAccountCreationShouldSucceed() {
-    Id id = new Id("917d15ee");
-
-    given(searcher.exists(id)).willReturn(false);
+    given(searcher.exists(ACCOUNT_ID)).willReturn(false);
 
     Optional<Account> optionalAccount =
-        underTest.create(new AccountCreateCommand(id, new Id("825e17ff")));
+        underTest.create(new AccountCreateCommand(ACCOUNT_ID, USER_ID));
 
     assertThat(optionalAccount).isNotEmpty();
 
-    then(searcher).should().exists(id);
+    then(searcher).should().exists(ACCOUNT_ID);
     then(saver).should().save(optionalAccount.get());
   }
 }
