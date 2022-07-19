@@ -30,10 +30,8 @@ public final class Account {
   public Operation withdraw(Money cash) {
     BiConsumer<Money, Money> mayWithdraw =
         (funds, money) -> {
-          if (!funds.isGreaterOrEqualThan(money)) {
-            // TODO: throw a dedicated exception
-            throw new RuntimeException();
-          }
+          // TODO: throw a dedicated exception
+          if (!funds.isGreaterOrEqualThan(money)) throw new RuntimeException();
         };
 
     mayWithdraw.accept(balance, cash);
