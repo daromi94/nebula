@@ -1,10 +1,10 @@
-# Compiled class file
+# Compiled class files
 *.class
 
-# Log file
+# Log files
 *.log
 
-# Package Files
+# Package files
 *.jar
 *.war
 *.nar
@@ -16,13 +16,13 @@
 # Virtual machine crash logs
 hs_err_pid*
 
-# Maven
+# Maven files
 */target/
 
-# Environment
+# Environment files
 .env
 
-# IntelliJ IDEA
+# IntelliJ IDEA files
 .idea
 *.iws
 *.iml

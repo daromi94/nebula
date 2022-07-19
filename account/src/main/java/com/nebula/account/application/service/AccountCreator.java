@@ -1,37 +1,38 @@
 package com.nebula.account.application.service;
 
-import com.nebula.account.application.port.out.AccountRepository;
+import com.nebula.account.application.port.in.AccountCreateCommand;
+import com.nebula.account.application.port.in.AccountCreateUseCase;
+import com.nebula.account.application.port.out.SaveAccountPort;
+import com.nebula.account.application.port.out.SearchAccountPort;
 import com.nebula.account.domain.Account;
-import com.nebula.account.domain.AccountAlreadyExistsException;
-import com.nebula.shared.application.service.EventPublisher;
-import com.nebula.shared.domain.commons.value.Id;
-import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
-public class AccountCreator {
+final class AccountCreator implements AccountCreateUseCase {
 
-  private final AccountRepository repository;
+  private final SearchAccountPort searcher;
 
-  private final EventPublisher publisher;
+  private final SaveAccountPort saver;
 
-  public AccountCreator(AccountRepository repository, EventPublisher publisher) {
-    this.repository = repository;
-    this.publisher = publisher;
+  public AccountCreator(SearchAccountPort searcher, SaveAccountPort saver) {
+    this.searcher = searcher;
+    this.saver = saver;
   }
 
-  public void create(Id id, Id customerId) {
-    var account = Account.create(id, customerId);
+  @Override
+  public Optional<Account> create(AccountCreateCommand command) {
+    if (searcher.exists(command.id())) {
+      return Optional.empty();
+    }
 
-    repository
-        .search(account.id())
-        .ifPresent(
-            entity -> {
-              throw new AccountAlreadyExistsException(entity.id());
-            });
+    Account account = Account.of(command.id(), command.userId());
 
-    repository.save(account);
-    publisher.publish(account.pull());
+    saver.save(account);
+
+    return Optional.of(account);
   }
 }
