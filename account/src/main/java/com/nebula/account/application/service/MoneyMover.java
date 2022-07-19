@@ -38,23 +38,8 @@ final class MoneyMover implements TransferMoneyUseCase {
     Account source = fetchAccount.apply(command.source(), searcher);
     Account target = fetchAccount.apply(command.target(), searcher);
 
-    Operation withdrawal =
-        source
-            .withdraw(command.money())
-            .orElseThrow(
-                () -> {
-                  // TODO: throw a dedicated exception
-                  throw new RuntimeException();
-                });
-
-    Operation deposit =
-        target
-            .deposit(command.money())
-            .orElseThrow(
-                () -> {
-                  // TODO: throw a dedicated exception
-                  throw new RuntimeException();
-                });
+    Operation withdrawal = source.withdraw(command.money());
+    Operation deposit = target.deposit(command.money());
 
     Bundle bundle = new Bundle(command.id(), List.of(withdrawal, deposit));
     // TODO: save the bundle using a port
