@@ -25,7 +25,7 @@ final class MoneyMover implements TransferMoneyUseCase {
 
   @Override
   public void transfer(TransferMoneyCommand command) {
-    BiFunction<Id, SearchAccountPort, Account> fetchAccount =
+    BiFunction<Id, SearchAccountPort, Account> requireFetchAccount =
         (id, fetcher) ->
             fetcher
                 .search(id)
@@ -35,8 +35,8 @@ final class MoneyMover implements TransferMoneyUseCase {
                       throw new RuntimeException();
                     });
 
-    Account source = fetchAccount.apply(command.source(), searcher);
-    Account target = fetchAccount.apply(command.target(), searcher);
+    Account source = requireFetchAccount.apply(command.source(), searcher);
+    Account target = requireFetchAccount.apply(command.target(), searcher);
 
     Operation withdrawal = source.withdraw(command.money());
     Operation deposit = target.deposit(command.money());

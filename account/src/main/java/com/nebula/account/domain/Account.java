@@ -28,13 +28,13 @@ public final class Account {
   }
 
   public Operation withdraw(Money cash) {
-    BiConsumer<Money, Money> mayWithdraw =
+    BiConsumer<Money, Money> requireEnoughFunds =
         (funds, money) -> {
           // TODO: throw a dedicated exception
           if (!funds.isGreaterOrEqualThan(money)) throw new RuntimeException();
         };
 
-    mayWithdraw.accept(balance, cash);
+    requireEnoughFunds.accept(balance, cash);
 
     return new Operation(id, cash.negate());
   }
