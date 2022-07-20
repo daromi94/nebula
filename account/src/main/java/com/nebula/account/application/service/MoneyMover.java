@@ -19,7 +19,7 @@ final class MoneyMover implements TransferMoneyUseCase {
 
   private final SearchAccountPort searcher;
 
-  public MoneyMover(SearchAccountPort searcher) {
+  MoneyMover(SearchAccountPort searcher) {
     this.searcher = searcher;
   }
 

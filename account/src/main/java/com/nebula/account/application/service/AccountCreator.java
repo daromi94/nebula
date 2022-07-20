@@ -20,7 +20,7 @@ final class AccountCreator implements AccountCreateUseCase {
 
   private final SaveAccountPort saver;
 
-  public AccountCreator(SearchAccountPort searcher, SaveAccountPort saver) {
+  AccountCreator(SearchAccountPort searcher, SaveAccountPort saver) {
     this.searcher = searcher;
     this.saver = saver;
   }
