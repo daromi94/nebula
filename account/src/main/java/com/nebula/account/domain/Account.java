@@ -1,8 +1,8 @@
 package com.nebula.account.domain;
 
-import com.nebula.shared.domain.commons.value.CreatedAt;
-import com.nebula.shared.domain.commons.value.Id;
-import com.nebula.shared.domain.commons.value.Money;
+import com.nebula.shared.domain.value.CreatedAt;
+import com.nebula.shared.domain.value.Id;
+import com.nebula.shared.domain.value.Money;
 
 import java.util.function.BiConsumer;
 

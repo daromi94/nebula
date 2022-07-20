@@ -23,16 +23,16 @@ class CustomerCreatedQueueConfiguration {
   }
 
   @Bean
-  @Qualifier("${amqp.queues.customer-created}")
-  public Queue queue() {
-    return new Queue(queue);
-  }
-
-  @Bean
   @Qualifier("${amqp.exchanges.internal}-${amqp.queues.customer-created}")
   public Binding internalToCustomerCreatedBinding() {
     return BindingBuilder.bind(queue())
         .to(exchangeConfiguration.internalTopicExchange())
         .with(CustomerCreatedEvent.class.getName());
+  }
+
+  @Bean
+  @Qualifier("${amqp.queues.customer-created}")
+  public Queue queue() {
+    return new Queue(queue);
   }
 }

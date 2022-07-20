@@ -1,8 +1,8 @@
 package com.nebula.customer;
 
-import static org.springframework.boot.SpringApplication.run;
-
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication(scanBasePackages = {"com.nebula.customer", "com.nebula.shared"})
 class CustomerApplication {

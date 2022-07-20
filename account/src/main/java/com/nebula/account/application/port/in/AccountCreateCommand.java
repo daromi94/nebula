@@ -1,6 +1,6 @@
 package com.nebula.account.application.port.in;
 
-import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.value.Id;
 
 import javax.validation.constraints.NotNull;
 

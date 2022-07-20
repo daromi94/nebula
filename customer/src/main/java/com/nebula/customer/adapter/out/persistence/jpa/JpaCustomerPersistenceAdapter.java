@@ -2,7 +2,8 @@ package com.nebula.customer.adapter.out.persistence.jpa;
 
 import com.nebula.customer.application.port.out.CustomerRepository;
 import com.nebula.customer.domain.Customer;
-import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.value.Id;
+
 import java.util.Optional;
 
 public class JpaCustomerPersistenceAdapter implements CustomerRepository {

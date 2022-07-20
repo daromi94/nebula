@@ -1,6 +1,6 @@
 package com.nebula.account.domain;
 
-import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.value.Id;
 
 import java.util.List;
 

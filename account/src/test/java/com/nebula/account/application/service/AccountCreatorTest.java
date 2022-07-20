@@ -4,7 +4,7 @@ import com.nebula.account.application.port.in.AccountCreateCommand;
 import com.nebula.account.application.port.out.SaveAccountPort;
 import com.nebula.account.application.port.out.SearchAccountPort;
 import com.nebula.account.domain.Account;
-import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.value.Id;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,8 +1,8 @@
 package com.nebula.customer.domain;
 
 import com.nebula.customer.application.command.CustomerCreateCommand;
-import com.nebula.shared.domain.commons.value.Id;
 import com.nebula.shared.domain.customer.CustomerCreatedEvent;
+import com.nebula.shared.domain.value.Id;
 
 public final class Customer extends AggregateRoot {
 

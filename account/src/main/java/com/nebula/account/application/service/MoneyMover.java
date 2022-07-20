@@ -6,7 +6,7 @@ import com.nebula.account.application.port.out.SearchAccountPort;
 import com.nebula.account.domain.Account;
 import com.nebula.account.domain.Bundle;
 import com.nebula.account.domain.Operation;
-import com.nebula.shared.domain.commons.value.Id;
+import com.nebula.shared.domain.value.Id;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

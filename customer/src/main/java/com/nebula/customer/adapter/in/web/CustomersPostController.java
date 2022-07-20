@@ -3,14 +3,11 @@ package com.nebula.customer.adapter.in.web;
 import com.nebula.customer.application.command.CustomerCreateCommandMapper;
 import com.nebula.customer.application.service.CustomerCreator;
 import com.nebula.shared.adapter.web.customer.CustomersPostRequest;
-import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("${api.request-mappings.customers-post}")
