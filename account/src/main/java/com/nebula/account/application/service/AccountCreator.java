@@ -9,7 +9,6 @@ import com.nebula.shared.domain.value.Id;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
 @Service
@@ -26,7 +25,7 @@ final class AccountCreator implements AccountCreateUseCase {
   }
 
   @Override
-  public Optional<Account> create(AccountCreateCommand command) {
+  public void create(AccountCreateCommand command) {
     BiConsumer<Id, SearchAccountPort> requireNonExistentAccountId =
         (id, fetcher) -> {
           // TODO: throw a dedicated exception
@@ -38,7 +37,5 @@ final class AccountCreator implements AccountCreateUseCase {
     Account account = Account.of(command.id(), command.userId());
 
     saver.save(account);
-
-    return Optional.of(account);
   }
 }
